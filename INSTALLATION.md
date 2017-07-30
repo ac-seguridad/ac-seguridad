@@ -20,7 +20,8 @@ Ejecutar:
 
 ## [Si el proyecto no está creado] Crear el proyecto.
 Ejecutar: 
-* `django-admin startproject acseguridad_project`
+* `django-admin startproject project`
+* `python manage.py startapp ac_seguridad`
 
 ## Creación de la base de datos.
 Ejecutar:
