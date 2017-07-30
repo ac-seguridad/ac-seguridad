@@ -1,7 +1,9 @@
 1. Encender el servicio de la BD: sudo service postgresql start
 
 2. Para crear la BD desde cero.
-Ejecutar: sudo sudo -u postgres psql
+Ejecutar: psql
           create user fernandobperezm superuser password '2306anayfer';
           CREATE DATABASE acseguridad;
           alter database acseguridad owner to fernandobperezm;
+
+3. psql -h localhost -d acseguridad -U fernandobperezm

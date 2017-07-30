@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io']
 # Application definition
 
 INSTALLED_APPS = [
+    'ac_seguridad.apps.AcSeguridadConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,7 +73,6 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
