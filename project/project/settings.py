@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project.urls'
+LOGIN_REDIRECT_URL = 'index'
 
 TEMPLATES = [
     {
