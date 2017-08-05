@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 #MODELO DE LA BASE DE DATOS. 
 #conjunto de tablas, junto con sus atributos y propiedades. 
@@ -10,19 +13,29 @@ from django.db import models
 # Referencia de todos los tipos.
 #migracion: actualizas las bases de datos, la forma o atributos, hasta nombres
 #usuarios(cédula, nombre, apellido, teléfono, email, contraseña)
-class Usuarios(models.Model):     #crea tabla
+class Usuario(models.Model):     #crea tabla
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE) # Permite el login con usuario/password.
     nombre = models.CharField(max_length=20) #crea las columnas
     apellido = models.CharField(max_length=25)
     cedula = models.CharField(max_length=20, primary_key = True) #es char porque no voy a hacer operaciones con ese valor
     telefono = models.CharField(max_length=25)
     email = models.EmailField()
-    contrasena = models.CharField(max_length=20)
+    # contrasena = models.CharField(max_length=20)
     
     def __str__(self):
         return self.nombre + " " +  self.apellido + " cedula: "+ self.cedula
         
     def usuario_con_telefono(self):
         return self.nombre + " " + self.telefono
+        
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Usuario.objects.create(usuario=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.usuario.save()
         
 #Estacionamiento(RIF, nombre, Numero_de_puestos)        
 class Estacionamiento(models.Model):
@@ -36,7 +49,7 @@ class Estacionamiento(models.Model):
         
 #vehiculos(Placa,CEDULA,)   
 class Vehiculos(models.Model):
-    Cedula = models.ForeignKey(Usuarios, on_delete=models.CASCADE) 
+    Cedula = models.ForeignKey(Usuario, on_delete=models.CASCADE) 
     Placa =models.CharField(max_length=20, primary_key = True)
     
     def __str__(self):
@@ -52,7 +65,7 @@ class Alertas(models.Model):
     
 #Ocurre_a(Cedula,numero,fecha)
 class Ocurre_a(models.Model):
-    Cedula_usuarios_en_alertas = models.ForeignKey(Usuarios, on_delete=models.CASCADE) 
+    Cedula_usuarios_en_alertas = models.ForeignKey(Usuario, on_delete=models.CASCADE) 
     Numero_alertas = models.ForeignKey(Alertas, on_delete=models.CASCADE )
     Fecha_alertas    = models.DateTimeField('fecha de alerta')
     
