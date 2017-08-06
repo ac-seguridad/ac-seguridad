@@ -38,7 +38,7 @@ class Estacionamiento(models.Model):
     email = models.EmailField(verbose_name='email address', max_length=255)
 
     def __str__(self):
-        return self.RIF + " " + self.Nombre
+        return self.rif + " " + self.nombre
         
 #vehiculos(Placa,CEDULA,)   
 class Vehiculos(models.Model):

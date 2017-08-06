@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 import pdb
-from .models import Persona
+from .models import Persona, Estacionamiento
 from . import forms as ac_forms
 
 def index(request):
@@ -24,7 +24,7 @@ def afiliados(request):
     template = loader.get_template('ac_seguridad/afiliados.html')
     return HttpResponse(template.render(context, request))
     
-def signup(request):
+def registro_persona(request):
     context=dict()
     
     if request.method == 'POST':
@@ -66,4 +66,49 @@ def signup(request):
         
     context['user_form'] = user_form
     context['persona_form'] = persona_form
-    return render(request, 'ac_seguridad/registration/signup.html', context)
+    return render(request, 'ac_seguridad/registration/signup_perona.html', context)
+    
+def registro_estacionamiento(request):
+    context=dict()
+    
+    if request.method == 'POST':
+        user_form = UserCreationForm(request.POST)
+        estacionamiento_form = ac_forms.SignUpEstacionamientoForm(request.POST)
+        if (user_form.is_valid() and estacionamiento_form.is_valid()):
+            # Aquí se guarda el usuario creado en AUTH users
+            usuario_user = user_form.save() 
+            usuario_user.refresh_from_db()
+            
+            # Extraemos los datos del form de estacionamiento.
+            rif_estacionamiento = estacionamiento_form.cleaned_data.get('rif')
+            email_estacionamiento = estacionamiento_form.cleaned_data.get('email')
+            nombre_estacionamiento = estacionamiento_form.cleaned_data.get('nombre')
+            numero_de_puestos_estacionamiento = estacionamiento_form.cleaned_data.get('numero_de_puestos')
+            acceso_restringido_estacionamiento = estacionamiento_form.cleaned_data.get('acceso_restringido')
+            
+            
+            usuario_estacionamiento = Estacionamiento(
+                                        usuario = usuario_user,
+                                        rif = rif_estacionamiento,
+                                        nombre = nombre_estacionamiento,
+                                        numero_de_puestos = numero_de_puestos_estacionamiento,
+                                        acceso_restringido = acceso_restringido_estacionamiento,
+                                        email = email_estacionamiento)
+            
+            usuario_estacionamiento.save()
+            usuario_user.save()
+            
+            # Extraer los datos de cada form.
+            nombre_usuario = user_form.cleaned_data.get('username')
+            raw_password = user_form.cleaned_data.get('password1')
+            
+            usuario = authenticate(username=nombre_usuario, password=raw_password)
+            login(request, usuario)
+            return redirect('login')
+    else:
+        estacionamiento_form = ac_forms.SignUpEstacionamientoForm()
+        user_form = UserCreationForm()
+        
+    context['user_form'] = user_form
+    context['estacionamiento_form'] = estacionamiento_form
+    return render(request, 'ac_seguridad/registration/signup_estacionamiento.html', context)
