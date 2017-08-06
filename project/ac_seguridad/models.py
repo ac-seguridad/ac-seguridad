@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -8,19 +9,17 @@ from django.dispatch import receiver
 #las clases son las tablas
 #los atributos son las columnas
 
-
 # https://docs.djangoproject.com/en/1.10/ref/models/fields/#django.db.models 
 # Referencia de todos los tipos.
 #migracion: actualizas las bases de datos, la forma o atributos, hasta nombres
 #usuarios(cédula, nombre, apellido, teléfono, email, contraseña)
-class Usuario(models.Model):     #crea tabla
+class Persona(models.Model):     #crea tabla
     usuario = models.OneToOneField(User, on_delete=models.CASCADE) # Permite el login con usuario/password.
     nombre = models.CharField(max_length=20) #crea las columnas
     apellido = models.CharField(max_length=25)
-    cedula = models.CharField(max_length=20, primary_key = True) #es char porque no voy a hacer operaciones con ese valor
+    cedula = models.CharField(max_length=20, primary_key=True, verbose_name='cedula', unique=True) #es char porque no voy a hacer operaciones con ese valor
     telefono = models.CharField(max_length=25)
-    email = models.EmailField()
-    # contrasena = models.CharField(max_length=20)
+    email = models.EmailField(verbose_name='email address', max_length=255)
     
     def __str__(self):
         return self.nombre + " " +  self.apellido + " cedula: "+ self.cedula
@@ -28,28 +27,22 @@ class Usuario(models.Model):     #crea tabla
     def usuario_con_telefono(self):
         return self.nombre + " " + self.telefono
         
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Usuario.objects.create(usuario=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.usuario.save()
         
 #Estacionamiento(RIF, nombre, Numero_de_puestos)        
 class Estacionamiento(models.Model):
-    RIF = models.CharField(max_length=20, primary_key = True)
-    Nombre = models.CharField(max_length=200)
-    Numero_de_puestos = models.IntegerField(default=1000)
-    Acceso_restringido = models.BooleanField(default=True)
-    
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE) # Permite el login con usuario/password
+    rif = models.CharField(max_length=20, primary_key=True, verbose_name='rif', unique=True)
+    nombre = models.CharField(max_length=200)
+    numero_de_puestos = models.IntegerField(default=1000)
+    acceso_restringido = models.BooleanField(default=True)
+    email = models.EmailField(verbose_name='email address', max_length=255)
+
     def __str__(self):
         return self.RIF + " " + self.Nombre
         
 #vehiculos(Placa,CEDULA,)   
 class Vehiculos(models.Model):
-    Cedula = models.ForeignKey(Usuario, on_delete=models.CASCADE) 
+    Cedula = models.ForeignKey(Persona, on_delete=models.CASCADE) 
     Placa =models.CharField(max_length=20, primary_key = True)
     
     def __str__(self):
@@ -65,7 +58,7 @@ class Alertas(models.Model):
     
 #Ocurre_a(Cedula,numero,fecha)
 class Ocurre_a(models.Model):
-    Cedula_usuarios_en_alertas = models.ForeignKey(Usuario, on_delete=models.CASCADE) 
+    Cedula_usuarios_en_alertas = models.ForeignKey(Persona, on_delete=models.CASCADE) 
     Numero_alertas = models.ForeignKey(Alertas, on_delete=models.CASCADE )
     Fecha_alertas    = models.DateTimeField('fecha de alerta')
     

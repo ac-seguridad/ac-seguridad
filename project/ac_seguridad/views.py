@@ -16,6 +16,11 @@ def ver_pagina(request):
     context = {}
     template = loader.get_template('ac_seguridad/ver_pagina.html')
     return HttpResponse(template.render(context, request))
+
+def afiliados(request):
+    context = {}
+    template = loader.get_template('ac_seguridad/afiliados.html')
+    return HttpResponse(template.render(context, request))
     
 def signup(request):
     if request.method == 'POST':
