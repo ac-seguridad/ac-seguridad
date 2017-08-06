@@ -4,6 +4,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
+import pdb
+from .models import Persona
 from . import forms as ac_forms
 
 def index(request):
@@ -23,42 +25,45 @@ def afiliados(request):
     return HttpResponse(template.render(context, request))
     
 def signup(request):
+    context=dict()
+    
     if request.method == 'POST':
-        form = ac_forms.SignUpForm(request.POST)
-        if form.is_valid():
-            usuario = form.save()
-            usuario.refresh_from_db()  # load the profile instance created by the signal
-            usuario.usuario.cedula = form.cleaned_data.get('cedula')
-            usuario.usuario.email = form.cleaned_data.get('email')
-            usuario.usuario.nombre = form.cleaned_data.get('nombre')
-            usuario.usuario.apellido = form.cleaned_data.get('apellido')
-            usuario.usuario.telefono = form.cleaned_data.get('telefono')
-            usuario.save()
-            raw_password = form.cleaned_data.get('password1')
-            usuario = authenticate(username=usuario.username, password=raw_password)
+        user_form = UserCreationForm(request.POST)
+        persona_form = ac_forms.SignUpPersonaForm(request.POST)
+        if (user_form.is_valid() and persona_form.is_valid()):
+            # Aquí se guarda el usuario creado en AUTH users
+            usuario_user = user_form.save() 
+            usuario_user.refresh_from_db()
+            
+            # Extraemos los datos del form de persona.
+            cedula_persona = persona_form.cleaned_data.get('cedula')
+            email_persona = persona_form.cleaned_data.get('email')
+            nombre_persona = persona_form.cleaned_data.get('nombre')
+            apellido_persona = persona_form.cleaned_data.get('apellido')
+            telefono_persona = persona_form.cleaned_data.get('telefono')
+            
+            usuario_persona = Persona(
+                                usuario=usuario_user, 
+                                nombre=nombre_persona,
+                                apellido=apellido_persona,
+                                telefono=telefono_persona,
+                                cedula=cedula_persona,
+                                email=email_persona)
+            
+            usuario_persona.save()
+            usuario_user.save()
+            
+            # Extraer los datos de cada form.
+            nombre_usuario = user_form.cleaned_data.get('username')
+            raw_password = user_form.cleaned_data.get('password1')
+            
+            usuario = authenticate(username=nombre_usuario, password=raw_password)
             login(request, usuario)
             return redirect('login')
     else:
-        form = ac_forms.SignUpForm()
-    return render(request, 'ac_seguridad/registration/signup.html', {'form': form})
-    # context = dict()
-    # template = loader.get_template('ac_seguridad/registration/signup.html')
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         username = form.cleaned_data.get('username')
-    #         raw_password = form.cleaned_data.get('password1')
-    #         # If user is None, then the authentication failed. However, 
-    #         # as we're getting the info from the sign up form, it should
-    #         # always login
-    #         user = authenticate(username=username, password=raw_password)
-    #         if user is not None:
-    #             login(request, user)
-    #             return redirect('index')
-    #         else:
-    #             return redirect('login')
-    # else:
-    #     context['form'] = UserCreationForm()
-    
-    # return HttpResponse(template.render(context,request))
+        persona_form = ac_forms.SignUpPersonaForm()
+        user_form = UserCreationForm()
+        
+    context['user_form'] = user_form
+    context['persona_form'] = persona_form
+    return render(request, 'ac_seguridad/registration/signup.html', context)
