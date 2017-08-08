@@ -87,6 +87,10 @@ DATABASES = {
 # User Validation
 # AUTH_USER_MODEL = 'ac_seguridad.Usuario'
 
+# Redirection after login.
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

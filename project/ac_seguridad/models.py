@@ -56,7 +56,7 @@ class Vehiculo(models.Model):
     year = models.PositiveSmallIntegerField(choices=anos_vehiculos, default=2000) 
     
     def __str__(self):
-        return str(self.placa) + " " + str(self.marca) + " " + str(self.modelo) + str(self.year)+ str(self.dueno.cedula)
+        return str(self.placa) + " " + str(self.marca) + " " + str(self.modelo) + " " + str(self.year) + " " + str(self.dueno.cedula)
 
 # alertas(numero,tipo)
 class Alerta(models.Model):
@@ -86,15 +86,15 @@ class Ocurre_en(models.Model):
 
 #Ticket( Placa, RIF,numero,hora_entrada, hora salida)
 class Ticket(models.Model):
-    Placa = models.ForeignKey(Vehiculo, on_delete=models.CASCADE) 
-    RIF = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE)
-    Numero_ticket = models.IntegerField(default=0)
-    Hora_entrada =  models.DateTimeField('Hora de entrada')
-    Hora_salida =  models.DateTimeField('Hora de salida')
-    Pagado = models.BooleanField(default=False) # Tiene que añadirse un valor por defecto cuandohay campos booleanos.
+    placa = models.ForeignKey(Vehiculo, on_delete=models.CASCADE) 
+    rif = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE)
+    numero_ticket = models.IntegerField(default=0)
+    hora_entrada =  models.DateTimeField('Hora de entrada')
+    hora_salida =  models.DateTimeField('Hora de salida')
+    pagado = models.BooleanField(default=False) # Tiene que añadirse un valor por defecto cuandohay campos booleanos.
     
     def __str__(self):
-        return self.Placa.__str__() + " " + self.RIF.__str__() + " " + self.Numero_ticket.__str__() + " " + self.Hora_entrada.__str__() + " " + self.Hora_salida.__str__() + " " + self.Pagado.__str__()
+        return str(self.placa) + " " + str(self.rif) + " " + str(self.numero_ticket) + " " + str(self.hora_entrada) + " " + str(self.hora_salida) + " " + str(self.pagado)
 
 # # GUSTOS(cédula, gusto_entrada, gusto_sal)
 # class Gustos(models.Model):

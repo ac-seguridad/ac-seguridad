@@ -20,5 +20,15 @@
     
   <a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>
   
+  <h2>Tus tickets recientes</h2>
+    {% if tickets_usuario|length > 0 %}
+      <ul>
+        {% for ticket in tickets_usuario %}
+          <li>{{ ticket }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>
+    {% endif %}
     
 {% endblock %}

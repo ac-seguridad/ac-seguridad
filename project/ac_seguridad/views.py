@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 import pdb
-from .models import Persona, Estacionamiento, Vehiculo
+from .models import *
 from . import forms as ac_forms
 
 def index(request):
@@ -133,10 +133,22 @@ def area_personal(request):
     context = dict()
     usuario = request.user.persona
     
-    # Obtener la lista de vehículos que la persona posee.
-    query_vehiculos_usuario = Vehiculo.objects.filter(dueno=usuario.cedula)
+    # Obtener la lista de vehículos que la persona posee. 
+    # Aquí tenemos que forzar la evaluación con list() porque necesitaremos
+    # las placas para los tickets.
+    vehiculos_usuario = list(Vehiculo.objects.filter(dueno=usuario.cedula))
     
-    context['vehiculos_usuario'] = query_vehiculos_usuario
+    lista_placas = [vehiculo.placa for vehiculo in vehiculos_usuario]
+    
+    # Obtener la lista de tickets.
+    # pdb.set_trace()
+    # Al usar placa__in le decimos que la placa tiene que ser alguna de las
+    # que esté en la lista.
+    # Forzamos a realizar la búsqueda en la BD.
+    tickets_usuario = list(Ticket.objects.filter(placa__in=lista_placas))
+    
+    context['vehiculos_usuario'] = vehiculos_usuario
+    context['tickets_usuario'] = tickets_usuario
     context['usuario'] = usuario
     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')
     return HttpResponse(template.render(context,request))
