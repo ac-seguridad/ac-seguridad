@@ -64,7 +64,7 @@ class Alerta(models.Model):
     Tipo = models.CharField(max_length=200)
     
     def __str__(self):
-        return self.Numero_alertas.__str__() + " " + self.Tipo 
+        return str(self.Numero_alertas) + " " + self.Tipo 
     
 #Ocurre_a(Cedula,numero,fecha)
 class Ocurre_a(models.Model):
