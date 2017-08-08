@@ -1,0 +1,24 @@
+{% extends '../area-personal-base.html' %}
+
+{% block title %}Área Personal{% endblock %}
+
+{% block area_personal %}
+
+  <h2>Datos personales</h2>
+    <li>{{ usuario }}</li>
+  <h2>Tus vehículos</h2>
+    {% if vehiculos_usuario|length > 0 %}
+      <ul>
+        {% for vehiculo in vehiculos_usuario %}
+          <li>{{ vehiculo }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Usted no tiene vehículos registrados en el sistema</p>
+    {% endif %}
+    
+    
+  <a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>
+  
+    
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends '../area-personal-base.html' %}
+
+{% block title %}Área Personal{% endblock %}
+
+{% block area_personal %}
+  <h2>Añade un nuevo vehículo.</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ vehiculo_form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}

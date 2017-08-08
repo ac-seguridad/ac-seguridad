@@ -1,0 +1,91 @@
+{% extends '../website-base.html' %} 
+{% load static %}
+<!--para importar boostrap y el jquery-->
+
+{% block pagetitle %}Index{% endblock %}
+
+{% block contenido %}
+
+
+<header>
+    <div class="container">
+      <h1> Estacionamientos afiliados </h1>  
+        
+    </div>
+</header>    
+
+    <div class="container">
+          <section class="main row">
+            <article class="col-xs-12 col-sm-9 col-md-9 col-lg-8 ">
+                <p>
+                FOTO
+    			<img src="{% static 'ac_seguridad/images/plaza-altamira.jpg' %}" class="img-responsive center-block">
+    		
+    	       </p>
+            </article>
+            
+            <aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">
+            <h2> <strong>Plaza Altamira </strong> </h2>
+                <br/><br/>
+                <p>
+                      
+                    Bienvenido a la mejor pagina del mundo entero
+                      <br/>
+                    <strong>  Dirección: </strong>
+                    Calle 1 con urb 2 , ciudad 3. 
+                      1050, Caracas Venezuela
+                      <br/><br/>
+                      
+                       <strong> <em>Condiciones de entrada: </em> </strong>
+                      <br/><br/>
+                      
+                       <strong> <em> Horario </em> </strong>
+                      <br/><br/>
+                      
+                      </p>  
+            </aside>
+            </section>
+            
+  <hr/>           
+ <!--otra fila -->
+            
+            
+        
+          <section class="main row">
+            <article class="col-xs-12 col-sm-9 col-md-9 col-lg-8 ">
+                <p>
+                FOTO
+    			<img src="{% static 'ac_seguridad/images/Ucab-Campus2.jpg' %}" class="img-responsive center-block">
+    		
+    	       </p>
+            </article>
+            
+            <aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">
+                
+                <h2> <strong>UCAB </strong> </h2>
+                <br/><br/>
+                <p>
+                      
+                    Bienvenido a la mejor pagina del mundo entero
+                      <br/>
+                    <strong>  Dirección: </strong>
+                    Calle 1 con urb 2 , ciudad 3. 
+                      1050, Caracas Venezuela
+                      <br/><br/>
+                      
+                       <strong> <em>Condiciones de entrada: </em> </strong>
+                      <br/><br/>
+                      
+                       <strong> <em> Horario </em> </strong>
+                      <br/><br/>
+                      
+                      </p>  
+            </aside>
+            </section>
+           
+            
+        
+        </section>
+    </div>
+
+{% endblock %}

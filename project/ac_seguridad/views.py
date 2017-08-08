@@ -3,9 +3,10 @@ from django.template import loader
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 import pdb
-from .models import Persona, Estacionamiento
+from .models import Persona, Estacionamiento, Vehiculo
 from . import forms as ac_forms
 
 def index(request):
@@ -58,15 +59,22 @@ def registro_persona(request):
             raw_password = user_form.cleaned_data.get('password1')
             
             usuario = authenticate(username=nombre_usuario, password=raw_password)
-            login(request, usuario)
-            return redirect('login')
+            # Authenticate regresa un objeto Usuario si logra autenticar, 
+            # Retorna None si NO pudo autenticar. En este caso, como estamos 
+            # creando el usuario, siempre debería autenticar.
+            if usuario is not None:
+                login(request, usuario)
+                return redirect('area_personal')
+            else:
+                return redirect('login')
+                
     else:
         persona_form = ac_forms.SignUpPersonaForm()
         user_form = UserCreationForm()
         
     context['user_form'] = user_form
     context['persona_form'] = persona_form
-    return render(request, 'ac_seguridad/registration/signup_perona.html', context)
+    return render(request, 'ac_seguridad/registration/signup_persona.html', context)
     
 def registro_estacionamiento(request):
     context=dict()
@@ -103,8 +111,11 @@ def registro_estacionamiento(request):
             raw_password = user_form.cleaned_data.get('password1')
             
             usuario = authenticate(username=nombre_usuario, password=raw_password)
-            login(request, usuario)
-            return redirect('login')
+            if usuario is not None:
+                login(request, usuario)
+                return redirect('area_personal')
+            else:
+                return redirect('login')
     else:
         estacionamiento_form = ac_forms.SignUpEstacionamientoForm()
         user_form = UserCreationForm()
@@ -112,3 +123,52 @@ def registro_estacionamiento(request):
     context['user_form'] = user_form
     context['estacionamiento_form'] = estacionamiento_form
     return render(request, 'ac_seguridad/registration/signup_estacionamiento.html', context)
+    
+@login_required
+def area_personal(request):
+    # Esta página sólo es visible para el usuario que ha hecho login. 
+    # Django nos garantiza al usar el @login_required que sólo se podrá entrar
+    # en esta página si el usuario está logueado. También, en request.user
+    # estará la instancia de usuario 'User'.
+    context = dict()
+    usuario = request.user.persona
+    
+    # Obtener la lista de vehículos que la persona posee.
+    query_vehiculos_usuario = Vehiculo.objects.filter(dueno=usuario.cedula)
+    
+    context['vehiculos_usuario'] = query_vehiculos_usuario
+    context['usuario'] = usuario
+    template = loader.get_template('ac_seguridad/area_personal/area_personal.html')
+    return HttpResponse(template.render(context,request))
+    
+@login_required
+def registro_vehiculo(request):
+    usuario = request.user.persona
+    
+    context = dict()
+    if request.method == 'POST':
+        vehiculo_form = ac_forms.VehiculoForm(request.POST)
+        if (vehiculo_form.is_valid()):
+            
+            # Extraemos los datos del form de estacionamiento.
+            placa = vehiculo_form.cleaned_data.get('placa')
+            marca = vehiculo_form.cleaned_data.get('marca')
+            modelo = vehiculo_form.cleaned_data.get('modelo')
+            year = vehiculo_form.cleaned_data.get('year')
+            
+            vehiculo = Vehiculo(
+                                dueno = usuario,
+                                placa = placa,
+                                marca = marca,
+                                modelo = modelo,
+                                year = year)
+            vehiculo.save()
+            
+            # Redirigir a area personal.
+            return redirect('area_personal')
+    else:
+        vehiculo_form = ac_forms.VehiculoForm()
+        
+    context['vehiculo_form'] = vehiculo_form
+    return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
+    
