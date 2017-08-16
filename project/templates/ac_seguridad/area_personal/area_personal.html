@@ -31,4 +31,15 @@
       <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>
     {% endif %}
     
+  <h2>Tu actividad reciente</h2>
+    {% if avisos_usuario|length > 0 %}
+      <ul>
+        {% for aviso in avisos_usuario %}
+          <li>{{ aviso }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Usted no tiene actividad reciente.</p>
+    {% endif %}
+    
 {% endblock %}

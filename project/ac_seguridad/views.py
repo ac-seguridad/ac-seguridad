@@ -147,8 +147,16 @@ def area_personal(request):
     # Forzamos a realizar la búsqueda en la BD.
     tickets_usuario = list(Ticket.objects.filter(placa__in=lista_placas))
     
+    # Obtener la lista de tickets.
+    # pdb.set_trace()
+    # Al usar placa__in le decimos que la placa tiene que ser alguna de las
+    # que esté en la lista.
+    # Forzamos a realizar la búsqueda en la BD.
+    avisos_usuario = list(Alerta.objects.filter(usuario=usuario.cedula))
+    
     context['vehiculos_usuario'] = vehiculos_usuario
     context['tickets_usuario'] = tickets_usuario
+    context['avisos_usuario'] = avisos_usuario
     context['usuario'] = usuario
     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')
     return HttpResponse(template.render(context,request))

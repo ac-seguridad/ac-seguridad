@@ -1,0 +1,91 @@
+{% extends '../website-base.html' %} 
+{% load static %}
+<!--para importar boostrap y el jquery-->
+
+{% block pagetitle %}Index{% endblock %}
+
+{% block contenido %}
+
+
+<header>
+    <div class="container">
+      <h1> Contátanos </h1>  
+        
+    </div>
+</header>    
+
+    <div class="container">
+            
+  <hr/>           
+ <!--otra fila -->
+            
+            
+        
+          <section class="main row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                <p>
+            	<img src="{% static 'ac_seguridad/images/banner_contacto.jpg' %}" class="img-responsive center-block">
+    	       </p>
+            </article>
+           </section>
+        
+        
+        <!--Otra fila-->
+        
+        
+  <section class="main row">
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+                <p>
+                <h2>Redes sociales</h2> </br></br></br>
+                 <img src="{% static 'ac_seguridad/images/facebook.png'  %}" class="img-responsive center-block">
+    		
+                 <h3>Facebook</h3>
+                
+    			 <h4>Anabel Rincon</h4>
+    		 <h5>Christian Escalona</h5>
+    		 
+    		 
+    	       </p>
+            </article>
+            
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+                <p>
+                <h2>Telefonos</h2> </br></br></br>
+               
+    			<img src="{% static 'ac_seguridad/images/telefono.png' %}" width= "100" height="100" class="img-responsive center-block">
+    		 
+    		   <h3>Llámanos</h3>
+    		 <h4>Anabel Rincon </h4>                                                                  
+    		 <h5>+58414-5555555 </h5>                              
+    		 <h4>Christian Escalona</h4> 
+    		 <h5> +58414-5555555</h5>
+    	       </p>
+            </article>
+            
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+                <p>
+                
+                <h2>Ubícanos</h2> </br></br>
+               
+    			<img src="{% static 'ac_seguridad/images/mapa_carro.jpg' %}" width= "200" height="100"  class="img-responsive center-block">
+    		 
+    		   <h3>Dirección:</h3>
+    		 	<h5>Calle 1, con calle 2 en Urbanización 3. </br> Caracas, Venezuela 1050 </h5>                                    
+    		 
+    	       </p>
+            </article>
+            
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+                <p>
+                <h2>Escribenos</h2> </br></br></br>
+               	<img src="{% static 'ac_seguridad/images/mail.png' %}" width= "100" height="100" class="img-responsive center-block">
+    		    <h3>Correo:</h3>
+    		 <h4>acseguridad@gmail.com </h4>  
+    	       </p>
+            </article>
+            </section>
+          
+        
+    </div>
+
+{% endblock %}

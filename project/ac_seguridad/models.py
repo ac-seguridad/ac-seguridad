@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import datetime
+from django.utils import timezone
 
 #MODELO DE LA BASE DE DATOS. 
 #conjunto de tablas, junto con sus atributos y propiedades. 
@@ -58,32 +59,6 @@ class Vehiculo(models.Model):
     def __str__(self):
         return str(self.placa) + " " + str(self.marca) + " " + str(self.modelo) + " " + str(self.year) + " " + str(self.dueno.cedula)
 
-# alertas(numero,tipo)
-class Alerta(models.Model):
-    Numero_alertas = models.AutoField(primary_key = True) # Deberiamos quitar esto o cambiarlo a IntegerField porque aunque se borre la BD igual queda el contador.
-    Tipo = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return str(self.Numero_alertas) + " " + self.Tipo 
-    
-#Ocurre_a(Cedula,numero,fecha)
-class Ocurre_a(models.Model):
-    Cedula_usuarios_en_alertas = models.ForeignKey(Persona, on_delete=models.CASCADE) 
-    Numero_alertas = models.ForeignKey(Alerta, on_delete=models.CASCADE )
-    Fecha_alertas    = models.DateTimeField('fecha de alerta')
-    
-    def __str__(self):
-        return self.Cedula_usuarios_en_alertas.__str__() + " " + self.Numero_alertas.__str__() + " " + self.Fecha_alertas.__str__()
-        
-#Ocurre_en(RIF,numero,fecha)
-class Ocurre_en(models.Model):
-    RIF = models.ForeignKey( Estacionamiento, on_delete=models.CASCADE) 
-    Numero_alertas = models.ForeignKey( Alerta, on_delete=models.CASCADE)
-    Fecha_alertas    = models.DateTimeField('fecha de alerta')
-    
-    def __str__(self):
-        return self.RIF.__str__() + " " + self.Numero_alertas.__str__() + " " + self.Fecha_alertas.__str__()
-
 #Ticket( Placa, RIF,numero,hora_entrada, hora salida)
 class Ticket(models.Model):
     placa = models.ForeignKey(Vehiculo, on_delete=models.CASCADE) 
@@ -95,6 +70,37 @@ class Ticket(models.Model):
     
     def __str__(self):
         return str(self.placa) + " " + str(self.rif) + " " + str(self.numero_ticket) + " " + str(self.hora_entrada) + " " + str(self.hora_salida) + " " + str(self.pagado)
+
+# alertas(numero,tipo)
+class Alerta(models.Model):
+    numero_alertas = models.AutoField(primary_key = True) # Deberiamos quitar esto o cambiarlo a IntegerField porque aunque se borre la BD igual queda el contador.
+    usuario = models.ForeignKey(Persona, on_delete=models.CASCADE, null=True)
+    vehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, null=True)
+    estacionamiento = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE, null=True) #TODO: set null=False
+    tipo = models.CharField(max_length=200)
+    fecha = models.DateTimeField('fecha de alerta', default=timezone.now)
+    
+    def __str__(self):
+        return self.tipo + " " + str(self.usuario) + " " + str(self.vehiculo) + " " + str(self.estacionamiento) + " " + str(self.fecha)
+    
+# #Ocurre_a(Cedula,numero,fecha)
+# class OcurreA(models.Model):
+#     cedula_usuario = models.ForeignKey(Persona, on_delete=models.CASCADE) 
+#     numero_alertas = models.ForeignKey(Alerta, on_delete=models.CASCADE )
+#     fecha_alertas    = models.DateTimeField('fecha de alerta')
+    
+#     def __str__(self):
+#         return str(self.cedula_usuario) + " " + str(self.numero_alertas) + " " + str(self.fecha_alertas)
+        
+# #Ocurre_en(RIF,numero,fecha)
+# class OcurreEn(models.Model):
+#     rif = models.ForeignKey( Estacionamiento, on_delete=models.CASCADE) 
+#     numero_alertas = models.ForeignKey(Alerta, on_delete=models.CASCADE)
+#     fecha_alertas    = models.DateTimeField('fecha de alerta')
+    
+#     def __str__(self):
+#         return str(self.rif) + " " + str(self.numero_alertas) + " " + str(self.Fecha_alertas)
+
 
 # # GUSTOS(cédula, gusto_entrada, gusto_sal)
 # class Gustos(models.Model):
