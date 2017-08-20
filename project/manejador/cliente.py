@@ -12,15 +12,15 @@ from mysocket import MySocket
 
 rif = 'J-1234'
 puerta = 1
-placa = 'AE800MB'
-tipo = 'Entrada'
+placa = 'AE8MB'
+tipo = 'Salida'
     
 # Programa comienza aquí.
 # ref: https://docs.python.org/3/howto/sockets.html
 # Crear un socket como cliente.
 print("Creando socket")
 socket_cliente = MySocket()
-socket_cliente.connect(host='localhost', port=8080)
+socket_cliente.connect(host='localhost', port=9999)
 print("Socket conectado.")
 
 # Enviar mensaje:

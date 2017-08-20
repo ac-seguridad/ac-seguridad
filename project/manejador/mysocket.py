@@ -5,7 +5,6 @@ import socket
 import json
 import pdb
 
-
 # Referencia: https://docs.python.org/3/howto/sockets.html
 # Referencia: https://stackoverflow.com/questions/2751098/sending-data-as-instances-using-python-sockets
 class MalformedMessage(Exception): pass
@@ -23,7 +22,6 @@ class MySocket:
         else:
             self.sock = sock
             
-        self.MSGLEN = 4096
         self.delimiter= '\r\n'
             
     def accept(self):
@@ -68,25 +66,7 @@ class MySocket:
         return data
         
     def receive(self):
-        # peekdata = self.peek(1024)
-        # if peekdata == '':
-        #     raise ConnectionClosed
-        # sizepos = peekdata.find(self.endline.encode(encoding="utf-8", errors="strict"))
-        # print(sizepos)
-        # if sizepos == -1:
-        #     raise MalformedMessage('Did not find endline in message %r' % peekdata)
-        # sizedata = self.read_exactly(sizepos)
-        # self.read_exactly(len(self.endline))
-        # try:
-        #     size = int(sizedata)
-        # except ValueError:
-        #     raise MalformedMessage(
-        #         'size data %r could not be converted to an int' % sizedata)
-        # data = self.read_exactly(size)
-        # return json.loads(data)
-        
         # Vemos si hay algún mensaje en 1024 bytes de data.
-        pdb.set_trace()
         peekdata = self.peek(1024)
         if peekdata == '':
             raise ConnectionClosed
@@ -111,25 +91,3 @@ class MySocket:
         # Leemos lo que queda del mensaje.
         data = self.read_exactly(size)
         return json.loads(data)
-
-    def mysend(self, msg):
-        totalsent = 0
-        print(len(msg))
-        # while totalsent < self.MSGLEN:
-        while totalsent < len(msg):
-            sent = self.sock.send(msg[totalsent:])
-            if sent == 0:
-                raise RuntimeError("socket connection broken")
-            totalsent = totalsent + sent
-
-    def myreceive(self):
-        chunks = []
-        bytes_recd = 0
-        self.MSGLEN = 25
-        while bytes_recd < self.MSGLEN:
-            chunk = self.sock.recv(min(self.MSGLEN - bytes_recd, 2048))
-            if chunk == b'':
-                raise RuntimeError("socket connection broken")
-            chunks.append(chunk)
-            bytes_recd = bytes_recd + len(chunk)
-        return b''.join(chunks)
