@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 import pdb
 from .models import *
@@ -20,6 +21,11 @@ def ver_pagina(request):
     template = loader.get_template('ac_seguridad/ver_pagina.html')
     return HttpResponse(template.render(context, request))
 
+def contacto(request):
+    context = {}
+    template = loader.get_template('ac_seguridad/contacto.html')
+    return HttpResponse(template.render(context, request))
+    
 def afiliados(request):
     context = {}
     template = loader.get_template('ac_seguridad/afiliados.html')
@@ -113,7 +119,7 @@ def registro_estacionamiento(request):
             usuario = authenticate(username=nombre_usuario, password=raw_password)
             if usuario is not None:
                 login(request, usuario)
-                return redirect('area_personal')
+                return redirect('area_empresas')
             else:
                 return redirect('login')
     else:
@@ -131,7 +137,10 @@ def area_personal(request):
     # en esta página si el usuario está logueado. También, en request.user
     # estará la instancia de usuario 'User'.
     context = dict()
-    usuario = request.user.persona
+    try:
+        usuario = request.user.persona
+    except:
+        return redirect('index')
     
     # Obtener la lista de vehículos que la persona posee. 
     # Aquí tenemos que forzar la evaluación con list() porque necesitaremos
@@ -159,8 +168,50 @@ def area_personal(request):
     context['avisos_usuario'] = avisos_usuario
     context['usuario'] = usuario
     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')
+        
     return HttpResponse(template.render(context,request))
+
+@login_required
+def area_empresas(request):
+    # Esta página sólo es visible para el usuario que ha hecho login. 
+    # Django nos garantiza al usar el @login_required que sólo se podrá entrar
+    # en esta página si el usuario está logueado. También, en request.user
+    # estará la instancia de usuario 'User'.
+    context = dict()
+    try:
+        estacionamiento = request.user.estacionamiento
+    except:
+        return redirect('index')
     
+    # # Obtener la lista de vehículos que la persona posee. 
+    # # Aquí tenemos que forzar la evaluación con list() porque necesitaremos
+    # # las placas para los tickets.
+    # vehiculos_usuario = list(Vehiculo.objects.filter(dueno=usuario.cedula))
+    
+    # lista_placas = [vehiculo.placa for vehiculo in vehiculos_usuario]
+    
+    # # Obtener la lista de tickets.
+    # # pdb.set_trace()
+    # # Al usar placa__in le decimos que la placa tiene que ser alguna de las
+    # # que esté en la lista.
+    # # Forzamos a realizar la búsqueda en la BD.
+    # tickets_usuario = list(Ticket.objects.filter(placa__in=lista_placas))
+    
+    # # Obtener la lista de tickets.
+    # # pdb.set_trace()
+    # # Al usar placa__in le decimos que la placa tiene que ser alguna de las
+    # # que esté en la lista.
+    # # Forzamos a realizar la búsqueda en la BD.
+    # avisos_usuario = list(Alerta.objects.filter(usuario=usuario.cedula))
+    
+    # context['vehiculos_usuario'] = vehiculos_usuario
+    # context['tickets_usuario'] = tickets_usuario
+    # context['avisos_usuario'] = avisos_usuario
+    context['estacionamiento'] = estacionamiento
+    template = loader.get_template('ac_seguridad/area_empresas/area_empresas.html')
+        
+    return HttpResponse(template.render(context,request))
+
 @login_required
 def registro_vehiculo(request):
     usuario = request.user.persona
@@ -191,4 +242,51 @@ def registro_vehiculo(request):
         
     context['vehiculo_form'] = vehiculo_form
     return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
+
+@login_required
+def pago_estacionamiento(request):
+    context=dict()
+    
+    estacionamiento = request.user.estacionamiento
+    es_tarifa_plana = estacionamiento.tarifa_plana
+    monto_tarifa = estacionamiento.monto_tarifa
+    pdb.set_trace()
+    if request.method == 'POST':
+        pago_form = ac_forms.PagoEstacionamientoForm(request.POST)
+        if (pago_form.is_valid()):
+            
+            # Extraemos los datos del form de pago.
+            num_ticket = pago_form.cleaned_data.get('numero_ticket')
+            registrado_ticket = pago_form.cleaned_data.get('registrado_ticket')
+            
+            try:
+                if (registrado_ticket):
+                    ticket = Ticket.objects.get(numero_ticket=num_ticket)
+                else:
+                    ticket = TicketNoRegistrado.objects.get(numero_ticket=num_ticket)
+            except:
+                return redirect('pago_estacionamiento')
+            
+            # Tiempo transcurrido.
+            tiempo_transcurrido = timezone.now() - ticket.hora_entrada
+            if (es_tarifa_plana):
+                monto_a_pagar = monto_tarifa * (1 + tiempo_transcurrido.days)
+            else:
+                horas = round(tiempo_transcurrido.total_seconds() / 3600)
+                monto_a_pagar = monto_tarifa * horas
+            
+            context['monto_tarifa'] = monto_tarifa
+            context['es_tarifa_plana'] = es_tarifa_plana
+            context['hora_entrada'] = ticket.hora_entrada
+            context['registrado_ticket'] = registrado_ticket
+            context['tiempo_transcurrido'] = tiempo_transcurrido
+            context['monto_a_pagar'] = monto_a_pagar
+            context['num_ticket'] = num_ticket
+            
+    else:
+        pago_form = ac_forms.PagoEstacionamientoForm()
+        
+    context['pago_form'] = pago_form
+    return render(request, 'ac_seguridad/area_empresas/pago_estacionamiento.html', context)    
+
     
