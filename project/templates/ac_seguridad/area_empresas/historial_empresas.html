@@ -1,0 +1,46 @@
+{% extends '../area-empresas-base.html' %}
+
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+
+  <h2>Datos personales</h2>
+    <li>{{ estacionamiento }}</li>
+  <h2>Vehiculos en</h2>
+    
+    {% if vehiculos_en|length > 0 %}
+      <ul>
+        {% for ticket in vehiculos_en %}
+          <li>{{ ticket }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No hay han ingresado vehiculos</p>
+    {% endif %}
+    
+    
+  <!--<a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>-->
+  
+  <!--<h2>Tus tickets recientes</h2>-->
+  <!--  {% if tickets_usuario|length > 0 %}-->
+  <!--    <ul>-->
+  <!--      {% for ticket in tickets_usuario %}-->
+  <!--        <li>{{ ticket }}</li>-->
+  <!--      {% endfor %}-->
+  <!--    </ul>-->
+  <!--  {% else %}-->
+  <!--    <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>-->
+  <!--  {% endif %}-->
+    
+  <!--<h2>Tu actividad reciente</h2>-->
+  <!--  {% if avisos_usuario|length > 0 %}-->
+  <!--    <ul>-->
+  <!--      {% for aviso in avisos_usuario %}-->
+  <!--        <li>{{ aviso }}</li>-->
+  <!--      {% endfor %}-->
+  <!--    </ul>-->
+  <!--  {% else %}-->
+  <!--    <p>Usted no tiene actividad reciente.</p>-->
+  <!--  {% endif %}-->
+    
+{% endblock %}

@@ -309,3 +309,30 @@ def pagar_ticket(request):
             return redirect('pago_estacionamiento')
         
     return redirect('pago_estacionamiento') 
+    
+@login_required
+def historial_empresas(request):
+    try:
+         estacionamiento = request.user.estacionamiento
+    except:
+        return redirect('index')
+    
+    context=dict()
+    
+    rif_estacionamiento = estacionamiento.rif
+
+    Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento))   
+
+    context['vehiculos_en'] = Vehiculos_en
+    context['estacionamiento']= estacionamiento
+    return render(request, 'ac_seguridad/area_empresas/historial_empresas.html', context)  
+    
+#   avisos_usuario = list(Alerta.objects.filter(usuario=usuario.cedula))
+    
+#     context['vehiculos_usuario'] = vehiculos_usuario
+#     context['tickets_usuario'] = tickets_usuario
+#     context['avisos_usuario'] = avisos_usuario
+#     context['usuario'] = usuario
+#     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')  
+    
+    

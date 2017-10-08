@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^area-empresas/$', views.area_empresas, name='area_empresas'),
     url(r'^area-empresas/pago-estacionamiento/$', views.pago_estacionamiento, name='pago_estacionamiento'),
     url(r'^area-empresas/pago-estacionamiento/pagar_ticket/$', views.pagar_ticket, name='pagar_ticket'),
+    url(r'^area-empresas/historial_empresas/$', views.historial_empresas, name='historial_empresas'),
+    
     
     # Login.
     url(r'^login/$', auth_views.LoginView.as_view(template_name='ac_seguridad/registration/login.html',redirect_field_name='area_personal'), name='login'),
