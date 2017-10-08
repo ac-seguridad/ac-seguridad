@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.forms import Form
+from django import forms
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from .models import Persona, Estacionamiento, Vehiculo
@@ -21,4 +21,12 @@ class VehiculoForm(ModelForm):
     class Meta:
         model = Vehiculo
         fields = ['placa', 'marca','modelo','year']
+        
+class PagoEstacionamientoForm(forms.Form):
+    numero_ticket = forms.IntegerField(label="Número de ticket",
+                                       min_value=0)
+    registrado_ticket = forms.BooleanField(label="¿El ticket está registrado?",
+                                           required=False)
+    
+    
         

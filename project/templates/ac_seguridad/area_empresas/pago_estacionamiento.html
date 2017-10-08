@@ -13,7 +13,6 @@
 </header>    
 
 <div class="container">
-<!-- DESPUÉS.-->
 <!-- Variables disponibles dentro de context: -->
 	<!--* num_ticket: representa numero entero, id del ticket.-->
 	<!--* monto_a_pagar: representa un flotante, lo que se va a pagar.-->
@@ -22,77 +21,92 @@
 <section class="main row">
     <article class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
         <p>
-			<img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "400" height="400" class="img-responsive center-block">
+			<img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "300" height="300" class="img-responsive center-block">
         </p>
     </article>
             
     <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 	    <h2> <strong><center>Pago de un ticket </center></strong> </h2>
 	    <br>
-	    
-	    <!-- Todos los FORM de Django deben estar dentro de esto. -->
-	 <!--   <form action="{% url 'pago_estacionamiento' %}" method="post">-->
-		<!--    {% csrf_token %}-->
-		    <!-- AQUÍ EMPIEZA DONDE PONES LOS CAMPOS DEL FORM. -->
-		<!--    {{ pago_form.non_field_errors }}-->
-	 <!--   	<div class="fieldWrapper col-sm-4 col-sm-offset-3">-->
-		<!--		<h3>Datos del ticket</h3>-->
-		<!--		{{ pago_form.numero_ticket.errors }}-->
-		<!--		<label for="{{ pago_form.numero_ticket.id_for_label }}">Número del ticket:</label>-->
-		<!--		{% if pago_form.numero_ticket.value %}-->
-		<!--			<input type="text" class="form-control" id="pago_form.numero_ticket.id_for_label" placeholder="ticket" value="{{ pago_form.numero_ticket.value }}"/>-->
-		<!--		{% else %}-->
-		<!--			<input type="text" class="form-control" id="pago_form.numero_ticket.id_for_label" placeholder="ticket"/>-->
-		<!--		{% endif %}-->
-		<!--	</div>-->
-		<!--	<div class="fieldWrapper col=sm-4 col-sm-offset-3">-->
-		<!--		{{ pago_form.registrado_ticket.errors }}-->
-		<!--		<label for="{{ pago_form.registrado_ticket.id_for_label }}">-->
-		<!--			<input type="checkbox" class="form-control" id="pago_form.registrado_ticket.id_for_label">¿El ticket está registrado?-->
-		<!--		</label>-->
-				<!--{{ pago_form.registrado_ticket }}-->
-				
-				<!--<input type="text" class="form-control" id="registrado_ticket" placeholder="ticket" value="{{ pago_form.numero_ticket.value }}">-->
-		<!--	</div>-->
-			<!-- AQUÍ TERMINA DONDE PONES LOS CAMPOS DEL FORM. -->
-		    <!--<input type="submit" value="Submit" />-->
-		<!--    <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-1 btn-lg">Buscar</button>-->
-		<!--</form>-->
 		<form action="{% url 'pago_estacionamiento' %}" method="post">
 		    {% csrf_token %}
-		    {{ pago_form }}
-		    <input type="submit" value="Submit" />
+		    <p>{{ pago_form.numero_ticket.label_tag }}
+			    <input id="{{ pago_form.numero_ticket.id_for_label }}"
+			    	   class="form-control"
+			    	   type="number" 
+			    	   name="numero_ticket" 
+			    	   placeholder="Ingrese el número de ticket aquí" 
+			    	   value="{{ pago_form.numero_ticket.value }}" 
+			    	   required /></p>
+			<p>{{ pago_form.registrado_ticket.label_tag }}
+				<input id="{{ pago_form.registrado_ticket.id_for_label }}"
+					   class="form-inline"
+					   type="checkbox" 
+					   name="registrado_ticket" 
+					   value="{{ pago_form.registrado_ticket.value }}" /></p>
+		    <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-1 btn-lg">Buscar</button>
 		</form>
 		<br><br><br><br>
 	 
 	</aside>
-	<aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">>
+	<aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
 	  	<br><br><br>
-	  	<H3><strong>Total a pagar</strong></H3>
-	  	{% if monto_a_pagar %}
-	  		{{ monto_a_pagar }}
-	  	{% else %}
-	  		<p> No ha ingresado ningún ticket.</p>
-	  	{% endif %}
+	
+		  	<H3><strong><center>Total a pagar</center></strong></H3>
+			  	{% if monto_a_pagar %}
+			  	<p><big><center>	{{ monto_a_pagar }}</center></big> </p>
+			  	{% else %}
+			  		<p> No ha ingresado ningún ticket.</p>
+			  	{% endif %}
+			  	<br><br>
+		<form action="{% url 'pagar_ticket' %}" method="post">
+		    {% csrf_token %}
+		    <input id="{{ pago_form.numero_ticket.id_for_label }}"
+			    	   class="form-control"
+			    	   type="hidden" 
+			    	   name="numero_ticket" 
+			    	   placeholder="Ingrese el número de ticket aquí" 
+			    	   value="{{ pago_form.numero_ticket.value }}" 
+			    	   required 
+			    	   hidden /></p>
+			<input id="{{ pago_form.registrado_ticket.id_for_label }}"
+					   class="form-inline"
+					   type="hidden" 
+					   name="registrado_ticket" 
+					   value="{{ pago_form.registrado_ticket.value }}" 
+					   hidden /></p>
+			<center><button type="submit" class="btn btn-success col-sm-4 btn-lg active col-sm-offset-2">PAGAR</button></center>
+		</form>
+			  	
 	</aside>
+	
 </section>
 <section> 
     <table class="table">
-	<table class="col-xs-12 col-sm-8 col-md-8 col-lg-8"width="80%" border="0" cellpadding="6" cellspacing="10" bordercolor="#000000">
+	<table class="col-xs-12 col-sm-12 col-md-12 col-lg-12"width="80%" border="0" cellpadding="10" cellspacing="10" bordercolor="#000000">
 
 		<tr>
 			<center>
-			<th>Número del ticket</th> 
-			<th>Hora de entrada</th> 	
+			<th>Número del ticket</th>
+			<th>¿Ticket registrado?</th>
+			<th>Fecha de entrada</th> 	
 			<th>tiempo trascurrido</th>
 			<th>Tipo de tarifa</th>
 			<th>Tarifa</th>
-			<th>Total</th>
+			<th>Placa</th>
+			
 			</center>
 		</tr>
 		<tr>
 			<td rowspan="2" valign="middle">{{ num_ticket }}</td>
-			<td rowspan="2" valign="middle">{{ hora_entrada }}</td>
+			{% if registrado_ticket == True %}
+				<td rowspan="2" valign="middle">Sí</td>
+			{% elif registrado_ticket == False %}
+				<td rowspan="2" valign="middle">No</td>
+			{% else %}
+				<td rowspan="2" valign="middle"></td>
+			{% endif %}
+			<td rowspan="2" valign="middle">{{ hora_entrada|date:"D d M Y" }} {{ hora_entrada|time:"H:i" }}</td>
 			<td rowspan="2" valign="middle">{{ tiempo_transcurrido }}</td>
 			{% if es_tarifa_plana == True %}
 				<td rowspan="2" valign="middle">Tarifa plana</td>
@@ -102,13 +116,11 @@
 				<td rowspan="2" valign="middle"></td>
 			{% endif %}
 			<td rowspan="2" valign="middle">{{ monto_tarifa }}</td>
-			<td rowspan="2" valign="middle">{{ monto_a_pagar }}</td>
+			<!--<td rowspan="2" valign="middle">{{ monto_a_pagar }}</td>-->
+			<td rowspan="2" valign="middle">{{ placa }}</td>
 		</tr>
 	</table>
     
-    <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-	   	<button class="btn btn-success col-sm-4 btn-lg active col-sm-offset-2">PAGAR</button>
-	   	<button class="btn btn-danger col-sm-4 btn-lg active col-sm-offset-1">cancelar</button>
-	</aside>           
+               
 </section>
 {% endblock %}

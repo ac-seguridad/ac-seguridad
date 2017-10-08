@@ -12,7 +12,6 @@ from django.utils import timezone
 #las clases son las tablas
 #los atributos son las columnas
 
-marcasDisponibles = ['Toyota','Chery','Ford']
 
 # https://docs.djangoproject.com/en/1.10/ref/models/fields/#django.db.models 
 # Referencia de todos los tipos.
@@ -41,7 +40,9 @@ class Estacionamiento(models.Model):
     numero_de_puestos = models.IntegerField(default=1000)
     acceso_restringido = models.BooleanField(default=True)
     email = models.EmailField(verbose_name='email address', max_length=255)
-
+    tarifa_plana = models.BooleanField(default=True)
+    monto_tarifa = models.FloatField(default=1000)
+    
     def __str__(self):
         return self.rif + " " + self.nombre
         
@@ -59,13 +60,25 @@ class Vehiculo(models.Model):
     def __str__(self):
         return str(self.placa) + " " + str(self.marca) + " " + str(self.modelo) + " " + str(self.year) + " " + str(self.dueno.cedula)
 
-#Ticket( Placa, RIF,numero,hora_entrada, hora salida)
+#Ticket( Placa, RIF,numero,hora_entrada, hora salida, pago)
 class Ticket(models.Model):
     placa = models.ForeignKey(Vehiculo, on_delete=models.CASCADE) 
     rif = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE)
-    numero_ticket = models.IntegerField(default=0)
+    numero_ticket = models.AutoField(primary_key=True)
     hora_entrada =  models.DateTimeField('Hora de entrada')
-    hora_salida =  models.DateTimeField('Hora de salida')
+    hora_salida =  models.DateTimeField('Hora de salida', null=True)
+    pagado = models.BooleanField(default=False) # Tiene que añadirse un valor por defecto cuandohay campos booleanos.
+    
+    def __str__(self):
+        return str(self.placa) + " " + str(self.rif) + " " + str(self.numero_ticket) + " " + str(self.hora_entrada) + " " + str(self.hora_salida) + " " + str(self.pagado)
+
+#Ticket no registrados ( Placa, RIF,numero,hora_entrada, hora salida, pago)
+class TicketNoRegistrado(models.Model):
+    placa =  models.CharField(max_length=25)
+    rif = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE)
+    numero_ticket = models.AutoField(primary_key=True)
+    hora_entrada =  models.DateTimeField('Hora de entrada')
+    hora_salida =  models.DateTimeField('Hora de salida', null=True)
     pagado = models.BooleanField(default=False) # Tiene que añadirse un valor por defecto cuandohay campos booleanos.
     
     def __str__(self):
@@ -82,6 +95,37 @@ class Alerta(models.Model):
     
     def __str__(self):
         return self.tipo + " " + str(self.usuario) + " " + str(self.vehiculo) + " " + str(self.estacionamiento) + " " + str(self.fecha)
+
+# actividad(numero_alertas,usuario,vehiculo,estacionamiento,ticket,tipo,fecha)
+class Actividad(models.Model):
+    """Tabla que representa el historial de cada persona en cada C.C.
+    
+    Miembros:
+        * numero_actividad: se refiere al indice que agrega la BD.
+        * usuario: Se refiere a la persona que se le genera la actividad.
+        * vehiculo: se refiere al vehiculo al cual se le genera la actividad.
+        * estacionamiento: se refiere al estacionamiento donde sucede la actividad.
+        * ticket: representa el ticket del usuario al momento de entrar o salir del estacionamiento.
+        * tipo: tipo de actividad.
+        * fecha: la fecha en la que ocurre la actividad.
+    
+    tipo: 
+        * entrada_estacionamiento, 
+        * salida_estacionamiento,
+        * comunicacion_enviada,
+        * ticket_cambiado,
+    """
+    numero_actividad = models.AutoField(primary_key = True) 
+    usuario = models.ForeignKey(Persona, on_delete=models.CASCADE, null=False)
+    vehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE, null=False)
+    estacionamiento = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE, null=False)
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, null=True)
+    tipo = models.CharField(max_length=200)
+    fecha = models.DateTimeField('fecha de actividad', default=timezone.now)
+    
+    def __str__(self):
+        return self.tipo + " " + str(self.usuario) + " " + str(self.vehiculo) + " " + str(self.estacionamiento) + " " + str(self.fecha)
+
     
 # #Ocurre_a(Cedula,numero,fecha)
 # class OcurreA(models.Model):

@@ -250,7 +250,7 @@ def pago_estacionamiento(request):
     estacionamiento = request.user.estacionamiento
     es_tarifa_plana = estacionamiento.tarifa_plana
     monto_tarifa = estacionamiento.monto_tarifa
-    pdb.set_trace()
+    # pdb.set_trace()
     if request.method == 'POST':
         pago_form = ac_forms.PagoEstacionamientoForm(request.POST)
         if (pago_form.is_valid()):
@@ -262,8 +262,10 @@ def pago_estacionamiento(request):
             try:
                 if (registrado_ticket):
                     ticket = Ticket.objects.get(numero_ticket=num_ticket)
+                    placa = ticket.placa.placa
                 else:
                     ticket = TicketNoRegistrado.objects.get(numero_ticket=num_ticket)
+                    placa = ticket.placa
             except:
                 return redirect('pago_estacionamiento')
             
@@ -282,6 +284,7 @@ def pago_estacionamiento(request):
             context['tiempo_transcurrido'] = tiempo_transcurrido
             context['monto_a_pagar'] = monto_a_pagar
             context['num_ticket'] = num_ticket
+            context['placa']= placa
             
     else:
         pago_form = ac_forms.PagoEstacionamientoForm()
@@ -289,4 +292,20 @@ def pago_estacionamiento(request):
     context['pago_form'] = pago_form
     return render(request, 'ac_seguridad/area_empresas/pago_estacionamiento.html', context)    
 
-    
+@login_required
+def pagar_ticket(request):
+    context=dict()
+    if request.method == 'POST':
+        ticket_id = request.POST['numero_ticket']
+        registrado = request.POST['registrado_ticket']
+        try:
+            if (registrado):
+                ticket = Ticket.objects.get(numero_ticket=ticket_id)
+            else:
+                ticket = TicketNoRegistrado.objects.get(numero_ticket=ticket_id)
+            ticket.pagado = True
+            ticket.save()
+        except:
+            return redirect('pago_estacionamiento')
+        
+    return redirect('pago_estacionamiento') 
