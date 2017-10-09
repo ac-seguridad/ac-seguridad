@@ -1,45 +1,69 @@
 {% extends '../area-personal-base.html' %}
-
+{% load static %}
 {% block title %}Área Empresas{% endblock %}
 
 {% block area_personal %}
 
-  <!--<h2>Datos personales</h2>-->
-  <!--  <li>{{ usuario }}</li>-->
-  <!--<h2>Tus vehículos</h2>-->
-  <!--  {% if vehiculos_usuario|length > 0 %}-->
-  <!--    <ul>-->
-  <!--      {% for vehiculo in vehiculos_usuario %}-->
-  <!--        <li>{{ vehiculo }}</li>-->
-  <!--      {% endfor %}-->
-  <!--    </ul>-->
-  <!--  {% else %}-->
-  <!--    <p>Usted no tiene vehículos registrados en el sistema</p>-->
-  <!--  {% endif %}-->
+
+
+<header>
+    <div class="container">
+      <h1> Area Empresarial</h1>  
+        
+    </div>
+</header>    
+
+<div class="container">
+            
+  <hr/>           
+<!--Otra fila-->
+        
+        
+    <section class="main row">
+    <!--Seccion de datos empresariales-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Ver Perfil</center></h2> </br>
+                <a href="{% url 'pago_estacionamiento' %}">
+                    <img src="{% static 'ac_seguridad/images/iconos/datos_personales.png'  %}"  width= "200" height="200"class="img-responsive center-block">
+        	   </a>
+        </article>
+    <!--tabla de historial del centro comercial-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Historial</center></h2> </br>
+                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	</p>
+        </article>
+                
+    <!--Pago de estacionamiento-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Pago estacionamiento</center></h2> 
+                <a href="{% url 'pago_estacionamiento' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "200" height="200"  class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+        
+    <!--Requerimientos, redirect a contacto-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Requerimiento</center></h2> </br>
+                <a href="{% url 'contacto' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/requerimiento.png' %}" width= "200" height="200" class="img-responsive center-block">
+                </a>        	
+        	</p>
+        </article>
+    </section>
     
-    
-  <!--<a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>-->
-  
-  <!--<h2>Tus tickets recientes</h2>-->
-  <!--  {% if tickets_usuario|length > 0 %}-->
-  <!--    <ul>-->
-  <!--      {% for ticket in tickets_usuario %}-->
-  <!--        <li>{{ ticket }}</li>-->
-  <!--      {% endfor %}-->
-  <!--    </ul>-->
-  <!--  {% else %}-->
-  <!--    <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>-->
-  <!--  {% endif %}-->
-    
-  <!--<h2>Tu actividad reciente</h2>-->
-  <!--  {% if avisos_usuario|length > 0 %}-->
-  <!--    <ul>-->
-  <!--      {% for aviso in avisos_usuario %}-->
-  <!--        <li>{{ aviso }}</li>-->
-  <!--      {% endfor %}-->
-  <!--    </ul>-->
-  <!--  {% else %}-->
-  <!--    <p>Usted no tiene actividad reciente.</p>-->
-  <!--  {% endif %}-->
-    
+    <p>
+        Seleccione una de las imágenes presentes para ingresar a la sección deseada.
+    </p>
+</div>
+
+
+
 {% endblock %}
