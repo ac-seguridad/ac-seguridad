@@ -13,7 +13,7 @@ import socket
 
 # Constantes.
 NUM_PUERTA = 1
-RIF = "J-1234"
+RIF = "J-1231"
 
 # Funciones
 def leer_placa():
@@ -33,17 +33,21 @@ print("Socket conectado.")
 # * RIF: lleno
 # * ticket: None.
 # * placa: llena.
-# * accion: entrada.
 # * tipo: llena ('placa_leida')
 # * puerta: llena.
+# * lectura_automatica: llena, sus posibles valores son:
+            # True: lectura realizada de forma automática
+            # False: lentura realizada de forma manual
+            # None: No aplica la información (ejemplo, mensajes servidor-cliente)
+
 print("Preparando mensaje")
 mensaje = dict()
 mensaje['estacionamiento'] = RIF
-mensaje['ticket'] = None
+mensaje['ticket'] = 2
 mensaje['placa'] = leer_placa()
 mensaje['puerta'] = NUM_PUERTA
-mensaje['accion'] = 'entrada'
-mensaje['tipo'] = 'placa_leida'
+mensaje['tipo'] = 'placa_leida_entrada'
+mensaje['lectura_automatica']= True
 
 print("Enviando mensaje: {}".format(mensaje))
 socket_cliente.sendall_json(mensaje)
@@ -56,9 +60,19 @@ print("Respuesta recibida: {}".format(respuesta))
 
 if (respuesta['tipo'] == "OK_entrada_estacionamiento"):
     print("Luz verde.")
-    
+
 elif (respuesta['tipo'] == "NO_entrada_estacionamiento"):
     print("Luz roja.")
+
+elif (respuesta['tipo'] == "OK_salida_estacionamiento"):
+    print("Luz verde.")
+    
+elif (respuesta['tipo'] == "NO_ticket_placa"):
+    print("Luz roja.")
+
+elif (respuesta['tipo'] == "NO_ticket_pagado"):
+    print("Luz roja.")
+    
 else:
     print("Respuesta no válida")
 

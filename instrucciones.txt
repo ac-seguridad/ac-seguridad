@@ -1,0 +1,65 @@
+Link de la pw: https://ac-seguridad-fernandobperezm.c9users.io/area-empresas/pago-estacionamiento/
+
+
+Prender servidor
+
+* Hacer cd hasta proyecto `cd project`
+* Iniciar el servicio de postgres: `sudo service postgresql start`
+* Iniciar el entorno virtual de Python: `source activate acseguridad`
+* Iniciar el servidor: `python manage.py runserver 0.0.0.0:8080`
+
+
+Hacer migraciones cada vez que se actualice los modelos 
+
+*ir a la carpeta:  cd project
+* Iniciar el entorno virtual de Python: `source activate acseguridad`
+* Iniciar el servicio de postgres: `sudo service postgresql start`
+*Decir a quien queremos migrar: python manage.py makemigrations ac_seguridad
+* el muestra todas las migraciones las veo y le doy 'python manage.py migrate
+
+***************para ver las tablas
+
+activisar postsql:  sudo service postgresql start
+entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad 
+23
+select * from ac_seguridad_estacionamiento;
+**************** Para borrar todo el contenido de una tabla o varias
+activisar postsql:  sudo service postgresql start
+entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad 
+23
+truncate name1,name2;
+
+
+
+***************Actualizar en GIT
+git add nombre_de_archivo o git status
+
+git commit -m "Que anadiste"
+git push 
+
+***************Anadir info de la base de datos a la PW
+
+*views.py
+*url
+*form
+
+**************shell
+Iniciar el entorno virtual de Python: `source activate acseguridad`
+en cd project
+
+python manage.py 
+
+
+*************para correr el servidor.
+cd project/manejador
+* Iniciar el servicio de postgres: `sudo service postgresql start`
+* Iniciar el entorno virtual de Python: `source activate acseguridad`
+*python serv.py forks
+
+
+y el cliente es 
+python cliente.py
+
+
+
+
