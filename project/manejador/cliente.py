@@ -13,7 +13,10 @@ import socket
 
 # Constantes.
 NUM_PUERTA = 1
-RIF = "J-1231"
+RIF = "J-1234"
+
+#1234 acceso restringido 
+#0000 acceso no restringido
 
 # Funciones
 def leer_placa():

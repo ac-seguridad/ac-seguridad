@@ -60,6 +60,20 @@ cd project/manejador
 y el cliente es 
 python cliente.py
 
+************para hacer debug 
+al principio del código: import pdb
+
+
+una linea antes de que pare: pdb.set_trace()
+
+en el terminal, 
+n para ejecutar la linea actual
+c para continuar la ejecución
+salir ctrl d
+s para meterme en la función
+p expresion 
+
+
 
 
 

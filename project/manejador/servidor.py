@@ -27,9 +27,9 @@ def inicializarServidor():
     # Se define el socket del servidor.
     print("Creando socket")
     socket_servidor = MySocket()
-    socket_servidor.bind(hostname='localhost',port=8080)
+    socket_servidor.bind(hostname='localhost',port=8081)
     socket_servidor.listen(number_connections=5)
-    print("Socket creado, asociado al hostname '{}', puerto '{}' y número de conexiones '{}'".format('localhost',8082,5))
+    print("Socket creado, asociado al hostname '{}', puerto '{}' y número de conexiones '{}'".format('localhost',8081,5))
     
     while True:
         # Apenas se establece una conexión, se maneja apropiadamente.
