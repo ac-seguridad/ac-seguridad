@@ -130,47 +130,113 @@ def registro_estacionamiento(request):
     context['estacionamiento_form'] = estacionamiento_form
     return render(request, 'ac_seguridad/registration/signup_estacionamiento.html', context)
     
+    
+# <----------------------------Area Personal
+
 @login_required
 def area_personal(request):
     # Esta página sólo es visible para el usuario que ha hecho login. 
     # Django nos garantiza al usar el @login_required que sólo se podrá entrar
     # en esta página si el usuario está logueado. También, en request.user
     # estará la instancia de usuario 'User'.
-    context = dict()
+    context=dict()    
     try:
         usuario = request.user.persona
     except:
         return redirect('index')
     
-    # Obtener la lista de vehículos que la persona posee. 
-    # Aquí tenemos que forzar la evaluación con list() porque necesitaremos
-    # las placas para los tickets.
-    vehiculos_usuario = list(Vehiculo.objects.filter(dueno=usuario.cedula))
     
-    lista_placas = [vehiculo.placa for vehiculo in vehiculos_usuario]
-    
-    # Obtener la lista de tickets.
-    # pdb.set_trace()
-    # Al usar placa__in le decimos que la placa tiene que ser alguna de las
-    # que esté en la lista.
-    # Forzamos a realizar la búsqueda en la BD.
-    tickets_usuario = list(Ticket.objects.filter(placa__in=lista_placas))
-    
-    # Obtener la lista de tickets.
-    # pdb.set_trace()
-    # Al usar placa__in le decimos que la placa tiene que ser alguna de las
-    # que esté en la lista.
-    # Forzamos a realizar la búsqueda en la BD.
-    avisos_usuario = list(Alerta.objects.filter(usuario=usuario.cedula))
-    
-    context['vehiculos_usuario'] = vehiculos_usuario
-    context['tickets_usuario'] = tickets_usuario
-    context['avisos_usuario'] = avisos_usuario
-    context['usuario'] = usuario
+    usuario1 = usuario.cedula
+    Vehiculos_de = Vehiculo.objects.filter(dueno=usuario)
+    context['usuario'] = usuario1
+    context['vehiculo_de'] = Vehiculos_de
+
+
     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')
         
     return HttpResponse(template.render(context,request))
 
+@login_required
+def perfil_personal(request):
+    try:
+         usuario = request.user.persona
+    except:
+        return redirect('index')
+        
+    cedula=usuario.cedula
+    Vehiculos_de = list(Vehiculo.objects.filter(dueno=cedula))
+    
+    print("vehiculo_de: {%}",Vehiculos_de)
+    context=dict()
+    context['usuario']=usuario
+    context['lista_vehiculo']= Vehiculos_de
+    
+    return render(request, 'ac_seguridad/area_personal/perfil_personal.html', context)  
+
+@login_required
+def historial_personas(request):
+    try:
+         usuario = request.user.persona
+    except:
+        return redirect('index')
+    
+    context=dict()
+    
+    cedula=usuario.cedula
+    
+    carros_de = list(Vehiculo.objects.filter(dueno=cedula))
+    carros_cantidad = Vehiculo.objects.filter(dueno=cedula).count()
+    
+    # Vehiculos_en = []
+    # for i in range(carros_cantidad):
+    #     Vehiculos_en += list(Ticket.objects.filter(placa=carros_de[i],pagado= False))
+      
+      
+    Vehiculos_en = []
+    for carro in carros_de:
+        Vehiculos_en += list(Ticket.objects.filter(placa=carro,pagado=False))
+    
+    Vehiculos_hist = []
+    for carro in carros_de:
+        Vehiculos_hist += list(Ticket.objects.filter(placa=carro,pagado=True))
+    
+    context['lista_vehiculo'] = Vehiculos_en
+    context['lista_vehiculo2'] = Vehiculos_hist
+    context['usuario']= usuario
+    return render(request, 'ac_seguridad/area_personal/historial_personas.html', context)  
+
+@login_required
+def registro_vehiculo(request):
+    usuario = request.user.persona
+    
+    context = dict()
+    if request.method == 'POST':
+        vehiculo_form = ac_forms.VehiculoForm(request.POST)
+        if (vehiculo_form.is_valid()):
+            
+            # Extraemos los datos del form de estacionamiento.
+            placa = vehiculo_form.cleaned_data.get('placa')
+            marca = vehiculo_form.cleaned_data.get('marca')
+            modelo = vehiculo_form.cleaned_data.get('modelo')
+            year = vehiculo_form.cleaned_data.get('year')
+            
+            vehiculo = Vehiculo(
+                                dueno = usuario,
+                                placa = placa,
+                                marca = marca,
+                                modelo = modelo,
+                                year = year)
+            vehiculo.save()
+            
+            # Redirigir a area personal.
+            return redirect('area_personal')
+    else:
+        vehiculo_form = ac_forms.VehiculoForm()
+        
+    context['vehiculo_form'] = vehiculo_form
+    return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
+
+#<----------------------------- Area empresas
 @login_required
 def area_empresas(request):
     # Esta página sólo es visible para el usuario que ha hecho login. 
@@ -213,36 +279,57 @@ def area_empresas(request):
     return HttpResponse(template.render(context,request))
 
 @login_required
-def registro_vehiculo(request):
-    usuario = request.user.persona
+def historial_empresas(request):
+    try:
+         estacionamiento = request.user.estacionamiento
+    except:
+        return redirect('index')
     
-    context = dict()
-    if request.method == 'POST':
-        vehiculo_form = ac_forms.VehiculoForm(request.POST)
-        if (vehiculo_form.is_valid()):
-            
-            # Extraemos los datos del form de estacionamiento.
-            placa = vehiculo_form.cleaned_data.get('placa')
-            marca = vehiculo_form.cleaned_data.get('marca')
-            modelo = vehiculo_form.cleaned_data.get('modelo')
-            year = vehiculo_form.cleaned_data.get('year')
-            
-            vehiculo = Vehiculo(
-                                dueno = usuario,
-                                placa = placa,
-                                marca = marca,
-                                modelo = modelo,
-                                year = year)
-            vehiculo.save()
-            
-            # Redirigir a area personal.
-            return redirect('area_personal')
-    else:
-        vehiculo_form = ac_forms.VehiculoForm()
-        
-    context['vehiculo_form'] = vehiculo_form
-    return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
+    context=dict()
+    
+    rif_estacionamiento = estacionamiento.rif
+    
+    Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento,pagado= False))
+    Vehiculos_orden = Ticket.objects.filter(rif=rif_estacionamiento,pagado= True)
 
+    
+    Cantidad= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
+    
+    context['vehiculos_en'] = Vehiculos_en
+    context['vehiculos_orden'] = Vehiculos_orden
+    context['estacionamiento']= estacionamiento
+    context['cantidad']= Cantidad
+    return render(request, 'ac_seguridad/area_empresas/historial_empresas.html', context)  
+
+@login_required
+def perfil_empresas(request):
+    try:
+         estacionamiento = request.user.estacionamiento
+    except:
+        return redirect('index')
+    
+    context=dict()
+    context['estacionamiento'] = estacionamiento
+    return render(request, 'ac_seguridad/area_empresas/perfil_empresas.html', context)  
+
+@login_required
+def pagar_ticket(request):
+    context=dict()
+    if request.method == 'POST':
+        ticket_id = request.POST['numero_ticket']
+        registrado = request.POST['registrado_ticket']
+        try:
+            if (registrado):
+                ticket = Ticket.objects.get(numero_ticket=ticket_id)
+            else:
+                ticket = TicketNoRegistrado.objects.get(numero_ticket=ticket_id)
+            ticket.pagado = True
+            ticket.save()
+        except:
+            return redirect('pago_estacionamiento')
+        
+    return redirect('pago_estacionamiento') 
+    
 @login_required
 def pago_estacionamiento(request):
     context=dict()
@@ -291,48 +378,3 @@ def pago_estacionamiento(request):
         
     context['pago_form'] = pago_form
     return render(request, 'ac_seguridad/area_empresas/pago_estacionamiento.html', context)    
-
-@login_required
-def pagar_ticket(request):
-    context=dict()
-    if request.method == 'POST':
-        ticket_id = request.POST['numero_ticket']
-        registrado = request.POST['registrado_ticket']
-        try:
-            if (registrado):
-                ticket = Ticket.objects.get(numero_ticket=ticket_id)
-            else:
-                ticket = TicketNoRegistrado.objects.get(numero_ticket=ticket_id)
-            ticket.pagado = True
-            ticket.save()
-        except:
-            return redirect('pago_estacionamiento')
-        
-    return redirect('pago_estacionamiento') 
-    
-@login_required
-def historial_empresas(request):
-    try:
-         estacionamiento = request.user.estacionamiento
-    except:
-        return redirect('index')
-    
-    context=dict()
-    
-    rif_estacionamiento = estacionamiento.rif
-
-    Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento))   
-
-    context['vehiculos_en'] = Vehiculos_en
-    context['estacionamiento']= estacionamiento
-    return render(request, 'ac_seguridad/area_empresas/historial_empresas.html', context)  
-    
-#   avisos_usuario = list(Alerta.objects.filter(usuario=usuario.cedula))
-    
-#     context['vehiculos_usuario'] = vehiculos_usuario
-#     context['tickets_usuario'] = tickets_usuario
-#     context['avisos_usuario'] = avisos_usuario
-#     context['usuario'] = usuario
-#     template = loader.get_template('ac_seguridad/area_personal/area_personal.html')  
-    
-    
