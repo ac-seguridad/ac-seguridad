@@ -1,46 +1,183 @@
 {% extends '../area-empresas-base.html' %}
-
+{% load static %}
 {% block title %}Área Empresas{% endblock %}
 
 {% block area_empresas %}
 
-  <h2>Datos personales</h2>
-    <li>{{ estacionamiento }}</li>
-  <h2>Vehiculos en</h2>
-    
-    {% if vehiculos_en|length > 0 %}
-      <ul>
-        {% for ticket in vehiculos_en %}
-          <li>{{ ticket }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No hay han ingresado vehiculos</p>
-    {% endif %}
-    
-    
-  <!--<a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>-->
+<def class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</def>	
+
+<!--datos del estacionamiento-->
+<def class ="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+  <h1> <font color= "#FF69B4"> Historial del establecimiento</font></h1>
+   <h2>RIF:</h2>
+  <li>{{ estacionamiento }}</li>
+  <h2>total carros en el estacionamiento</h2>
+  <ul>
+    <li>{{ cantidad}}</li>
+  </ul>
+</def>
+
+<!--Tabla de vehiculos en el estacionamiento-->
+<def class ="col-xs-12">    
   
-  <!--<h2>Tus tickets recientes</h2>-->
-  <!--  {% if tickets_usuario|length > 0 %}-->
-  <!--    <ul>-->
-  <!--      {% for ticket in tickets_usuario %}-->
-  <!--        <li>{{ ticket }}</li>-->
-  <!--      {% endfor %}-->
-  <!--    </ul>-->
-  <!--  {% else %}-->
-  <!--    <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>-->
-  <!--  {% endif %}-->
+  <h2>Vehiculos actualmente dentro del establecimiento</h2>
     
-  <!--<h2>Tu actividad reciente</h2>-->
-  <!--  {% if avisos_usuario|length > 0 %}-->
-  <!--    <ul>-->
-  <!--      {% for aviso in avisos_usuario %}-->
-  <!--        <li>{{ aviso }}</li>-->
-  <!--      {% endfor %}-->
-  <!--    </ul>-->
-  <!--  {% else %}-->
-  <!--    <p>Usted no tiene actividad reciente.</p>-->
-  <!--  {% endif %}-->
+<table class="table table-responsive">
+  
+		<tr>
+			<center>
+			<th>Placa</th>
+			<th>hora de entrada</th>
+			</center>
+		</tr>
+   
+   <tr>
+			<center>
+			<th><ol><ul>
+  			   {% if vehiculos_en|length > 0 %}
+              {% for ticket in vehiculos_en %}
+              <li>{{ ticket.placa }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</ol></th>
+			
+			<th>
+			{% if vehiculos_en|length > 0 %}
+        <ul>
+          {% for ticket in vehiculos_en %}
+            <li>{{ ticket.hora_entrada }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</th>
+			
+			</center>
+		</tr> 
+  </table>
+</def>
+
+<!--Tabla de egresos del estacionamiento-->
+<def class ="col-xs-12">    
+  
+  <h2>Historial de egresos del establecimiento</h2>
+
+<table class="table table-responsive">
+  
+		<tr>
+			<center>
+			<th>Placa</th>
+			<th>hora de entrada</th>
+			<th>hora de salida</th>
+			</center>
+		</tr>
+   
+   <tr>
+			<center>
+			<th><ol>
+  			   {% if vehiculos_en|length > 0 %}
+              {% for ticket in vehiculos_orden %}
+              <li>{{ ticket.placa }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</ol></th>
+			
+			<th>
+			{% if vehiculos_en|length > 0 %}
+        <ul>
+          {% for ticket in vehiculos_orden %}
+            <li>{{ ticket.hora_entrada }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</th>
+			
+			<th>
+			{% if vehiculos_en|length > 0 %}
+        <ul>
+          {% for ticket in vehiculos_orden %}
+            <li>{{ ticket.hora_salida}}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</th>
+			</center>
+		</tr> 
+  </table>
+</def>
+
+<!--Historial de alertas-->
     
+    <!--numero_alertas = models.AutoField(primary_key = True) # Deberiamos quitar esto o cambiarlo a IntegerField porque aunque se borre la BD igual queda el contador.-->
+    <!--usuario = models.CharField(max_length=50, null = True)-->
+    <!--vehiculo = models.CharField(max_length=25)-->
+    <!--estacionamiento = models.ForeignKey(Estacionamiento, on_delete=models.CASCADE, null=True) #TODO: set null=False-->
+    <!--tipo = models.CharField(max_length=200)-->
+    <!--fecha = models.DateTimeField('-->
+
+<def class ="col-xs-12">    
+  
+  <h2>Historial de alertas</h2>
+
+  <table class="table table-responsive">
+    <tr>
+	  <thead>
+	  <th>Tipo</th>
+	  <th>fecha</th>
+		<th>usuario</th>
+		</thead>
+		</tr>
+   
+   <tr>
+			<center>
+			<th><ol>
+  			   {% if lista_alertas|length > 0 %}
+              {% for alerta in lista_alertas %}
+              <li>{{ alerta.tipo }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No se han registrado alertas</p>
+        {% endif %}
+			</ol></th>
+			
+
+			<th><ol>
+  			   {% if lista_alertas|length > 0 %}
+              {% for alerta in lista_alertas %}
+              <li>{{ alerta.fecha }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No se han registrado alertas</p>
+        {% endif %}
+			</ol></th>
+    
+    <th><ol>
+  			   {% if lista_alertas|length > 0 %}
+              {% for alerta in lista_alertas %}
+              <li>{{ alerta.usuario }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No se han registrado alertas</p>
+        {% endif %}
+			</ol></th>
+	</tr>
+
+</def>
+
 {% endblock %}

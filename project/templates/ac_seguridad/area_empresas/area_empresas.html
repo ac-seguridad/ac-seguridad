@@ -4,6 +4,8 @@
 
 {% block area_personal %}
 
+<!--POR QUE DICE PERSONAL?-->
+
 
 
 <header>
@@ -25,7 +27,7 @@
         <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
             <p>
                 <h2><center>Ver Perfil</center></h2> </br>
-                <a href="{% url 'pago_estacionamiento' %}">
+                <a href="{% url 'perfil_empresas' %}">
                     <img src="{% static 'ac_seguridad/images/iconos/datos_personales.png'  %}"  width= "200" height="200"class="img-responsive center-block">
         	   </a>
         </article>
@@ -34,7 +36,9 @@
         <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
             <p>
                 <h2><center>Historial</center></h2> </br>
+                <a href="{% url 'historial_empresas' %}">
                 <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
         	</p>
         </article>
                 
@@ -54,7 +58,7 @@
                 <h2><center>Requerimiento</center></h2> </br>
                 <a href="{% url 'contacto' %}">
                 <img src="{% static 'ac_seguridad/images/iconos/requerimiento.png' %}" width= "200" height="200" class="img-responsive center-block">
-                </a>        	
+                </a>
         	</p>
         </article>
     </section>

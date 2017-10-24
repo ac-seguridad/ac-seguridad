@@ -294,10 +294,10 @@ def historial_empresas(request):
     context=dict()
     
     rif_estacionamiento = estacionamiento.rif
-    
+      
     Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento,pagado= False))
     Vehiculos_orden = Ticket.objects.filter(rif=rif_estacionamiento,pagado= True)
-
+    Alertas_en = list(Alerta.objects.filter(estacionamiento=rif_estacionamiento))
     
     Cantidad= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
     
@@ -305,6 +305,9 @@ def historial_empresas(request):
     context['vehiculos_orden'] = Vehiculos_orden
     context['estacionamiento']= estacionamiento
     context['cantidad']= Cantidad
+    context['lista_alertas']= Alertas_en
+    
+    
     return render(request, 'ac_seguridad/area_empresas/historial_empresas.html', context)  
 
 @login_required
