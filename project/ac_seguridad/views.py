@@ -207,8 +207,10 @@ def historial_personas(request):
 
 @login_required
 def registro_vehiculo(request):
-    usuario = request.user.persona
-    
+    try:
+         usuario = request.user.persona
+    except:
+        return redirect('index')
     context = dict()
     if request.method == 'POST':
         vehiculo_form = ac_forms.VehiculoForm(request.POST)
@@ -232,7 +234,11 @@ def registro_vehiculo(request):
             return redirect('area_personal')
     else:
         vehiculo_form = ac_forms.VehiculoForm()
-        
+    cedula= usuario.cedula 
+    carros_de = list(Vehiculo.objects.filter(dueno=cedula))
+    
+    
+    context['lista_vehiculo'] = carros_de
     context['vehiculo_form'] = vehiculo_form
     return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
 
