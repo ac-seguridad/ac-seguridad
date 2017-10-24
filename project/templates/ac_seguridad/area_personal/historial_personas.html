@@ -1,0 +1,140 @@
+{% extends '../area-empresas-base.html' %}
+{% load static %}
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+
+<def class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</def>	
+
+<def class ="col-xs-12 col-sm-6 col-md-6 col-lg-6 ">
+  	<h1> <font color= "#FF69B4"> Historial Personal</font></h1>
+  	<li>{{ estacionamiento }}</li>
+  	
+  
+</def>
+
+
+<def class ="col-xs-9">    
+  
+  <h2>Vehiculos actualmente dentro del establecimiento</h2>
+    
+<table class="table table-bordered">
+  
+		<tr>
+			<center>
+			<th>Placa</th>
+			<th>hora de entrada</th>
+			</center>
+		</tr>
+   
+   <tr>
+			<center>
+			<th><ol><ul>
+  			   {% if vehiculos_en|length > 0 %}
+              {% for ticket in vehiculos_en %}
+              <li>{{ ticket.placa }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+            <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</ol></th>
+			
+			<th>
+			{% if vehiculos_en|length > 0 %}
+        <ul>
+          {% for ticket in vehiculos_en %}
+            <li>{{ ticket.hora_entrada }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>No hay han ingresado vehiculos</p>
+        {% endif %}
+			</th>
+			
+			</center>
+		</tr> 
+  </table>
+<!--<def class ="col-xs-12">    -->
+  
+<!--  <h2>Historial de vehiculos</h2>-->
+
+<!--<table class="table table-bordered">-->
+  
+<!--		<tr>-->
+<!--			<center>-->
+<!--			<th>Placa</th>-->
+<!--			<th>hora de entrada</th>-->
+<!--			<th>hora de salida</th>-->
+<!--			</center>-->
+<!--		</tr>-->
+   
+<!--   <tr>-->
+<!--			<center>-->
+<!--			<th><ol>-->
+<!--  			   {% if vehiculos_en|length > 0 %}-->
+<!--              {% for ticket in vehiculos_orden %}-->
+<!--              <li>{{ ticket.placa }}</li>-->
+<!--            {% endfor %}-->
+<!--          </ul>-->
+<!--          {% else %}-->
+<!--            <p>No hay han ingresado vehiculos</p>-->
+<!--        {% endif %}-->
+<!--			</ol></th>-->
+			
+<!--			<th>-->
+<!--			{% if vehiculos_en|length > 0 %}-->
+<!--        <ul>-->
+<!--          {% for ticket in vehiculos_orden %}-->
+<!--            <li>{{ ticket.hora_entrada }}</li>-->
+<!--          {% endfor %}-->
+<!--        </ul>-->
+<!--        {% else %}-->
+<!--          <p>No hay han ingresado vehiculos</p>-->
+<!--        {% endif %}-->
+<!--			</th>-->
+			
+<!--			<th>-->
+<!--			{% if vehiculos_en|length > 0 %}-->
+<!--        <ul>-->
+<!--          {% for ticket in vehiculos_orden %}-->
+<!--            <li>{{ ticket.hora_salida}}</li>-->
+<!--          {% endfor %}-->
+<!--        </ul>-->
+<!--        {% else %}-->
+<!--          <p>No hay han ingresado vehiculos</p>-->
+<!--        {% endif %}-->
+<!--			</th>-->
+<!--			</center>-->
+<!--		</tr> -->
+<!--  </table>-->
+<!--</def>-->
+
+
+
+
+
+
+
+<!--<def class ="col-xs-9">    -->
+  
+<!--  <h2>Vehiculos que han entrado al establecimiento</h2>-->
+<!--  <table class="table table-bordered">-->
+    
+<!--    {% if vehiculos_orden|length > 0 %}-->
+<!--      <ul>-->
+<!--        {% for ticket in vehiculos_orden %}-->
+<!--          <li>{{ ticket }}</li>-->
+<!--        {% endfor %}-->
+<!--      </ul>-->
+<!--    {% else %}-->
+<!--      <p>No hay han ingresado vehiculos</p>-->
+<!--    {% endif %}-->
+  
+<!--  </table>-->
+    
+<!--</def>-->
+
+{% endblock %}

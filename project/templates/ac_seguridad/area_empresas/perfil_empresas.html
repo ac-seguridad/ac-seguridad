@@ -1,0 +1,43 @@
+{% extends '../area-empresas-base.html' %}
+{% load static %}
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+
+<p><strong>
+    	<h1>Perfil de empresas</h1></strong>
+    	
+</p>
+<def class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</def>	
+
+<def class ="col-xs-12 col-sm-4 ">
+ 	<h3>Datos Estacionamiento</h3>
+  	<li>{{ estacionamiento.nombre }}</li>
+ 	<h3>RIF</h3>  
+   	<li>{{ estacionamiento.rif}}</li>
+   	
+  <h3>Numero de puestos</h3>  
+   	<li>{{ estacionamiento.numero_de_puestos}}</li>
+</def>
+<def class ="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+   	<h3>Monto tarifa</h3>  
+   	<li>{{ estacionamiento.monto_tarifa}}</li>
+   	
+  	<h3>Tarifa plana</h3>  
+   	{% if estacionamiento.tarifa_plana == True %}
+   	  <li>Si</li>
+   	{% else %}
+   	  <li>No</li>
+   	{% endif %}
+   	
+   	<h3>Acesso restringido</h3>  
+   	{% if estacionamiento.acceso_restringido ==  True %}
+   	  <li>Si</li>
+   	{% else %}
+   	<li>No</li>
+   	{% endif %}
+</def>
+
+{% endblock %}

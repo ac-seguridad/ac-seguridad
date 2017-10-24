@@ -1,45 +1,81 @@
 {% extends '../area-personal-base.html' %}
 
 {% block title %}Área Personal{% endblock %}
-
+{% load static %}
 {% block area_personal %}
 
-  <h2>Datos personales</h2>
-    <li>{{ usuario }}</li>
-  <h2>Tus vehículos</h2>
-    {% if vehiculos_usuario|length > 0 %}
-      <ul>
-        {% for vehiculo in vehiculos_usuario %}
-          <li>{{ vehiculo }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Usted no tiene vehículos registrados en el sistema</p>
-    {% endif %}
+<!--Aqui se muestra el area de las personas donde pueden elegir que accion realizar en el sistema-->
+<!--si la persona no tiene carros registrados, solo se muestra eso-->
+<header>
+    <div class="container">
+      <h1> Área personal</h1>  
+        
+    </div>
+</header>    
+{% if vehiculo_de|length > 0 %}
+  <div class="container">
+            
+  <hr/>           
+<!--Otra fila-->
+        
+        
+    <section class="main row">
+    <!--Seccion de datos personales-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Ver Perfil</center></h2> </br>
+                <a href="{% url 'perfil_personal' %}">
+                    <img src="{% static 'ac_seguridad/images/iconos/datos_personales.png'  %}"  width= "200" height="200"class="img-responsive center-block">
+        	   </a>
+        </article>
+<!--tabla de historial del centro comercial-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Historial</center></h2> </br>
+                <a href="{% url 'historial_personas' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+
+<!--registro de carros-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Registro de carros</center></h2> </br>
+                <a href="{% url 'registro_vehiculo' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+        
+    <!--Requerimientos, redirect a contacto-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Requerimiento</center></h2> </br>
+                <a href="{% url 'contacto' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/requerimiento.png' %}" width= "200" height="200" class="img-responsive center-block">
+                </a>
+        	</p>
+        </article>
+    </section>
     
-    
-  <a href="{% url 'registro_vehiculo' %}">Registre sus vehículos</a>
+    <p>
+        Seleccione una de las imágenes presentes para ingresar a la sección deseada.
+    </p>
+</div>
+
+{% else %}
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+    <p>
+      <h2><center>Registro de carros</center></h2> </br>
+      <a href="{% url 'registro_vehiculo' %}">
+        <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+      </a>
+    </p>
+  </div>
   
-  <h2>Tus tickets recientes</h2>
-    {% if tickets_usuario|length > 0 %}
-      <ul>
-        {% for ticket in tickets_usuario %}
-          <li>{{ ticket }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Usted no ha ingresado a ningún estacionamiento recientemente.</p>
-    {% endif %}
-    
-  <h2>Tu actividad reciente</h2>
-    {% if avisos_usuario|length > 0 %}
-      <ul>
-        {% for aviso in avisos_usuario %}
-          <li>{{ aviso }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>Usted no tiene actividad reciente.</p>
-    {% endif %}
-    
+{% endif %}
 {% endblock %}
