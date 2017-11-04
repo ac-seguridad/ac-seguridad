@@ -13,7 +13,7 @@ import socket
 
 # Constantes.
 NUM_PUERTA = 1
-RIF = "J-1234"
+RIF = "J-1231"
 
 #1234 acceso restringido 
 #0000 acceso no restringido
