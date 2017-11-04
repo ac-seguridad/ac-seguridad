@@ -31,26 +31,18 @@
 <h3>Registrados</h3>
  
   <table class="table table-responsive">
-      <tr>
-  		  <thead>
-  			<th>Placa</th>
-  			</thead>
-  		</tr>
-     
-     <tr>
-  			<th><ol><ul>
-    			   {% if lista_vehiculo|length > 0 %}
-                {% for carro in lista_vehiculo %}
-                <li>{{ carro.placa }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
+    <tr><thead>
+  	    <th>Placa</th>
+  	</thead></tr>
+         {% if lista_vehiculo|length > 0 %}
+            {% for carro in lista_vehiculo %}
+                <tr>
+                    <td><center>{{ carro.placa }}</center></td>
+                </tr>
+        	{% endfor %}
+        {% else %}
               <p>Sin vehiculos registrados, por favor registre su primer vehículo</p>
           {% endif %}
-  			</ol></th>
+  	</table>		
 </div> 
-
-
-  
-
 {% endblock %}

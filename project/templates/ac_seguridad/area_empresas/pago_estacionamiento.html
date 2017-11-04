@@ -58,6 +58,8 @@
 			  	{% else %}
 			  		<p> No ha ingresado ningún ticket.</p>
 			  	{% endif %}
+
+
 			  	<br><br>
 		<form action="{% url 'pagar_ticket' %}" method="post">
 		    {% csrf_token %}

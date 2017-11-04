@@ -49,7 +49,7 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="{% url 'ver_pagina' %}">Ver página <span class="sr-only">(current)</span></a></li>
           <li><a href="{% url 'afiliados' %}">Afiliados</a></li>
-          <li><a href="#">Contacto</a></li>
+          <li><a href="{% url 'contacto' %}">Contacto</a></li>
         </ul>
         
         <!-- Alinea a la derecha los siguientes links  -->
@@ -57,9 +57,15 @@
           <!-- Se verifica que el usuario haya hecho login para cambiar la -->
           <!-- barra de navegación.  -->
           {% if request.user.is_authenticated %}
-            <li class="active"><a href="#">Bienvenido: {{ request.user.persona.nombre }}</a></li>
-            <li><a href="{% url 'area_personal' %}">Área Personal</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% if request.user.persona %}
+              <li class="active"><a href="#">Bienvenido: {{ request.user.persona.nombre }}</a></li>
+              <li><a href="{% url 'area_personal' %}">Área Personal</a></li>
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+              <li class="active"><a href="#">Bienvenido: {{ request.user.estacionamiento.nombre }}</a></li>
+              <li><a href="{% url 'area_empresas' %}">Área Empresas</a></li>
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
           {% else %}
             <li><a href="{% url 'registro_persona' %}">Registro Personas</a></li>
             <li><a href="{% url 'registro_estacionamiento' %}">Registro Estacionamiento</a></li>

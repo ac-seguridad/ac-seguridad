@@ -24,57 +24,24 @@
   			</thead>
   		</tr>
      
-     <tr>
-  			<th><ol><ul>
-    			   {% if lista_vehiculo|length > 0 %}
-                {% for carro in lista_vehiculo %}
-                <li>{{ carro.placa }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-              <p>Sin vehiculos en establecimientos</p>
-          {% endif %}
-  			</ol></th>
-  			
-  			<th>
-  			{% if lista_vehiculo|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo %}
-              <li>{{ carro.rif }}</li>
+     {% if lista_vehiculo|length > 0 %}
+        {% for carro in lista_vehiculo %}
+          <tr>
+                <td><center>{{ carro.placa }}</center></td>
+                <td><center>{{ carro.rif }}</center></td>
+                <td><center>{{ carro.numero_ticket }}</center></td>
+                <td><center>{{ carro.hora_entrada }}</center></td>
+              </tr>
             {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  			<th>
-  			{% if lista_vehiculo|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo %}
-              <li>{{ carro.numero_ticket }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  			<th>
-  			{% if lista_vehiculo|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo %}
-              <li>{{ carro.hora_entrada }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  		</tr> 		
-  </table>
-</def>
+        {% else %}
+            <p>Sin vehiculos en establecimientos</p>
+         {% endif %}   
+</table>
+</div>      
+
 <!--Tabla para mostrar su historial de vehiculos que ingresaron al estacionamiento-->
 
-<def class ="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+<div class ="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
     <h3>Historial de egreso de vehiculos</h3>
   <table class="table table-responsive">
       <tr>
@@ -86,65 +53,19 @@
   			<th>Fecha de salida</th>
   			</thead>
   		</tr>
-     
-     <tr>
-  			<th><ol><ul>
-    			   {% if lista_vehiculo2|length > 0 %}
-                {% for carro in lista_vehiculo2 %}
-                <li>{{ carro.placa }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-              <p>Sin egresos registrados</p>
-          {% endif %}
-  			</ol></th>
-  			
-  			<th>
-  			{% if lista_vehiculo2|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo2 %}
-              <li>{{ carro.rif }}</li>
+     {% if lista_vehiculo2|length > 0 %}
+        {% for carro in lista_vehiculo2 %}
+                  <tr>
+                <td><center>{{ carro.placa }}</center></td>
+                <td><center>{{ carro.rif }}</center></td>
+                <td><center>{{ carro.numero_ticket }}</center></td>
+                <td><center>{{ carro.hora_entrada }}</center></td>
+                <td><center>{{ carro.hora_salida }}</center></td>
+              </tr>
             {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  			<th>
-  			{% if lista_vehiculo2|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo2 %}
-              <li>{{ carro.numero_ticket }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  			<th>
-  			{% if lista_vehiculo2|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo2 %}
-              <li>{{ carro.hora_entrada }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  				<th>
-  			{% if lista_vehiculo2|length > 0 %}
-          <ul>
-            {% for carro in lista_vehiculo2 %}
-              <li>{{ carro.hora_salida }}</li>
-            {% endfor %}
-          </ul>
-          {% else %}
-            <p>-</p>
-          {% endif %}
-  			</th>
-  		</tr> 		
-  </table>
-</def>
-
+        {% else %}
+            <p>Sin egresos registrados</p>
+      {% endif %}   
+</table>
+</div>             
 {% endblock %}
