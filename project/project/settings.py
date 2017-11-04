@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io']
 
 INSTALLED_APPS = [
     'ac_seguridad.apps.AcSeguridadConfig',
+    'manejador.apps.ManejadorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Ve'
+
 
 TIME_ZONE = 'UTC'
 
@@ -132,3 +134,15 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+# EMAIL_USE_TLS='TRUE'
+# EMAIL_HOST='smtp.gmail.com'
+# EMAIL_HOST_USER ='ac.seguridad256@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Anabel94'
+# EMAIL_PORT=587
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = 'acseguridad256@outlook.com'
+EMAIL_HOST_PASSWORD = 'Anabel94'
+EMAIL_PORT = 25
