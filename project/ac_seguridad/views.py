@@ -39,14 +39,16 @@ def registro_persona(request):
         persona_form = ac_forms.SignUpPersonaForm(request.POST)
         if (user_form.is_valid() and persona_form.is_valid()):
             # Aquí se guarda el usuario creado en AUTH users
+            
             usuario_user = user_form.save() 
             usuario_user.refresh_from_db()
+            
             
             # Extraemos los datos del form de persona.
             cedula_persona = persona_form.cleaned_data.get('cedula')
             email_persona = persona_form.cleaned_data.get('email')
-            nombre_persona = persona_form.cleaned_data.get('nombre')
-            apellido_persona = persona_form.cleaned_data.get('apellido')
+            nombre_persona = persona_form.cleaned_data.get('nombre').capitalize()
+            apellido_persona = persona_form.cleaned_data.get('apellido').capitalize()
             telefono_persona = persona_form.cleaned_data.get('telefono')
             
             usuario_persona = Persona(
@@ -99,7 +101,8 @@ def registro_estacionamiento(request):
             nombre_estacionamiento = estacionamiento_form.cleaned_data.get('nombre')
             numero_de_puestos_estacionamiento = estacionamiento_form.cleaned_data.get('numero_de_puestos')
             acceso_restringido_estacionamiento = estacionamiento_form.cleaned_data.get('acceso_restringido')
-            
+            tarifa_estacionamiento1 = estacionamiento_form.cleaned_data.get('monto_tarifa')
+            tarifa_plana1 = estacionamiento_form.cleaned_data.get('tarifa_plana')
             
             usuario_estacionamiento = Estacionamiento(
                                         usuario = usuario_user,
@@ -107,7 +110,9 @@ def registro_estacionamiento(request):
                                         nombre = nombre_estacionamiento,
                                         numero_de_puestos = numero_de_puestos_estacionamiento,
                                         acceso_restringido = acceso_restringido_estacionamiento,
-                                        email = email_estacionamiento)
+                                        email = email_estacionamiento,
+                                        monto_tarifa = tarifa_estacionamiento1,
+                                        tarifa_plana = tarifa_plana1)
             
             usuario_estacionamiento.save()
             usuario_user.save()
@@ -217,9 +222,9 @@ def registro_vehiculo(request):
         if (vehiculo_form.is_valid()):
             
             # Extraemos los datos del form de estacionamiento.
-            placa = vehiculo_form.cleaned_data.get('placa')
-            marca = vehiculo_form.cleaned_data.get('marca')
-            modelo = vehiculo_form.cleaned_data.get('modelo')
+            placa = vehiculo_form.cleaned_data.get('placa').upper()
+            marca = vehiculo_form.cleaned_data.get('marca').upper()
+            modelo = vehiculo_form.cleaned_data.get('modelo').upper()
             year = vehiculo_form.cleaned_data.get('year')
             
             vehiculo = Vehiculo(
@@ -296,17 +301,22 @@ def historial_empresas(request):
     rif_estacionamiento = estacionamiento.rif
       
     Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento,pagado= False))
-    Vehiculos_orden = Ticket.objects.filter(rif=rif_estacionamiento,pagado= True)
+   # Vehiculos_en2 = list(TicketNoRegistrado.objects.filter(rif=rif_estacionamiento,pagado= False))
+    Vehiculos_orden = Ticket.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = True )
     Alertas_en = list(Alerta.objects.filter(estacionamiento=rif_estacionamiento))
     
-    Cantidad= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
+    
+    Cantidad_regis= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
+    Cantidad_nresg= TicketNoRegistrado.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
+    Cantidad = Cantidad_nresg + Cantidad_regis 
     
     context['vehiculos_en'] = Vehiculos_en
     context['vehiculos_orden'] = Vehiculos_orden
     context['estacionamiento']= estacionamiento
     context['cantidad']= Cantidad
     context['lista_alertas']= Alertas_en
-    
+    context['cantidad_r']= Cantidad_regis
+    context['cantidad_nr']= Cantidad_nresg
     
     return render(request, 'ac_seguridad/area_empresas/historial_empresas.html', context)  
 
@@ -342,11 +352,10 @@ def pagar_ticket(request):
 @login_required
 def pago_estacionamiento(request):
     context=dict()
-    
     estacionamiento = request.user.estacionamiento
     es_tarifa_plana = estacionamiento.tarifa_plana
     monto_tarifa = estacionamiento.monto_tarifa
-    # pdb.set_trace()
+
     if request.method == 'POST':
         pago_form = ac_forms.PagoEstacionamientoForm(request.POST)
         if (pago_form.is_valid()):
@@ -384,6 +393,34 @@ def pago_estacionamiento(request):
             
     else:
         pago_form = ac_forms.PagoEstacionamientoForm()
-        
+    
     context['pago_form'] = pago_form
     return render(request, 'ac_seguridad/area_empresas/pago_estacionamiento.html', context)    
+
+@login_required
+def mensajes (request): 
+    context=dict()
+    # pdb.set_trace()
+    if request.method == 'POST':
+        formulario_mensaje = ac_forms.Mensajes_Form(request.POST)
+        if (formulario_mensaje.is_valid()):
+            #datos del formulario
+            placa_mensaje = formulario_mensaje.cleaned_data.get('placa_mensaje')
+            responsable_mensaje = formulario_mensaje.cleaned_data.get('responsable')
+            tipo_mensaje = formulario_mensaje.cleaned_data.get('tipo_mensaje')         
+            print("{} {} {}".format(placa_mensaje, responsable_mensaje, tipo_mensaje))
+            context['responsable_mensaje'] = responsable_mensaje
+            context['tipo_mensaje'] = tipo_mensaje
+            context['placa_mensaje'] = placa_mensaje
+            # try:
+            #     dueno = vehiculo.objects.get(placa=placa_mensaje)
+       
+                    
+            # email_carro = Persona.objects.get(cedula=dueno) 
+    
+            # context['email_carro'] = email_carro
+    else:
+        formulario_mensaje = ac_forms.Mensajes_Form()
+        
+    context['Mensajes_Form'] = formulario_mensaje
+    return render(request, 'ac_seguridad/area_empresas/mensajes.html', context) 

@@ -15,7 +15,7 @@ class SignUpPersonaForm(ModelForm):
 class SignUpEstacionamientoForm(ModelForm):
     class Meta:
         model = Estacionamiento
-        fields = ['rif', 'nombre', 'numero_de_puestos', 'acceso_restringido', 'email']
+        fields = ['rif', 'nombre', 'numero_de_puestos', 'acceso_restringido', 'email', 'monto_tarifa', 'tarifa_plana']
         
 class VehiculoForm(ModelForm):
     class Meta:
@@ -28,5 +28,9 @@ class PagoEstacionamientoForm(forms.Form):
     registrado_ticket = forms.BooleanField(label="¿El ticket está registrado?",
                                            required=False)
     
-    
-        
+class Mensajes_Form(forms.Form):
+    placa_mensaje = forms.CharField(max_length=25, label="Placa del vehículo")
+                                       
+    responsable = forms.CharField(label="Responsable del mensaje",
+                                           required=True)
+    tipo_mensaje= forms.CharField(max_length=25, label="Tipo de mensaje")
