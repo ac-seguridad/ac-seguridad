@@ -8,12 +8,19 @@ otras. Debemos ejecutar en un terminal:
 * `bash Miniconda3-latest-Linux-x86_64.sh`
 * [Solo para limpieza] `rm Miniconda3-latest-Linux-x86_64.sh`
 
-## Creación de un ambiente virtual.
+## Creación de un ambiente virtual.(deprecado)
 Nos permite tener todos las dependencias necesarias para nuestro proyecto.
 Ejecutar en un terminal:
 * `conda create -n acseguridad --file requerimientos.txt`
 
-## Activar nuestro ambiente virtual.
+## Creación de un ambiente virtual con venv (preferido)
+```bash
+python3 -m venv env_acseguridad
+source env_acseguridad/bin/activate
+pip3 install -r requerimientos.txt
+```
+
+## Activar nuestro ambiente virtual.(deprecado)
 Ejecutar:
 * `source activate acseguridad`
 * [Desactivar] `source deactivate acseguridad`
