@@ -4,21 +4,29 @@
 
 {% block login %}
 
+<div >
+      <h1>Registro de estacionamientos</h1>  
+        
+    </div>
+ <hr/> 
+
+<section class="main row">
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
 	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
 </div>
 
 <div class ="col-xs-12 col-sm-8 ">
-  <h2>Registro de estacionamientos</h2>
+  <h2>Ingrese los datos del estacionamiento</h2>
   
   
   <form method="post">
     {% csrf_token %}
     {{ user_form.as_p }}
     {{ estacionamiento_form.as_p }}
-    <button type="submit" class="btn btn-primary col-sm-5 col-sm- btn-lg">Registrarse</button>
+    <button type="submit" class="btn btn-primary col-sm-5 col-sm- btn-lg btn-round">Registrarse</button>
   
     <!--<button type="submit">Sign up</button>-->
   </form>
 </div>
+</section>
 {% endblock %}

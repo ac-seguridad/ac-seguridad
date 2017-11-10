@@ -4,34 +4,35 @@
 {% block title %}Área Empresas{% endblock %}
 
 {% block area_empresas %}
-<header>
-    <div class="container">
-    	<h1><strong><center>Pago de estacionamiento</center></strong></h1>
-     	  
-        
-    </div>
-</header>    
 
-<div class="container">
+<div >
+    <h1> Pago de estacionamiento </h1>  
+</div>
+<hr> 
+
+
+
 <!-- Variables disponibles dentro de context: -->
 	<!--* num_ticket: representa numero entero, id del ticket.-->
 	<!--* monto_a_pagar: representa un flotante, lo que se va a pagar.-->
 	<!--* tiempo_transcurrido: timezone de Django, tiempo desde que se entró hasta que se pagó.-->
 	<!--* registrado_ticket: booleano, dice si el ticket es de vehiculo registrado o no.-->
-<section class="main row">
+	<!--Pagado: validar si un ticket se encuentra pagado o no -->
+<div class="card">
     <article class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
         <p>
 			<img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "300" height="300" class="img-responsive center-block">
         </p>
     </article>
-            
+ 
+         
     <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 	    <h2> <strong><center>Pago de un ticket </center></strong> </h2>
 	    <br>
 		<form action="{% url 'pago_estacionamiento' %}" method="post">
 		    {% csrf_token %}
-		    <p>{{ pago_form.numero_ticket.label_tag }}
-			    <input id="{{ pago_form.numero_ticket.id_for_label }}"
+		    {{ pago_form.numero_ticket.label_tag }}
+			    <p><input id="{{ pago_form.numero_ticket.id_for_label }}"
 			    	   class="form-control"
 			    	   type="number" 
 			    	   name="numero_ticket" 
@@ -44,12 +45,15 @@
 					   type="checkbox" 
 					   name="registrado_ticket" 
 					   value="{{ pago_form.registrado_ticket.value }}" /></p>
-		    <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-1 btn-lg">Buscar</button>
+		    <center><button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-1 btn-lg btn-round">Buscar</button></center>
 		</form>
 		<br><br><br><br>
 	 
 	</aside>
+	
+{% if pagado_ticket == False %}	
 	<aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+
 	  	<br><br><br>
 	
 		  	<H3><strong><center>Total a pagar</center></strong></H3>
@@ -77,13 +81,19 @@
 					   name="registrado_ticket" 
 					   value="{{ pago_form.registrado_ticket.value }}" 
 					   hidden /></p>
-			<center><button type="submit" class="btn btn-success col-sm-4 btn-lg active col-sm-offset-2">PAGAR</button></center>
+			<button type="submit" class="btn btn-success col-sm-4 btn-lg active col-sm-offset-2 btn-round">PAGAR</button></center>
 		</form>
 			  	
 	</aside>
-	
-</section>
-<section> 
+{% else %}
+					</br></br></br></br></br>		  	
+			  		<h3><font color='#FF5733'> <center>Ticket pagado</center></font></h3>
+{% endif %}
+
+</div>
+
+
+<div class="card">
     <table class="table">
 	<table class="col-xs-12 col-sm-12 col-md-12 col-lg-12"width="80%" border="0" cellpadding="10" cellspacing="10" bordercolor="#000000">
 
@@ -97,6 +107,7 @@
 			<th>Tarifa</th>
 			<th>Placa</th>
 			
+			
 			</center>
 		</tr>
 		<tr>
@@ -108,7 +119,9 @@
 			{% else %}
 				<td rowspan="2" valign="middle"></td>
 			{% endif %}
+			
 			<td rowspan="2" valign="middle">{{ hora_entrada|date:"D d M Y" }} {{ hora_entrada|time:"H:i" }}</td>
+			
 			<td rowspan="2" valign="middle">{{ tiempo_transcurrido }}</td>
 			{% if es_tarifa_plana == True %}
 				<td rowspan="2" valign="middle">Tarifa plana</td>
@@ -117,12 +130,18 @@
 			{% else %}
 				<td rowspan="2" valign="middle"></td>
 			{% endif %}
+			
 			<td rowspan="2" valign="middle">{{ monto_tarifa }}</td>
-			<!--<td rowspan="2" valign="middle">{{ monto_a_pagar }}</td>-->
+			
 			<td rowspan="2" valign="middle">{{ placa }}</td>
+			
+			
+			
+			
 		</tr>
-	</table>
+	</table></table>
     
                
-</section>
+</div>
+
 {% endblock %}

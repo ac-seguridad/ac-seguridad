@@ -4,43 +4,51 @@
 
 {% block area_empresas %}
 
-<def class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
-	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
-</def>	
+<div >
+    <h1> Historial Personal</h1>  
+</div>
+<hr>
+
+<div class = "card">
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+    	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+    </div>	
 
 <!--Tabla que muestra los carros actualmete dentro dele estacionamiento-->
-
-
-<def class ="col-xs-12 col-sm-12 col-md-8 col-lg-8 ">
-  <h1> <font color= "#FF69B4"> Historial Personal</font></h1>
-  <h3>Vehiculos actualmente dentro del establecimiento</h3>
-  <table class="table table-responsive">
-      <tr>
-  		  <thead>
-  			<th>Placa</th>
-  			<th>Estacionamiento</th>
-  			<th>Ticket</th>
-  			<th>Fecha de ingreso</th>
-  			</thead>
-  		</tr>
-     
-     {% if lista_vehiculo|length > 0 %}
-        {% for carro in lista_vehiculo %}
+    
+    <div class ="col-xs-12 col-sm-12 col-md-8 col-lg-8 ">
+ 
+        <h3>Vehiculos actualmente dentro del establecimiento</h3>
+        <table class="table table-responsive">
           <tr>
-                <td><center>{{ carro.placa }}</center></td>
-                <td><center>{{ carro.rif }}</center></td>
-                <td><center>{{ carro.numero_ticket }}</center></td>
-                <td><center>{{ carro.hora_entrada }}</center></td>
-              </tr>
-            {% endfor %}
-        {% else %}
-            <p>Sin vehiculos en establecimientos</p>
-         {% endif %}   
-</table>
-</div>      
+      		  <thead>
+      			<th>Placa</th>
+      			<th>Estacionamiento</th>
+      			<th>Ticket</th>
+      			<th>Fecha de ingreso</th>
+      			</thead>
+      		</tr>
+         
+         {% if lista_vehiculo|length > 0 %}
+            {% for carro in lista_vehiculo %}
+              <tr>
+                    <td><center>{{ carro.placa }}</center></td>
+                    <td><center>{{ carro.rif }}</center></td>
+                    <td><center>{{ carro.numero_ticket }}</center></td>
+                    <td><center>{{ carro.hora_entrada }}</center></td>
+                  </tr>
+                {% endfor %}
+            {% else %}
+                <p>Sin vehiculos en establecimientos</p>
+             {% endif %}   
+        </table>
+    </div>  
+</div>
 
+</br></br>
 <!--Tabla para mostrar su historial de vehiculos que ingresaron al estacionamiento-->
 
+<div class = "card">
 <div class ="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
     <h3>Historial de egreso de vehiculos</h3>
   <table class="table table-responsive">
@@ -66,6 +74,5 @@
         {% else %}
             <p>Sin egresos registrados</p>
       {% endif %}   
-</table>
-</div>             
+</table></div></div>           
 {% endblock %}
