@@ -19,6 +19,7 @@ from ac_seguridad.models import *
 import manejador.mysocket as mysocket
 from django.utils import timezone
 
+
 class MalformedMessage(Exception): pass
 class ConnectionClosed(Exception): pass
 
@@ -208,8 +209,8 @@ def generar_actividad(estacionamiento, vehiculo, persona, tipo, ticket=None):
 #false no está, true está
 def validar_existencia(placa):   
    
-    aux1 = Ticket.objects.filter(placa=placa,pagado= False).count()
-    aux2 = TicketNoRegistrado.objects.filter(placa=placa,pagado= False).count()
+    aux1 = Ticket.objects.filter(placa=placa,hora_salida__isnull = True).count()
+    aux2 = TicketNoRegistrado.objects.filter(placa=placa, hora_salida__isnull = True).count()
     print("aux1: {} y aux2: {}".format(aux1,aux2))
     
     if ( (aux1 == 0) and (aux2 == 0)):
@@ -217,6 +218,8 @@ def validar_existencia(placa):
     else:
         return True
     
+    
+
     
 ##############################################################################
 ############################## TCP y FILES ###################################
