@@ -3,14 +3,22 @@
 {% block title %}Área Empresas{% endblock %}
 
 {% block area_empresas %}
-
+<!--Titulo de la página-->
+<div >
+    <h1> Historial del establecimiento</h1>
+</div>
+<hr> 
+ 
+ <!--carta-->
+<div class= "card">
+<!--logo-->
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
 	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
-</div>	
-
+</div>
+</br>
 <!--datos del estacionamiento-->
 <div class ="col-xs-12 col-sm-6 col-md-6 col-lg-8 ">
-  <h1> Historial del establecimiento</font></h1>
+  
    <h2>RIF:</h2>
   <li>{{ estacionamiento }}</li>
   <h2>total carros en el estacionamiento</h2>
@@ -28,8 +36,10 @@
       <li>{{ cantidad_nr}}</li>
     </ul></div>
 </div>
+</div></br></br>
 
-<!--Tabla de vehiculos en el estacionamiento-->
+<div class= "card">
+<!--Tabla de vehiculos registrados en el estacionamiento-->
 <div class ="col-xs-11">    
   
   <h2>Vehiculos actualmente dentro del establecimiento</h2>
@@ -55,7 +65,38 @@
 		
   </table>
 </div>
+</div></br>
 
+<div class= "card">
+<!--Tabla de vehiculos NO registrados en el estacionamiento-->
+<div class ="col-xs-11">    
+  
+  <h2>Vehiculos no registrados actualmente dentro del establecimiento</h2>
+  <table class="table table-responsive table-striped">
+    <tr>
+		  <th>Placa</th>
+		  <th>Ticket</th>
+			<th>hora de entrada</th>
+		</tr>
+   
+   
+    {% if vehiculos_no_registrados_dentro|length > 0 %}
+    {% for TicketNoRegistrado in vehiculos_no_registrados_dentro %}
+    <tr>  
+                <td>{{ TicketNoRegistrado.placa }} </td>
+                <td>{{ TicketNoRegistrado.numero_ticket }}</td>
+                <td>{{ TicketNoRegistrado.hora_entrada }}</td>
+		          {% endfor %}
+		</tr>
+          {% else %}
+            <p>No se encuentran en el establecimiento</p>
+        {% endif %}
+		
+  </table>
+</div>
+</div></br>
+
+<div class= "card">
 <!--Tabla de egresos del estacionamiento-->
 <div class ="col-xs-12">    
   
@@ -86,6 +127,39 @@
   {% endif %}   
 </table>
 </div>
+</div></br>
+
+<div class= "card">
+<!--Tabla de egresos no registrados del estacionamiento-->
+<div class ="col-xs-12">    
+  
+  <h2>Historial de egresos del establecimiento vehículos no registrados</h2>
+
+  <table class="table table-responsive table-striped">
+  
+		<tr>
+			
+			<th>Placa</th>
+			<th>Ticket</th>
+			<th>hora de entrada</th>
+			<th>hora de salida</th>
+		</tr>
+   
+  {% if vehiculos_egresos_no_registrados|length > 0 %}
+    {% for ticket in vehiculos_egresos_no_registrados %}
+      <tr>
+        <td>{{ ticket.placa }}</td>
+        <td>{{ ticket.numero_ticket }}</td>
+        <td>{{ ticket.hora_entrada }}</td>
+        <td>{{ ticket.hora_salida }}</td>
+      </tr>
+    {% endfor %}
+  {% else %}
+    <p>No han egresado vehículos</p>
+  {% endif %}   
+</table>
+</div>
+</div></br>
 
 <!--Historial de alertas-->
     
@@ -96,6 +170,10 @@
     <!--tipo = models.CharField(max_length=200)-->
     <!--fecha = models.DateTimeField('-->
 
+
+<!--Tabla de alertas-->
+
+<div class= "card">
 <div class ="col-xs-11 ">    
   
   <h2>Historial de alertas</h2>
@@ -105,6 +183,7 @@
     <th>Tipo</th>
 	  <th>fecha</th>
 		<th>usuario</th>
+		<th>placa</th>
 	</tr>
    
     {% if lista_alertas|length > 0 %}
@@ -113,6 +192,7 @@
           <td>{{ alerta.tipo }}</td>
           <td>{{ alerta.fecha }}</td> 
           <td>{{ alerta.usuario  }}</td>
+          <td>{{ alerta.vehiculo  }}</td>
             {% endfor %}
         </tr>
           {% else %}
@@ -120,5 +200,5 @@
         {% endif %}
   </table>  
 </div>
-
+</div>
 {% endblock %}

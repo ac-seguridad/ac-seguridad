@@ -6,23 +6,25 @@
 
 <!--Aqui se muestra el area de las personas donde pueden elegir que accion realizar en el sistema-->
 <!--si la persona no tiene carros registrados, solo se muestra eso-->
-<header>
-    <div class="container">
+
+    <div>
       <h1> Área personal</h1>  
         
     </div>
-</header>    
+<hr>   
+
+
 {% if vehiculo_de|length > 0 %}
-  <div class="container">
+  <div class="card">
             
-  <hr/>           
+          
 <!--Otra fila-->
         
         
-    <section class="main row">
+    
     <!--Seccion de datos personales-->
         
-        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+        <article class="col-xs-12 col-sm-12 col-md-6 col-lg-3 ">
             <p>
                 <h2><center>Ver Perfil</center></h2> </br>
                 <a href="{% url 'perfil_personal' %}">
@@ -44,9 +46,9 @@
         
         <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
             <p>
-                <h2><center>Registro de carros</center></h2> </br>
+                <h2><center>Registro de carros</center></h2>
                 <a href="{% url 'registro_vehiculo' %}">
-                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+                <img src="{% static 'ac_seguridad/images/iconos/car.png' %}" width= "200" height="200" class="img-responsive center-block">
         	    </a>
         	</p>
         </article>
@@ -60,15 +62,18 @@
                 </a>
         	</p>
         </article>
-    </section>
+   
     
-    <p>
-        Seleccione una de las imágenes presentes para ingresar a la sección deseada.
-    </p>
-</div>
+    <article class="col-xs-12 col-sm-6 col-md-6 col-lg-12 ">
+           <p> Seleccione una de las imágenes presentes para ingresar a la sección deseada.</p>
+        </article>
+       
+   
+  </div>
 
 {% else %}
-  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+<div class = "card"> 
+  <div class= "col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
     <p>
       <h2><center>Registro de carros</center></h2> </br>
       <a href="{% url 'registro_vehiculo' %}">
@@ -76,6 +81,9 @@
       </a>
     </p>
   </div>
+</div>
   
 {% endif %}
+
+
 {% endblock %}

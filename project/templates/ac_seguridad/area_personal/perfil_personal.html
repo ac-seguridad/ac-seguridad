@@ -4,18 +4,19 @@
 {% load static %}
 {% block area_personal %}
 
-<header>
-    <div class="container">
-     <p><strong> <h1>Datos personales</h1></strong></p>
-     <h3>Bienvenida: {{ usuario.nombre}} </h3>
- 	
-    </div>
-</header>    
-<def class="col-xs-12 col-sm-1 col-md-6 col-lg-4 ">
-	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
-</def>	
 
-<def class ="col-xs-12 col-sm-2 col-md-6 col-lg-2">
+<div >
+      <h1> Datos personales </h1>  
+      <h3>Bienvenido: {{ usuario.nombre}} </h3>  
+</div>
+<hr> 
+
+<div class="card">
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</div>	
+
+<div class ="col-xs-6 col-sm-6 col-md-6 col-lg-2">
  
  	<h3>Nombre</h3>
   	<li>{{ usuario.nombre}}</li>
@@ -24,8 +25,9 @@
    	
   <h3>Cédula</h3>  
    	<li>{{ usuario.cedula}}</li>
-</def>
-<def class = "col-xs-12 col-sm-10 col-md-6 col-lg-6 ">
+</div>
+
+<div class = "col-xs-12 col-sm-10 col-md-6 col-lg-6 ">
     <h3>Vehiculos registados</h3>
      <table class="table table-responsive table-striped">
         <tr>
@@ -48,6 +50,6 @@
             <p>No han egresado vehículos</p>
          {% endif %}   
 </table>
-</div>
+</div></div>
 
 {% endblock %}

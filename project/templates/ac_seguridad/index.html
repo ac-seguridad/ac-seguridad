@@ -7,13 +7,13 @@
 {% block contenido %}
 <header>
     <div class="container">
-      <h1> AC Seguridad. </h1>  
-      <h2><center> Tu carro seguro. </h2> </center> 
+      <h3> AC Seguridad. </h3>  
+      <h1><center> Tu carro seguro. </h1> </center> 
     </div>
 </header>    
 
-    <div class="container">
-          <section class="main row">
+    <div class="card">
+          
             <article class="col-xs-12 col-sm-9 col-md-9 col-lg-8 ">
                 <p>
                 
@@ -28,18 +28,26 @@
                    
                       <br/>
               
-                      
-                     <h4> Pasos a seguir:</h4>
-                      <br/>
-                    <ol>
-                    <li>Registrarse en la página web. (Registro)</li>
-                    <li>Completar el formulario</li>
-                    <li>Añadir la información de contacto y datos del vehículo. Puedes añadir cuantos carros como poseas. </li>
-                    <li>Visitar cualquier centro comercial de preferencia. </li>
-                    </ol>
-<br/><br/>
-
-                <h4>Ventajas de registrarse.</h4> <br/>
+                    
+                 <def class="col-xs-6 col-sm-6 col-md-6 col-lg-6">     
+                        <div class="card w-100">
+                        <div class="card-block">
+                        <h3 class="card-title"><center>Registro</center></h3>
+                        <p class="card-text"><center>Registro de usuarios</center></p>
+                        <a href="{% url 'registro_persona' %}" class="btn btn-primary btn-round">Resgistro</a>
+                      </div>
+                        </div>
+                </def>
+                <def class="col-xs-6 col-sm-6 col-md-6 col-lg-6">  
+                        <div class="card w-100">
+                        <div class="card-block">
+                        <h3 class="card-title"><center>Ingreso </center></h3>
+                        <p class="card-text"><center>Ingreso al sistema</center></p>
+                        <a href="{% url 'registro_persona' %}" class="btn btn-primary btn-round">Resgistro</a>
+                      </div>
+                        </div>
+                </def>
+                <h4>Ventajas de registrarse.</h4> 
                     <ol>
                             
                         
@@ -50,14 +58,26 @@
                       
                 </p>  
             </aside>
-            </section>
+            
+    <!--<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">           -->
+
+    <!--    <div class="card w-75">-->
+    <!--      <div class="card-block">-->
+    <!--        <h3 class="card-title">Registro</h3>-->
+    <!--        <p class="card-text">Bienvenido. Registro</p>-->
+    <!--        <a href="{% url 'perfil_personal' %}" class="btn btn-primary">Resgistro</a>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--</aside>-->
+</div>
+
             
   <hr/>    
   
   <!--Otra FILA-->
   
-    <div class="container">
-          <section class="main row">
+  
+          <div class= "card">
             <h2> Ventajas de estacionamientos inteligentes </h2>
             
             <article class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
@@ -92,10 +112,10 @@
             
                       </p>  
             </aside>
-            </section>
+            </div>
             
   <hr/>    
-  
+ 
   
  <!--otra fila -->
             
@@ -129,6 +149,5 @@
             
         
         </section>
-</div>
-
+</div></div>
 {% endblock %}

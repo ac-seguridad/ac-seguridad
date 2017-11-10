@@ -203,7 +203,8 @@ def historial_personas(request):
     
     Vehiculos_hist = []
     for carro in carros_de:
-        Vehiculos_hist += list(Ticket.objects.filter(placa=carro,pagado=True))
+        Vehiculos_hist += list(Ticket.objects.filter(placa=carro).exclude(hora_salida__isnull = True ))
+    
     
     context['lista_vehiculo'] = Vehiculos_en
     context['lista_vehiculo2'] = Vehiculos_hist
@@ -248,6 +249,7 @@ def registro_vehiculo(request):
     return render(request, 'ac_seguridad/area_personal/registro_vehiculo.html', context)
 
 #<----------------------------- Area empresas
+
 @login_required
 def area_empresas(request):
     # Esta página sólo es visible para el usuario que ha hecho login. 
@@ -300,18 +302,23 @@ def historial_empresas(request):
     
     rif_estacionamiento = estacionamiento.rif
       
-    Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento,pagado= False))
+    Vehiculos_en = list(Ticket.objects.filter(rif=rif_estacionamiento,pagado= False).extra(order_by=['-hora_entrada']))
    # Vehiculos_en2 = list(TicketNoRegistrado.objects.filter(rif=rif_estacionamiento,pagado= False))
-    Vehiculos_orden = Ticket.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = True )
-    Alertas_en = list(Alerta.objects.filter(estacionamiento=rif_estacionamiento))
+    Vehiculos_egreso = list(Ticket.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = True ).extra(order_by=['-hora_entrada']))
+    Vehiculos_egreso_no_registrado = list(TicketNoRegistrado.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = True ).extra(order_by=['-hora_entrada']))
+    Alertas_en = list(Alerta.objects.filter(estacionamiento=rif_estacionamiento).extra(order_by=['-fecha']))
     
+    #tabla de vehiculos no registrados en el centro comercial
+    Vehiculos_no_registrados_dentro = list(TicketNoRegistrado.objects.filter(rif=rif_estacionamiento,pagado= False).extra(order_by=['-hora_entrada']))
     
     Cantidad_regis= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
     Cantidad_nresg= TicketNoRegistrado.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
     Cantidad = Cantidad_nresg + Cantidad_regis 
     
     context['vehiculos_en'] = Vehiculos_en
-    context['vehiculos_orden'] = Vehiculos_orden
+    context['vehiculos_no_registrados_dentro'] = Vehiculos_no_registrados_dentro 
+    context['vehiculos_orden'] = Vehiculos_egreso
+    context['vehiculos_egresos_no_registrados'] = Vehiculos_egreso_no_registrado
     context['estacionamiento']= estacionamiento
     context['cantidad']= Cantidad
     context['lista_alertas']= Alertas_en
@@ -367,10 +374,12 @@ def pago_estacionamiento(request):
             try:
                 if (registrado_ticket):
                     ticket = Ticket.objects.get(numero_ticket=num_ticket)
-                    placa = ticket.placa.placa
+                    placa = ticket.placa.placa #es placa.placa para obtener la placa del vehiculo
+                    pagado = ticket.pagado
                 else:
                     ticket = TicketNoRegistrado.objects.get(numero_ticket=num_ticket)
                     placa = ticket.placa
+                    pagado = ticket.pagado
             except:
                 return redirect('pago_estacionamiento')
             
@@ -382,6 +391,7 @@ def pago_estacionamiento(request):
                 horas = round(tiempo_transcurrido.total_seconds() / 3600)
                 monto_a_pagar = monto_tarifa * horas
             
+            
             context['monto_tarifa'] = monto_tarifa
             context['es_tarifa_plana'] = es_tarifa_plana
             context['hora_entrada'] = ticket.hora_entrada
@@ -390,9 +400,11 @@ def pago_estacionamiento(request):
             context['monto_a_pagar'] = monto_a_pagar
             context['num_ticket'] = num_ticket
             context['placa']= placa
+            context['pagado_ticket']= pagado
             
     else:
         pago_form = ac_forms.PagoEstacionamientoForm()
+        context['pagado_ticket']= False
     
     context['pago_form'] = pago_form
     return render(request, 'ac_seguridad/area_empresas/pago_estacionamiento.html', context)    

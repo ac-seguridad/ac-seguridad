@@ -84,3 +84,19 @@ QUE HACER SI SE VA ELSERVIDOR. INTERNET
 
 
 
+
+
+#Para correr la pagina web django
+
+python manage.py runserver 0.0.0.0:8000
+
+/home/ac-seguridad/project/project/settings
+
+servodores
+/home/ac-seguridad/project/manejador/
+
+
+Activar entorno 
+/home/ferandoperez/ac-seguridad
+source env_acseguridad/bin/activate
+
