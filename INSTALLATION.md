@@ -33,9 +33,9 @@ Ejecutar:
 ## Creación de la base de datos.
 Ejecutar:
 * `psql`
-* `CREATE USER usuario WITH PASSWORD 'contraseña';`
+* `CREATE USER acseguridad WITH PASSWORD 'contraseña';`
 * `CREATE DATABASE "ac_seguridad";`
-* `GRANT ALL PRIVILEGES ON DATABASE ac_seguridad to usuario;`;
+* `GRANT ALL PRIVILEGES ON DATABASE ac_seguridad to acseguridad;`;
 * `\password postgres;`
 * Insertar contraseña aquí, dos veces.
 * `python manage.py migrate`
