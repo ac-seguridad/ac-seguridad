@@ -25,7 +25,7 @@ SECRET_KEY = '%1*yv5u#t8_9h4y21)u4w0g)#*17)6epn=)3kf*b&%(2@cqz7j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io']
+ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io','localhost','127.0.0.1','192.168.0.11', '192.168.0.112']
 
 
 # Application definition
@@ -79,9 +79,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'ac_seguridad',
-        'USER': 'ubuntu',
-        'PASSWORD': '2306anayfer',
-        'HOST' : '/var/run/postgresql',
+        'USER': 'acseguridad',
+        'PASSWORD': 'vas20Tpp',
+        'HOST' : 'localhost',
     }
 }
 
