@@ -25,6 +25,7 @@ Ejecutar:
 
 ## Creación de la base de datos.
 Ejecutar:
+[Si psql no funciona]: * sudo -u postgres psql
 * `psql`
 * `CREATE USER usuario WITH PASSWORD 'contraseña';`
 * `CREATE DATABASE "ac_seguridad";`
