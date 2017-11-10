@@ -46,7 +46,7 @@ print("Socket conectado.")
 print("Preparando mensaje")
 mensaje = dict()
 mensaje['estacionamiento'] = RIF
-mensaje['ticket'] = 2
+mensaje['ticket'] = None
 mensaje['placa'] = leer_placa()
 mensaje['puerta'] = NUM_PUERTA
 mensaje['tipo'] = 'placa_leida_entrada'
