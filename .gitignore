@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Ambiente virtual de venv.
+env_acseguridad
+
 # C extensions
 *.so
 

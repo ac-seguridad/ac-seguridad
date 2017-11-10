@@ -11,7 +11,7 @@ import pdb
 # ref2: https://stackoverflow.com/questions/41518910/how-to-make-a-script-to-insert-data-in-my-default-sqlite3-database-django
 # Respuesta de: skoll
 import django
-sys.path.append('/home/ubuntu/workspace/project')
+sys.path.append('/home/fernandoperez/ac-seguridad/project')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'project.settings'
 django.setup()
 

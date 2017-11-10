@@ -1,23 +1,23 @@
-'''
-    Este archivo es el encargado de recibir la placa leída y decidir si dejar 
-    pasar a un vehículo o no, dependiendo de la configuración de este. Además,
-    busca si la placa está registrada en el sistema, en caso de estarlo, busca
-    el usuario asociado al vehículo.
+
+#    Este archivo es el encargado de recibir la placa leída y decidir si dejar 
+#    pasar a un vehículo o no, dependiendo de la configuración de este. Además,
+#    busca si la placa está registrada en el sistema, en caso de estarlo, busca
+#    el usuario asociado al vehículo.
     
-    Este archivo básicamente maneja las alertas que se generan en el sistema.
-'''
+#    Este archivo básicamente maneja las alertas que se generan en el sistema.
+
 
 # from ac_seguridad.models import *
 from mysocket import MySocket
 import socket
-
+import pdb 
 # Constantes.
 NUM_PUERTA = 1
-RIF = "J-1231"
+RIF = "1231"
 
 #1234 acceso restringido 
 #0000 acceso no restringido
-
+#pdb.set_trace()
 # Funciones
 def leer_placa():
     placa = input("Placa: ")
@@ -28,7 +28,7 @@ def leer_placa():
 # Crear un socket como cliente.
 print("Creando socket")
 socket_cliente = MySocket()
-socket_cliente.connect(host='localhost', port=8081)
+socket_cliente.connect(host='192.168.0.11', port=8081)
 print("Socket conectado.")
 
 # Enviar primer mensaje:
