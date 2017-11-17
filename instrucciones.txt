@@ -9,7 +9,7 @@ Prender servidor
 * Iniciar el servidor: `python manage.py runserver 0.0.0.0:8080`
 
 
-Hacer migraciones cada vez que se actualice los modelos 
+Hacer migraciones cada vez que se actualice los modelos
 
 *ir a la carpeta:  cd project
 * Iniciar el entorno virtual de Python: `source activate acseguridad`
@@ -20,12 +20,12 @@ Hacer migraciones cada vez que se actualice los modelos
 ***************para ver las tablas
 
 activisar postsql:  sudo service postgresql start
-entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad 
+entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad
 23
 select * from ac_seguridad_estacionamiento;
 **************** Para borrar todo el contenido de una tabla o varias
 activisar postsql:  sudo service postgresql start
-entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad 
+entrar en la BD: psql -h localhost -U fernandobperezm -d ac_seguridad
 23
 truncate name1,name2;
 
@@ -35,7 +35,7 @@ truncate name1,name2;
 git add nombre_de_archivo o git status
 
 git commit -m "Que anadiste"
-git push 
+git push
 
 ***************Anadir info de la base de datos a la PW
 
@@ -47,7 +47,7 @@ git push
 Iniciar el entorno virtual de Python: `source activate acseguridad`
 en cd project
 
-python manage.py 
+python manage.py
 
 
 *************para correr el servidor.
@@ -57,31 +57,61 @@ cd project/manejador
 *python serv.py forks
 
 
-y el cliente es 
+y el cliente es
 python cliente.py
 
-************para hacer debug 
+************para hacer debug
 al principio del código: import pdb
 
 
 una linea antes de que pare: pdb.set_trace()
 
-en el terminal, 
+en el terminal,
 n para ejecutar la linea actual
 c para continuar la ejecución
 salir ctrl d
 s para meterme en la función
-p expresion 
+p expresion
 
 
 
 
 VALIDAR EL PAGO DEL TICKET, 2 VECES
-AÑADIR AL CONTADOR LOS NO REGISTRADOS 
+AÑADIR AL CONTADOR LOS NO REGISTRADOS
 QUE HACER SI SE VA ELSERVIDOR. INTERNET
 
 
 
+Para correr en la laptop
+
+1. abrir 2 terminales. (servidor django, servidor manejo rasp)
+2. en cada terminarl  cd ~/ac-seguridad/
+3. en cada terminal source env_acseguridad/bin/activate
+
+
+Terminal DJANGO
+cd project
+python manage.py runserver  'ip esta pc':"puerto a escoger"
+
+TERMINAL servidor
+cd project/manejador
+python serv.py forks
+
+
+Simulación del cliente
+
+cd project/manejador
+python cliente.py
+
+TERMINAL DJANGO
+cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project; python manage.py runserver 192.168.0.108:8000
+
+TERMINAL servidor
+cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project/manejador; python serv.py forks
+
+TERMINAL cliente
+cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project/manejador; python cliente_entrada.py
+cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project/manejador; python cliente_salida.py
 
 
 
@@ -96,7 +126,6 @@ servodores
 /home/ac-seguridad/project/manejador/
 
 
-Activar entorno 
+Activar entorno
 /home/ferandoperez/ac-seguridad
 source env_acseguridad/bin/activate
-
