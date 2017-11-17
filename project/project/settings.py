@@ -25,7 +25,7 @@ SECRET_KEY = '%1*yv5u#t8_9h4y21)u4w0g)#*17)6epn=)3kf*b&%(2@cqz7j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io','localhost','127.0.0.1','192.168.0.11', '192.168.0.112']
+ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io','localhost','127.0.0.1','192.168.0.11', '192.168.0.112','192.168.1.15','192.168.0.115']
 
 
 # Application definition
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io','localhost','127.0.0.
 INSTALLED_APPS = [
     'ac_seguridad.apps.AcSeguridadConfig',
     'manejador.apps.ManejadorConfig',
+    'notificaciones.apps.NotificacionesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,14 +135,14 @@ STATICFILES_DIRS = [
 
 STATIC_URL = '/static/'
 
-# EMAIL_USE_TLS='TRUE'
-# EMAIL_HOST='smtp.gmail.com'
-# EMAIL_HOST_USER ='ac.seguridad256@gmail.com'
-# EMAIL_HOST_PASSWORD = 'Anabel94'
-# EMAIL_PORT=587
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_HOST_USER = 'acseguridad256@outlook.com'
+EMAIL_USE_TLS='TRUE'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER ='ac.seguridad256@gmail.com'
 EMAIL_HOST_PASSWORD = 'Anabel94'
-EMAIL_PORT = 25
+EMAIL_PORT=587
+
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp-mail.outlook.com'
+# EMAIL_HOST_USER = 'acseguridad256@outlook.com'
+# EMAIL_HOST_PASSWORD = 'Anabel94'
+# EMAIL_PORT = 25

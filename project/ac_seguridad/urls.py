@@ -7,10 +7,10 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^ver_pagina/$', views.ver_pagina, name='ver_pagina'),
+    # url(r'^ver_pagina/$', views.index, name='Inicio'),
     url(r'^contacto/$', views.contacto, name='contacto'),
     url(r'^afiliados/$', views.afiliados, name='afiliados'),
-    
+
     # Parte de personas.
     url(r'^registro-persona/$', views.registro_persona, name='registro_persona'),
     url(r'^area-personal/$', views.area_personal, name='area_personal'),
@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^area-empresas/historial_empresas/$', views.historial_empresas, name='historial_empresas'),
     url(r'^area-empresas/perfil_empresas/$', views.perfil_empresas, name='perfil_empresas'),
     url(r'^area-empresas/mensajes/$', views.mensajes, name='mensajes'),
-    
+
     # Login.
     url(r'^login/$', auth_views.LoginView.as_view(template_name='ac_seguridad/registration/login.html',redirect_field_name='area_personal'), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(template_name='ac_seguridad/registration/logout.html'), name='logout'),
