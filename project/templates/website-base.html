@@ -19,11 +19,11 @@
   <script type="text/javascript" src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
 
   <!-- STYLE -->
-  <link rel="stylesheet" type="text/css" href="{% static 'ac_seguridad/css/material-kit.css' %}"/>   
-  <link type="text/css" href="{% static 'ac_seguridad/js/material-kit.js' %}"/>   
-  <link type="text/css" href="{% static 'ac_seguridad/js/material.min.js' %}"/> 
-  <link type="text/css" href="{% static 'ac_seguridad/js/nouislider.min.js' %}"/> 
-  
+  <link rel="stylesheet" type="text/css" href="{% static 'ac_seguridad/css/material-kit.css' %}"/>
+  <link type="text/css" href="{% static 'ac_seguridad/js/material-kit.js' %}"/>
+  <link type="text/css" href="{% static 'ac_seguridad/js/material.min.js' %}"/>
+  <link type="text/css" href="{% static 'ac_seguridad/js/nouislider.min.js' %}"/>
+
 </head>
 <body>
   <!-- Logo -->
@@ -32,7 +32,7 @@
 	<!--		<img src="{% static 'ac_seguridad/images/Logo.png' %}" class="img-responsive center-block" alt="AC-Seguridad Logo">-->
 	<!--	</div>-->
 	<!--</div>-->
-  	
+
   {% block navbar %}
   <!-- Barra de navegación que utilizará toda la página -->
   <nav class="navbar navbar-default">
@@ -47,15 +47,15 @@
         </button>
         <!--<a class="navbar-brand" href="#">Brand</a>-->
       </div>
-            
+
       <!-- Empieza la barra aquí. -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style = " ">
-          <li class="active"><a href="{% url 'ver_pagina' %}">Ver página <span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="{% url 'index' %}">Inicio</a></li>
           <li><a href="{% url 'afiliados' %}">Afiliados</a></li>
           <li><a href="{% url 'contacto' %}">Contacto</a></li>
         </ul>
-        
+
         <!-- Alinea a la derecha los siguientes links  -->
         <ul class="nav navbar-nav navbar-right">
           <!-- Se verifica que el usuario haya hecho login para cambiar la -->
@@ -80,7 +80,7 @@
     </div><!-- /.container-fluid -->
   </nav>
   {% endblock %}
-  
+
   <!-- Contenido -->
 	<div class="row">
 		<div class="col-xs-12 contenido">
