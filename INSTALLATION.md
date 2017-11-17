@@ -26,7 +26,7 @@ Ejecutar:
 * [Desactivar] `source deactivate acseguridad`
 
 ## [Si el proyecto no está creado] Crear el proyecto.
-Ejecutar: 
+Ejecutar: s
 * `django-admin startproject project`
 * `python manage.py startapp ac_seguridad`
 
@@ -35,8 +35,9 @@ Ejecutar:
 [Si psql no funciona]: * sudo -u postgres psql
 * `psql`
 * `CREATE USER acseguridad WITH PASSWORD 'contraseña';`
-* `CREATE DATABASE "ac_seguridad";`
+* `CREATE DATABASE "ac_seguridad" owner acseguridad;`
 * `GRANT ALL PRIVILEGES ON DATABASE ac_seguridad to acseguridad;`;
+* `alter user acseguridad CREATEDB;`
 * `\password postgres;`
 * Insertar contraseña aquí, dos veces.
 * `python manage.py migrate`
