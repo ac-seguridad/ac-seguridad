@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 import pdb
 from ac_seguridad.models import *
+import requests
 
 # Create your views here.
 def index(request):
@@ -15,3 +16,6 @@ def index(request):
     template = loader.get_template('ac_seguridad/index.html')
     return HttpResponse(template.render(context, request))
     # return HttpResponse("Hello, world. You're at the polls index.")
+
+def enviar_correo_entrada(request):
+    if request
