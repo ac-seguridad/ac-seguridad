@@ -8,6 +8,7 @@ Prender servidor
 * Iniciar el entorno virtual de Python: `source activate acseguridad`
 * Iniciar el servidor: `python manage.py runserver 0.0.0.0:8080`
 
+cd project; sudo service postgresql start; source activate acseguridad; python manage.py runserver 0.0.0.0:8080
 
 Hacer migraciones cada vez que se actualice los modelos 
 
@@ -32,8 +33,8 @@ truncate name1,name2;
 
 
 ***************Actualizar en GIT
-git add nombre_de_archivo o git status
-
+git status
+git add nombre_de_archivo 
 git commit -m "Que anadiste"
 git push 
 
