@@ -1,0 +1,89 @@
+{% extends '../area-personal-base.html' %}
+
+{% block title %}Área Personal{% endblock %}
+{% load static %}
+{% block area_personal %}
+
+<!--Aqui se muestra el area de las personas donde pueden elegir que accion realizar en el sistema-->
+<!--si la persona no tiene carros registrados, solo se muestra eso-->
+
+    <div>
+      <h1> Área personal</h1>  
+        
+    </div>
+<hr>   
+
+
+{% if vehiculo_de|length > 0 %}
+  <div class="card">
+            
+          
+<!--Otra fila-->
+        
+        
+    
+    <!--Seccion de datos personales-->
+        
+        <article class="col-xs-12 col-sm-12 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Ver Perfil</center></h2> </br>
+                <a href="{% url 'perfil_personal' %}">
+                    <img src="{% static 'ac_seguridad/images/iconos/datos_personales.png'  %}"  width= "200" height="200"class="img-responsive center-block">
+        	   </a>
+        </article>
+<!--tabla de historial del centro comercial-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Historial</center></h2> </br>
+                <a href="{% url 'historial_personas' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+
+<!--registro de carros-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Registro de carros</center></h2>
+                <a href="{% url 'registro_vehiculo' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/car.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+        
+    <!--Requerimientos, redirect a contacto-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Requerimiento</center></h2> </br>
+                <a href="{% url 'contacto' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/requerimiento.png' %}" width= "200" height="200" class="img-responsive center-block">
+                </a>
+        	</p>
+        </article>
+   
+    
+    <article class="col-xs-12 col-sm-6 col-md-6 col-lg-12 ">
+           <p> Seleccione una de las imágenes presentes para ingresar a la sección deseada.</p>
+        </article>
+       
+   
+  </div>
+
+{% else %}
+<div class = "card"> 
+  <div class= "col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+    <p>
+      <h2><center>Registro de carros</center></h2> </br>
+      <a href="{% url 'registro_vehiculo' %}">
+        <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+      </a>
+    </p>
+  </div>
+</div>
+  
+{% endif %}
+
+
+{% endblock %}

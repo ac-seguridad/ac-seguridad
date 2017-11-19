@@ -1,0 +1,61 @@
+{% extends '../area-empresas-base.html' %}
+{% load static %}
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+
+<div class="container">
+    <h1> Area Empresarial</h1>  
+</div>
+<hr> 
+
+<div class="card">
+    <div>
+    <!--Seccion de datos empresariales-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Ver Perfil</center></h2> </br>
+                <a href="{% url 'perfil_empresas' %}">
+                    <img src="{% static 'ac_seguridad/images/iconos/datos_personales.png'  %}"  width= "200" height="200"class="img-responsive center-block">
+        	   </a>
+        </article>
+    <!--tabla de historial del centro comercial-->
+        
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Historial</center></h2> </br>
+                <a href="{% url 'historial_empresas' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/historial.png' %}" width= "200" height="200" class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+                
+    <!--Pago de estacionamiento-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Pago estacionamiento</center></h2> 
+                <a href="{% url 'pago_estacionamiento' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "200" height="200"  class="img-responsive center-block">
+        	    </a>
+        	</p>
+        </article>
+        
+    <!--Requerimientos, redirect a contacto-->
+        <article class="col-xs-12 col-sm-6 col-md-6 col-lg-3 ">
+            <p>
+                <h2><center>Requerimiento</center></h2> </br>
+                <a href="{% url 'contacto' %}">
+                <img src="{% static 'ac_seguridad/images/iconos/requerimiento.png' %}" width= "200" height="200" class="img-responsive center-block">
+                </a>
+        	</p>
+        </article>
+    </div>
+     <div class ="col-xs-12"><p>
+        Seleccione una de las imágenes presentes para ingresar a la sección deseada.
+    </p>
+</div>
+
+
+
+{% endblock %}

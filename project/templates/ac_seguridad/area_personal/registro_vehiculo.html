@@ -1,0 +1,55 @@
+{% extends '../area-personal-base.html' %}
+{% load static %}
+{% block title %}Área Personal{% endblock %}
+
+{% block area_personal %}
+ 
+<div >
+    <h1> Registro de vehículos </h1>  
+</div>
+<hr> 
+
+
+<div class = "card">
+ <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 ">
+  <p>
+    <a href="{% url 'perfil_personal' %}">
+    <img src="{% static 'ac_seguridad/images/iconos/car.png'  %}" class="img-responsive center-block">
+   </a>
+</div>
+</br></br>
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+    <center><h3>Datos del vehículo</h3></center>
+    <form method="post">
+    <div class="form-group">
+        <center>{% csrf_token %}</center>
+        <center> {{ vehiculo_form.as_p }}</center>
+        <!--<button type="submit">Sign up</button>-->
+        <center><button type="submit" class="btn btn-primary btn-round">Registrar</button></center>
+    </div>
+  </form>
+</div>
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-2">
+
+
+
+<center><h3>Registrados</h3></center>
+ 
+  <table class="table table-responsive">
+    <tr><thead>
+  	    <th>Placa</th>
+  	</thead></tr>
+         {% if lista_vehiculo|length > 0 %}
+            {% for carro in lista_vehiculo %}
+                <tr>
+                    <td><center>{{ carro.placa }}</center></td>
+                </tr>
+        	{% endfor %}
+        {% else %}
+              <p>Sin vehiculos registrados, por favor registre su primer vehículo</p>
+          {% endif %}
+  	</table>		
+</div> </div>
+{% endblock %}

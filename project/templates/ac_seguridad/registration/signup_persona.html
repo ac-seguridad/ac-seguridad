@@ -1,0 +1,38 @@
+{% extends '../login-base.html' %}
+{% load static %}
+{% block title %}SignUp{% endblock %}
+
+{% block login %}
+
+
+    <div >
+      <h1>Registro</h1>  
+        
+    </div>
+ <hr/> 
+
+<div class="card">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+</br>
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</div>	
+
+
+  
+<div class ="col-xs-12 col-sm-8 ">
+  
+</br>
+   <h3>Ingrese sus datos personales para el registro</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ user_form.as_p }}
+    
+
+    {{ persona_form.as_p }}
+  
+  <button type="submit" class="btn btn-primary col-sm-5 col-sm- btn-lg btn-round">Registrarse</button>
+  </form>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends '../website-base.html' %} 
+{% load static %}
+<!--para importar boostrap y el jquery-->
+
+{% block pagetitle %}Index{% endblock %}
+
+{% block contenido %}
+
+
+<header>
+    <div class="container">
+    	<h1><strong>Formulario de ingreso</strong></h1>
+     	  
+        
+    </div>
+</header>    
+
+    <div class="container">
+          <section class="main row">
+            <article class="col-xs-12 col-sm-9 col-md-9 col-lg-8 ">
+                <p>
+                
+    			<img src="{% static 'ac_seguridad/images/entrada.png' %}" width= "500" height="500" class="img-responsive center-block">
+    		
+    	       </p>
+            </article>
+            
+            <aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">
+            <h2> <strong>Ingreso de usuarios </strong> </h2>
+                <br/><br/>
+              
+              <div class="form-inline col=sm-6 col-sm-offset-3">
+              		
+					<h3> Ingresa a nuestro sitio</h3>
+					<p> Escribe tu usuario y contraseña</p>
+					<input type="text" class="form-control" id=Usuario placeholder="Usuario">
+					</br>
+				
+					<input type="text" class="form-control" id=Usuario placeholder="Contraseña">		
+				</div>
+               
+            </aside>
+            </section>
+            
+  <hr/>
+  
+{% endblock %}

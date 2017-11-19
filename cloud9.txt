@@ -3,7 +3,7 @@
 2. Para crear la BD desde cero.
 Ejecutar: psql
           create user fernandobperezm superuser password '2306anayfer';
-          CREATE DATABASE acseguridad;
-          alter database acseguridad owner to fernandobperezm;
+          CREATE DATABASE ac_seguridad;
+          alter database ac_seguridad owner to fernandobperezm;
 
-3. psql -h localhost -d acseguridad -U fernandobperezm
+3. psql -h localhost -d ac_seguridad -U fernandobperezm

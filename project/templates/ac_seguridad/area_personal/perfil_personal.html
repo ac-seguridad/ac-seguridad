@@ -1,0 +1,55 @@
+{% extends '../area-personal-base.html' %}
+
+{% block title %}Área Personal{% endblock %}
+{% load static %}
+{% block area_personal %}
+
+
+<div >
+      <h1> Datos personales </h1>  
+      <h3>Bienvenido: {{ usuario.nombre}} </h3>  
+</div>
+<hr> 
+
+<div class="card">
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 ">
+	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+</div>	
+
+<div class ="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+ 
+ 	<h3>Nombre</h3>
+  	<li>{{ usuario.nombre}}</li>
+ 	<h3>Apellido</h3>  
+   	<li>{{ usuario.apellido}}</li>
+   	
+  <h3>Cédula</h3>  
+   	<li>{{ usuario.cedula}}</li>
+</div>
+
+<div class = "col-xs-12 col-sm-10 col-md-6 col-lg-6 ">
+    <h3>Vehiculos registados</h3>
+     <table class="table table-responsive table-striped">
+        <tr>
+    			<th><center>Placa</center></th>
+    			<th><center>Modelo</center></th>
+    			<th><center>Marca</center></th>
+    			<th><center>Año</center></th>
+        </tr>
+        
+        {% if lista_vehiculo|length > 0 %}
+            {% for carro in lista_vehiculo %}
+                <tr>
+                <td><center>{{ carro.placa }}</center></td>
+                <td><center>{{ carro.modelo }}</center></td>
+                <td><center>{{ carro.marca }}</center></td>
+                <td><center>{{ carro.year }}</center></td>
+              </tr>
+            {% endfor %}
+        {% else %}
+            <p>No han egresado vehículos</p>
+         {% endif %}   
+</table>
+</div></div>
+
+{% endblock %}

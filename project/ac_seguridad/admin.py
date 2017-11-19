@@ -1,3 +1,6 @@
-from django.contrib import admin
+'''
+    En este archivo van los tipos de usuarios administrativos de la página.
+'''
 
-# Register your models here.
+from django import forms
+from django.contrib import admin

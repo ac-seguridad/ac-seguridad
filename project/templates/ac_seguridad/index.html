@@ -1,0 +1,153 @@
+{% extends '../website-base.html' %}
+{% load static %}
+<!--para importar boostrap y el jquery-->
+
+{% block pagetitle %}Index{% endblock %}
+
+{% block contenido %}
+<header>
+    <div class="container">
+      <h3> AC Seguridad. </h3>
+      <h1><center> Tu carro seguro. </h1> </center>
+    </div>
+</header>
+
+    <div class="card">
+
+            <article class="col-xs-12 col-sm-9 col-md-9 col-lg-8 ">
+                <p>
+
+    			<img src="{% static 'ac_seguridad/images/centro_comercial.jpg' %}" width= "800" height="800" class="img-responsive center-block">
+
+    	       </p>
+            </article>
+
+            <aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">
+                <p>
+                      <strong><h3>Bienvenido a AC Seguridad. El sistema para el resguardo de su automóvil. </strong></h3>
+
+                      <br/>
+
+
+                 <def class="col-xs-12">
+                        <div class="card w-100">
+                        <div class="card-block">
+                        <h3 class="card-title"><center>Ingreso</center></h3>
+                        <p class="card-text"><center>Ingreso al sistema</center></p>
+                        <center><a href="{% url 'login' %}" class="btn btn-primary btn-round">Ingreso</a></center>
+                      </div>
+                        </div>
+                </def>
+                <!-- <def class="col-xs-6 col-sm-6 col-md-6 col-lg-12">
+                        <div class="card w-100">
+                        <div class="card-block">
+                        <h3 class="card-title"><center>Ingreso </center></h3>
+                        <p class="card-text"><center>Ingreso al sistema</center></p>
+                        <center><a href="{% url 'registro_persona' %}" class="btn btn-primary btn-round">Resgistro</a></center>
+                      </div>
+                        </div>
+                </def> -->
+                <h4>Ventajas de registrarse.</h4>
+                    <ol>
+
+
+                        <li>  Mantener un historial de las visitas a centros comerciales. </li>
+                        <li>  Recibir notificaciones cada vez que ingresa a uno de nuestros establecimientos. </li>
+                        <li>	Doble verificación al momento de la salida. Doble verificación significa que al momento de extraer el vehículo debe hacerse con el ticket asignado y el vehículo correspondiente. No será posible extraer un carro sin su ticket. </li>
+                    </ol>
+
+                </p>
+            </aside>
+
+    <!--<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-4">           -->
+
+    <!--    <div class="card w-75">-->
+    <!--      <div class="card-block">-->
+    <!--        <h3 class="card-title">Registro</h3>-->
+    <!--        <p class="card-text">Bienvenido. Registro</p>-->
+    <!--        <a href="{% url 'perfil_personal' %}" class="btn btn-primary">Resgistro</a>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--</aside>-->
+</div>
+
+
+  <hr/>
+
+  <!--Otra FILA-->
+
+
+          <div class= "card">
+            <h2> Ventajas de estacionamientos inteligentes </h2>
+
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+                <p>
+
+    			<img src="{% static 'ac_seguridad/images/11.jpg' %}" width= "100" height="100" class="img-responsive center-block">
+
+    		<h3>Identificación de vehículos al momento de la entrada. Placa-Usuario </h3>
+
+    	       </p>
+            </article>
+
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+                <p>
+
+    				<img src="{% static 'ac_seguridad/images/2.jpg' %}" width= "170" height="170" class="img-responsive center-block">
+
+    		<h3>En caso de eventualidades permite contactar al propietario. </h3>
+
+    	       </p>
+            </article>
+
+
+            <article class="col-xs-12 col-sm-6 col-md-6 col-lg-4 ">
+                <p>
+
+    			<img src="{% static 'ac_seguridad/images/3.jpg' %}"  width= "170" height="170" class="img-responsive center-block">
+
+    		<h3>Valida ticket con placa al momento de la salida.</h3>
+    	       </p>
+    	    </article>
+
+                      </p>
+            </aside>
+            </div>
+
+  <hr/>
+
+
+ <!--otra fila -->
+
+
+<div class="row">
+    <div  class="col-xs-2 ">
+        <p class="text-center">
+        <img src="{% static 'ac_seguridad/images/UCAB.png' %}" class="img-responsive center-block">
+    	</p>
+    </div>
+    <div  class="col-xs-10 ">
+        <p class="text-center">
+            <b>CONTACTOS</b>
+            <br/><br/>
+            <strong>Twitter, Inc.</strong><br>
+
+            Universidad Católica Andrés Bello<br>
+            Caracas, VE 1050<br>
+            <abbr title="Phone">P:</abbr> +58 414 555-5555
+
+            <address class="text-center">
+
+                <strong>AC Seguridad</strong><br>
+                <a href="mailto:#">ac.seguridad256@gmail.com</a>
+            </address>
+
+                Proyecto realizado por estudiantes de la Universidad Católica Andrés Bello, para cumplir con el requisito académico del trabajo especial de grado. Realizado por. Br. Christian Escalona y Br. Anabel Rincón, trabajo resguardado bajo la tutela del Director de escuela Ingeniería en Telecomunicaciones Ing. José Pirrone. Proyecto desarrollado en 2016-2017 en Caracas, Venezuela.
+            </p>
+        </div>
+
+
+
+        </section>
+</div></div>
+{% endblock %}

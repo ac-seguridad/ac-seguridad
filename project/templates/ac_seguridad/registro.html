@@ -1,0 +1,107 @@
+{% extends '../website-base.html' %} 
+{% load static %}
+<!--para importar boostrap y el jquery-->
+
+{% block pagetitle %}Index{% endblock %}
+
+{% block contenido %}
+
+
+<header>
+    <div class="container">
+      <h1> Registro de nuevos usuarios</h1>  
+       
+    </div>
+</header>
+
+
+
+<div class="container">
+<section class "main row">
+	
+    	<div class= "col-md-7 col-md-offset-5">       
+			<h3>Registo de Nombre de Usuario </h3>                
+    	</div>
+
+		<form action="" class= "form-inline">
+			<article>
+				
+					<label for="Username"	class="control-label  col-sm-2 col-sm-offset-4 "> Usuario: </label> 
+					<div class= "col-md-7 col-md-offset-5"> 
+						<input type="text" class="form-control" id=Username placeholder="Usuario">
+					</div>
+													
+					<div class"form-group">
+						<label for="clave"	class="col-sm-2 col-sm-offset-4"> Clave: </label>
+						   	<div class="col-sm-7 col-sm-offset-5 "> 
+								<input type="text" class="form-control" id=clave placeholder="clave">
+								</br></br>
+								<b>Condiciones de la clave</b>
+								<ul>
+									<li>No se puede parecer al nombre de usuario</li>
+									<li>Longitud mínima de 8 caracteres</a></li>
+									<li>No se perimiten claves comunes. Ej: qwerty, password</a></li>
+									<li>No puede ser completamente numérica</a></li>
+								</ul>
+							</div>   
+    	    		</div>
+				    <div class"form-group">
+						<label for="Repetir_clave"	class="col-sm-2 col-sm-offset-4"> Repetir clave: </label>
+				    	<div class="col-sm-7 col-sm-offset-5"> 
+				    	    <input type="text" class="form-control" id=Repetir_clave placeholder="Repetir clave">
+				    	</div>
+					</div>
+				
+			</article>
+	 <hr/>
+	 
+	 
+	 
+			<div class= "col-md-7 col-md-offset-5">   
+				<h3>Registo de datos personales</h3>     
+			</div>	
+  			<div class="container">
+  				
+  					<div class"form-group">
+						<label for="Nombre"	class="col-sm-2 col-sm-offset-4"> Nombre: </label>
+    					<div class="col-sm-7 col-sm-offset-5 "> 
+    	    				<input type="text" class="form-control" id=Nombre placeholder="Nombre">
+    					</div>
+					</div>
+	
+	 				<div class"form-group">
+						<label for="Apellido"	class="col-sm-2 col-sm-offset-4"> Apellido: </label>
+				    	<div class="col-sm-7 col-sm-offset-5 "> 
+				    	    <input type="text" class="form-control" id=Apellido placeholder="Apellido">
+				    	</div>
+					</div>
+					
+						
+				    <div class"row">
+					<label for="Cedula"	class="col-sm-2 col-sm-offset-4"> Cédula: </label>
+				    	<div class="col-sm-7 col-sm-offset-5 "> 
+				    	    <input type="text" class="form-control" id=Cedula placeholder="Cédula">
+				    	</div>
+					</div>
+					
+					<div class"row">
+					<label for="Telefono"	class="col-sm-2 col-sm-offset-4"> Teléfono: </label>
+				    	<div class="col-sm-7 col-sm-offset-5 "> 
+				    	    <input type="text" class="form-control" id=telefono placeholder="02120000000">
+				    	</div>
+					</div>
+					
+					<div class"row">
+					<label for="Correo"	class="col-sm-2 col-sm-offset-4"> Correo: </label>
+				    	<div class="col-sm-7 col-sm-offset-5 " > 
+				    	    <input type="text" class="form-control" id=Correo placeholder="Correo">
+				    	</div>
+					</div>
+	
+				</div>
+
+
+<button class="btn btn-primary col-sm-4 col-sm-offset-4">Registrarse</button>
+</form>
+</section>
+{% endblock %}

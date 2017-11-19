@@ -1,0 +1,64 @@
+{% extends '../area-empresas-base.html' %}
+{% load static %}
+
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+<header>
+    <div class="container">
+    	<h1><strong><center>Mensajes</center></strong></h1>
+     	  
+        
+    </div>
+</header>    
+
+<div class="container">
+<!-- Variables disponibles dentro de context: -->
+ <!--   context['email_carro'] = email_carro-->
+ <!--   context['responsable_mensaje'] = responsable_mensaje-->
+ <!--   context['tipo_mensaje'] = tipo_mensaje-->
+ <!--   context['placa_mensaje'] = placa_mensaje-->
+
+	<section class="main row">
+    <article class="col-xs-12 col-sm-4 col-md-4 col-lg-4 ">
+        <p>
+			<img src="{% static 'ac_seguridad/images/iconos/dinero2.png' %}" width= "300" height="300" class="img-responsive center-block">
+        </p>
+    </article>
+            
+    <aside class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+	    <h2> <strong><center>Pago de un ticket </center></strong> </h2>
+	    <br>
+		<form action="{% url 'mensajes' %}" method="post">
+		    {% csrf_token %}
+		    <p>{{ Mensajes_Form.placa.label_tag }}
+			    <input id="{{ Mensajes_Form.placa.id_for_label }}"
+			    	   class="form-control"
+			    	   type="text" 
+			    	   name="placa_mensaje" 
+			    	   placeholder="Placa" 
+			    	   value="{{ Mensajes_Form.placa_mensaje.value }}" 
+			    	   required /></p>
+			<p>{{ Mensajes_Form.registrado_ticket.label_tag }}
+				<input id="{{ Mensajes_Form.responsable.id_for_label }}"
+					   class="form-control"
+					   type="text" 
+					   placeholder="Responsable"
+					   name="responsable_mensaje" 
+					   value="{{ Mensajes_Form.responsable.value }}" /></p>
+			<p>{{ Mensajes_Form.registrado_ticket.label_tag }}
+				<input id="{{ Mensajes_Form.tipo_mensaje.id_for_label }}"
+					   class="form-control"
+					   type="text"
+					   placeholder="timpo de mensaje"
+					   name="tipo_mensaje" 
+					   value="{{ Mensajes_Form.tipo_mensaje.value }}" /></p>
+					   
+		    <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-1 btn-lg">Buscar</button>
+		</form>
+		<br><br><br><br>
+	 
+<p>	{{ responsable_mensaje }} {{ tipo_mensaje }} {{ placa_mensaje }}</p>
+<td rowspan="2" valign="middle">{{ responsable_mensaje }}</td>	
+	</aside>
+{% endblock %}

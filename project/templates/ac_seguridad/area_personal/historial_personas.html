@@ -1,0 +1,80 @@
+{% extends '../area-empresas-base.html' %}
+{% load static %}
+{% block title %}Área Empresas{% endblock %}
+
+{% block area_empresas %}
+
+<div >
+    <h1> Historial Personal</h1>
+</div>
+<hr>
+
+<div class = "card">
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+    	<img src="{% static 'ac_seguridad/images/iconos/datos_personales2.png' %}"  width= "400" height="400" class="img-responsive center-block">
+    </div>
+
+<!--Tabla que muestra los carros actualmete dentro dele estacionamiento-->
+
+    <div class ="col-xs-12 col-sm-12 col-md-8 col-lg-8 ">
+
+        <h3>Vehiculos actualmente dentro del establecimiento</h3>
+        <table class="table table-responsive">
+          <tr>
+      		  <thead>
+      			<th>Placa</th>
+      			<th>Estacionamiento</th>
+      			<th>Ticket</th>
+      			<th>Fecha de ingreso</th>
+            <th>Tique pagado</th>
+      			</thead>
+      		</tr>
+
+         {% if lista_vehiculo|length > 0 %}
+            {% for carro in lista_vehiculo %}
+              <tr>
+                    <td><center>{{ carro.placa }}</center></td>
+                    <td><center>{{ carro.rif }}</center></td>
+                    <td><center>{{ carro.numero_ticket }}</center></td>
+                    <td><center>{{ carro.hora_entrada }}</center></td>
+                    <td><center>{{ carro.pagado }}</center></td>
+                  </tr>
+                {% endfor %}
+            {% else %}
+                <p>Sin vehiculos en establecimientos</p>
+             {% endif %}
+        </table>
+    </div>
+</div>
+
+</br></br>
+<!--Tabla para mostrar su historial de vehiculos que ingresaron al estacionamiento-->
+
+<div class = "card">
+<div class ="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+    <h3>Historial de egreso de vehiculos</h3>
+  <table class="table table-responsive">
+      <tr>
+  		  <thead>
+  			<th>Placa</th>
+  			<th>Estacionamiento</th>
+  			<th>Ticket</th>
+  			<th>Fecha de ingreso</th>
+  			<th>Fecha de salida</th>
+  			</thead>
+  		</tr>
+     {% if lista_vehiculo2|length > 0 %}
+        {% for carro in lista_vehiculo2 %}
+                  <tr>
+                <td><center>{{ carro.placa }}</center></td>
+                <td><center>{{ carro.rif }}</center></td>
+                <td><center>{{ carro.numero_ticket }}</center></td>
+                <td><center>{{ carro.hora_entrada }}</center></td>
+                <td><center>{{ carro.hora_salida }}</center></td>
+              </tr>
+            {% endfor %}
+        {% else %}
+            <p>Sin egresos registrados</p>
+      {% endif %}
+</table></div></div>
+{% endblock %}

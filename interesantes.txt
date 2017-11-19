@@ -1,0 +1,6 @@
+Como usar el login/autenticación de Django: 
+ * doc: https://docs.djangoproject.com/en/1.11/topics/auth/default/#using-the-views
+ * class-views: https://docs.djangoproject.com/en/1.11/topics/class-based-views/
+ * login: https://simpleisbetterthancomplex.com/tutorial/2016/06/27/how-to-use-djangos-built-in-login-system.html
+ * signup: https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
+ * extender usuarios: https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html
