@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%1*yv5u#t8_9h4y21)u4w0g)#*17)6epn=)3kf*b&%(2@cqz7j'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['ac-seguridad-fernandobperezm.c9users.io','localhost','127.0.0.1','192.168.0.11', '192.168.0.112','192.168.1.15','192.168.0.115']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mod_wsgi.server',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,7 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/ac-seguridad/project/static/"
 
 EMAIL_USE_TLS='TRUE'
 EMAIL_HOST='smtp.gmail.com'
