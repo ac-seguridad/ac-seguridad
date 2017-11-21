@@ -24,9 +24,9 @@ with open('/etc/secret_key_acseguridad.txt') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost','190.38.144.154']
 
 
 # Application definition
@@ -60,7 +60,7 @@ LOGIN_REDIRECT_URL = 'index'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates',],
+        'DIRS': ['/var/www/ac-seguridad/project/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
