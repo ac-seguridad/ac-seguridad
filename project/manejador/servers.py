@@ -280,8 +280,8 @@ def validar_existencia(placa):
     if ( (aux1 == 0) and (aux2 == 0)):
         return False
     else:
-        # return True
-        return False
+        return True
+        #return False Quita validación de carro dentro
 
 
 
