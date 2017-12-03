@@ -14,7 +14,8 @@ import pdb
 # Constantes.
 NUM_PUERTA = 5
 RIF = "1231"
-
+HOST = "localhost"
+PORT = 8081
 #1234 acceso restringido
 #0000 acceso no restringido
 #pdb.set_trace()
@@ -28,7 +29,7 @@ def leer_placa():
 # Crear un socket como cliente.
 print("Creando socket")
 socket_cliente = MySocket()
-socket_cliente.connect(host='192.168.0.115', port=8081)
+socket_cliente.connect(host=HOST, port=PORT)
 print("Socket conectado.")
 
 # Enviar primer mensaje:
