@@ -6,5 +6,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='manejador'),
+    url(r'^manejar_mensaje/$', views.manejar_mensaje, name='manejar_mensaje'),
 ]

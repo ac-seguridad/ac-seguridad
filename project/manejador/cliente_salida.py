@@ -12,11 +12,12 @@ from mysocket import MySocket
 import socket
 import pdb
 import sys
+import requests
 # Constantes.
 NUM_PUERTA = 5
-RIF = "1231"
+RIF = "12345"
 HOST = "localhost"
-PORT = 8081
+PORT = 8000
 #1234 acceso restringido
 #0000 acceso no restringido
 #pdb.set_trace()
@@ -33,8 +34,8 @@ def leer_ticket():
 # ref: https://docs.python.org/3/howto/sockets.html
 # Crear un socket como cliente.
 print("Creando socket")
-socket_cliente = MySocket()
-socket_cliente.connect(host=HOST, port=PORT)
+# socket_cliente = MySocket()
+# socket_cliente.connect(host=HOST, port=PORT)
 print("Socket conectado.")
 
 # Enviar primer mensaje:
@@ -63,12 +64,16 @@ mensaje['lectura_automatica']= True
 
 
 print("Enviando mensaje: {}".format(mensaje))
-socket_cliente.sendall_json(mensaje)
+# socket_cliente.sendall_json(mensaje)
 # socket_cliente.mysend("Hola, este es el mensaje\0".encode(encoding="utf-8", errors="strict"))
+url = "http://{}:{}/manejador/manejar_mensaje/".format(HOST,PORT)
+data_mensaje = mensaje
+respuesta_request = requests.post(url, data=data_mensaje)
+respuesta = respuesta_request.json()
 print("Mensaje enviado")
 
 print("Recibiendo respuesta")
-respuesta = socket_cliente.receive()
+# respuesta = socket_cliente.receive()
 print("Respuesta recibida: {}".format(respuesta))
 
 if (respuesta['tipo'] == "OK_salida_estacionamiento"):
@@ -86,5 +91,5 @@ elif (respuesta['tipo'] == "NO_ticket_no_encontrado"):
 else:
     print("Respuesta no válida")
 
-socket_cliente.sock.shutdown(socket.SHUT_WR)
-socket_cliente.sock.close()
+# socket_cliente.sock.shutdown(socket.SHUT_WR)
+# socket_cliente.sock.close()
