@@ -14,8 +14,7 @@ if __name__ == "__main__":
 else:
     import manejador.servers as servers
 
-print("host: {}, addr: {}".format(socket.gethostname(), socket.getaddrinfo(socket.gethostname(), 8081)))
-HOST, PORT = '192.168.0.115', 8081
+HOST, PORT = 'localhost', 8081
 chosen_server = sys.argv[1]
 server_classes = {'files':socketserver.TCPServer,
                   'forks':servers.ForkedTCPServer,

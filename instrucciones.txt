@@ -33,8 +33,16 @@ truncate name1,name2;
 
 
 ***************Actualizar en GIT
+
+ANTES DE HACER CUALQUIER CAMBIO VERIFICAR QUE SE ESTÁ EN LA RAMA DEVELOPMENT
+O DETECTOR
+git branch
+
+PARA CAMBIAR A OTRAS RAMAS (no pueden haber cambios en la rama actual)
+git checkout <nombre_otra_rama>
+
 git status
-git add nombre_de_archivo 
+git add nombre_de_archivo
 git commit -m "Que anadiste"
 git push
 
