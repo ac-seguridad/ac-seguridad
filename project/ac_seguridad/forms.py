@@ -10,27 +10,27 @@ telefonoValidator = RegexValidator(regex=r'^\+?(58)?\d{9,15}$', message="Introdu
 class SignUpPersonaForm(ModelForm):
     class Meta:
         model = Persona
-        fields = ['nombre', 'apellido', 'cedula', 'telefono', 'email']
-        
+        fields = ['nombre', 'apellido', 'cedula', 'telefono', 'email', 'enviar_correo']
+
 class SignUpEstacionamientoForm(ModelForm):
     class Meta:
         model = Estacionamiento
         fields = ['rif', 'nombre', 'numero_de_puestos', 'acceso_restringido', 'email', 'monto_tarifa', 'tarifa_plana']
-        
+
 class VehiculoForm(ModelForm):
     class Meta:
         model = Vehiculo
         fields = ['placa', 'marca','modelo','year']
-        
+
 class PagoEstacionamientoForm(forms.Form):
     numero_ticket = forms.IntegerField(label="Número de ticket",
                                        min_value=0)
     registrado_ticket = forms.BooleanField(label="¿El ticket está registrado?",
                                            required=False)
-    
+
 class Mensajes_Form(forms.Form):
     placa_mensaje = forms.CharField(max_length=25, label="Placa del vehículo")
-                                       
+
     responsable = forms.CharField(label="Responsable del mensaje",
                                            required=True)
     tipo_mensaje= forms.CharField(max_length=25, label="Tipo de mensaje")
