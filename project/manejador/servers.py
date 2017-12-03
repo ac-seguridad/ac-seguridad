@@ -28,7 +28,8 @@ class ConnectionClosed(Exception): pass
 #Posibles respuestas del servidor:
     # respuesta['tipo']= "NO_carro_dentro" : Cuando se encuentra el carro dentro, genera alerta, niega el paso.
 
-
+HOST = "localhost"
+PORT = 8000
 def manejar_mensaje(mensaje):
     '''
         args:
@@ -126,13 +127,16 @@ def manejar_mensaje(mensaje):
                 respuesta['ticket'] = None
                 #aqui podria generarse una alerta de denegación de entrada.
 
-        #Salida de vehiculo
 
-        elif ( tipo=='placa_leida_salida'):
+
+
+    else:
+        #Salida de vehiculo
+        if ( tipo=='placa_leida_salida'):
             registrado = mensaje["registrado"]
             ticket = mensaje["ticket"]
             pdb.set_trace()
-            if (not registrado ):
+            if (not registrado):
                 try:
                 #Lo primero que se hace es listar por No resgistrado
                 #para evitar el caso en que el carro se registre estando dentro
@@ -150,38 +154,34 @@ def manejar_mensaje(mensaje):
                 except:
                     respuesta['tipo']= "NO_ticket_no_encontrado"
             else:
-                    try:
-                        # Verificamos si el ticket exite.
-                        ticket=Ticket.objects.get(numero_ticket=ticket)
-                        if (ticket.pagado):
-                            if (ticket.placa.placa == mensaje["placa"]):
-                                respuesta['tipo']= "OK_salida_estacionamiento"
-                                generar_actividad(estacionamiento=estacionamiento,
-                                                  ticket=ticket,
-                                                  vehiculo=vehiculo,
-                                                  persona = vehiculo.dueno,
-                                                  tipo= respuesta['tipo'])
-                            else:
-                                respuesta['tipo']="NO_ticket_placa"
-                                generar_actividad (estacionamiento=estacionamiento,
-                                                   ticket=ticket,
-                                                   vehiculo=vehiculo,
-                                                   persona = vehiculo.dueno,
-                                                   tipo= respuesta['tipo']
-                                                    )
+                try:
+                    # Verificamos si el ticket exite.
+                    ticket=Ticket.objects.get(numero_ticket=ticket)
+                    if (ticket.pagado):
+                        if (ticket.placa.placa == mensaje["placa"]):
+                            respuesta['tipo']= "OK_salida_estacionamiento"
+                            generar_actividad(estacionamiento=estacionamiento,
+                                              ticket=ticket,
+                                              vehiculo=vehiculo,
+                                              persona = vehiculo.dueno,
+                                              tipo= respuesta['tipo'])
                         else:
-                            respuesta['tipo']= "NO_ticket_pagado"
+                            respuesta['tipo']="NO_ticket_placa"
+                            generar_actividad (estacionamiento=estacionamiento,
+                                               ticket=ticket,
+                                               vehiculo=vehiculo,
+                                               persona = vehiculo.dueno,
+                                               tipo= respuesta['tipo']
+                                                )
+                    else:
+                        respuesta['tipo']= "NO_ticket_pagado"
 
-                    except:
-                        print("Ticket No encontrado")
-                        respuesta['tipo']= "NO_ticket_no_encontrado"
-
-
-    else:
-        respuesta['tipo']= "NO_carro_dentro"
-        generar_alerta(rif= estacionamiento,placa=placa,tipo_alerta='carro_dentro',usuario= None)
-
-
+                except:
+                    print("Ticket No encontrado")
+                    respuesta['tipo']= "NO_ticket_no_encontrado"
+        else:
+            respuesta['tipo']= "NO_carro_dentro"
+            generar_alerta(rif= estacionamiento,placa=placa,tipo_alerta='carro_dentro',usuario= None)
     return respuesta
 
 def generar_ticket_registrados(vehiculo,estacionamiento):
@@ -228,7 +228,7 @@ def generar_actividad(estacionamiento, vehiculo, persona, tipo, ticket=None):
 # ***********************************************************************************Enviar Mensaje
 
 def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
-    url = "http://192.168.0.115:8000/notificaciones/enviar_correo_entrada/"
+    url = "http://{}:{}/notificaciones/enviar_correo_entrada/".format(HOST,PORT)
     # pdb.set_trace()
     data_mensaje = {
         'rif': estacionamiento.rif,
@@ -249,7 +249,7 @@ def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     #     print("No lo logró enviar.")
 
 def enviar_mensaje_salida(estacionamiento, vehiculo, ticket, persona):
-    url = "http://192.168.1.15:8000/notificaciones/enviar_correo_salida/"
+    url = "http://{}:{}/notificaciones/enviar_correo_salida/".format(HOST,PORT)
     # pdb.set_trace()
     data_mensaje = {
         'rif': estacionamiento.rif,
@@ -280,8 +280,8 @@ def validar_existencia(placa):
     if ( (aux1 == 0) and (aux2 == 0)):
         return False
     else:
-        # return True
-        return False
+        return True
+        #return False Quita validación de carro dentro
 
 
 
