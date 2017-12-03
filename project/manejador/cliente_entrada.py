@@ -13,9 +13,9 @@ import socket
 import pdb
 # Constantes.
 NUM_PUERTA = 5
-RIF = "1231"
-HOST = "localhost"
-PORT = 8081
+RIF = "12345"
+HOST = "190.39.1.134"
+PORT = 23061
 #1234 acceso restringido
 #0000 acceso no restringido
 #pdb.set_trace()

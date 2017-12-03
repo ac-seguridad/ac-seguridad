@@ -13,8 +13,8 @@ if __name__ == "__main__":
     import servers
 else:
     import manejador.servers as servers
-
-HOST, PORT = 'localhost', 8081
+HOST = "190.39.1.134"
+PORT = 23061
 chosen_server = sys.argv[1]
 server_classes = {'files':socketserver.TCPServer,
                   'forks':servers.ForkedTCPServer,

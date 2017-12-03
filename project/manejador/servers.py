@@ -28,8 +28,8 @@ class ConnectionClosed(Exception): pass
 #Posibles respuestas del servidor:
     # respuesta['tipo']= "NO_carro_dentro" : Cuando se encuentra el carro dentro, genera alerta, niega el paso.
 
-HOST = "localhost"
-PORT = 8000
+HOST = "190.39.1.134"
+PORT = 23061
 def manejar_mensaje(mensaje):
     '''
         args:
