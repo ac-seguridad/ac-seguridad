@@ -26,7 +26,7 @@ with open('/etc/secret_key_acseguridad.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','190.38.144.154']
+ALLOWED_HOSTS = ['localhost','190.38.144.154', '190.39.1.134']
 
 
 # Application definition
