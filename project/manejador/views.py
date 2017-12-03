@@ -13,7 +13,6 @@ import requests
 
 # Create your views here.
 def index(request):
-    pdb.set_trace()
     context = {}
     template = loader.get_template('ac_seguridad/index.html')
     return HttpResponse(template.render(context, request))
@@ -84,7 +83,6 @@ def manejar_mensaje(request):
                                   tipo= respuesta['tipo']
 
                                   )
-                # pdb.set_trace()
                 enviar_mensaje_entrada(estacionamiento=estacionamiento,
                                ticket=ticket,
                                vehiculo=vehiculo,
@@ -119,7 +117,6 @@ def manejar_mensaje(request):
         if ( tipo=='placa_leida_salida'):
             registrado = mensaje["registrado"]
             ticket = mensaje["ticket"]
-            pdb.set_trace()
             if (not registrado):
                 try:
                 #Lo primero que se hace es listar por No resgistrado
@@ -233,7 +230,6 @@ def generar_actividad(estacionamiento, vehiculo, persona, tipo, ticket=None):
 
 def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     url = "http://{}:{}/notificaciones/enviar_correo_entrada/".format(HOST,PORT)
-    # pdb.set_trace()
     data_mensaje = {
         'rif': estacionamiento.rif,
         'nombre_estacionamiento': estacionamiento.nombre,
@@ -247,18 +243,10 @@ def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     }
     respuesta_request = requests.post(url, data=data_mensaje)
     respuesta = respuesta_request.json()
-    import pdb
-    pdb.set_trace()
-    print(respuesta)
-    # if (respuesta['success']):
-    #     print("Lo logró enviar.")
-    # else:
-    #     print("No lo logró enviar.")
 
 def enviar_mensaje_salida(estacionamiento, vehiculo, ticket, persona):
 
     url = "http://{}:{}/notificaciones/enviar_correo_salida/".format(HOST,PORT)
-    # pdb.set_trace()
     data_mensaje = {
         'rif': estacionamiento.rif,
         'nombre_estacionamiento': estacionamiento.nombre,
@@ -272,11 +260,6 @@ def enviar_mensaje_salida(estacionamiento, vehiculo, ticket, persona):
     }
     respuesta_request = requests.post(url, data=data_mensaje)
     respuesta = respuesta_request.json()
-    print(respuesta)
-    # if (respuesta['success']):
-    #     print("Lo logró enviar.")
-    # else:
-    #     print("No lo logró enviar.")
 
 #validar si un carro se encuentra dentro antes de entrar.
 #false no está, true está
