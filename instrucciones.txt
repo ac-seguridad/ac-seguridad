@@ -91,16 +91,52 @@ QUE HACER SI SE VA ELSERVIDOR. INTERNET
 
 
 
-Para correr en la laptop
+*******************************Para correr en la UCAB
+
+Anadir la ip de la computadora actual en el archivo del servidor.
+1. cd /var/www/ac-seguridad/project/
+2. sudo nano project/settings.py
+3. sudo apache2ctl restart
+
+Para anadir la ip en el rasp
+1. ssh pi@IP
+2. yes
+3.clave vas20Tpp
+4.cd ~/Desktop/detector/source
+5. python3 trainin.py 0 0 1
+
+
 
 1. abrir 2 terminales. (servidor django, servidor manejo rasp)
 2. en cada terminarl  cd ~/ac-seguridad/
 3. en cada terminal source env_acseguridad/bin/activate
 
 
+
+
+
+*****************************************borrar tablas
+psql -h localhost -U acseguridad -d ac_seguridad
+v
+
+
+
+
+
+**************************************************DESACTUALIZADO
+
+
+
+
+
+
+
+
 Terminal DJANGO
 cd project
 python manage.py runserver  'ip esta pc':"puerto a escoger"
+python
+
 
 TERMINAL servidor
 cd project/manejador
@@ -113,10 +149,9 @@ cd project/manejador
 python cliente.py
 
 TERMINAL DJANGO
-cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project; python manage.py runserver 192.168.0.108:8000
+cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project; python manage.py runserver
 
-TERMINAL servidor
-cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project/manejador; python serv.py forks
+
 
 TERMINAL cliente
 cd ~/ac-seguridad/; source env_acseguridad/bin/activate; cd project/manejador; python cliente_entrada.py

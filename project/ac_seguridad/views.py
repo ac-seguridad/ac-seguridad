@@ -311,8 +311,8 @@ def historial_empresas(request):
     #tabla de vehiculos no registrados en el centro comercial
     Vehiculos_no_registrados_dentro = list(TicketNoRegistrado.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = False ).extra(order_by=['-hora_entrada']))
 
-    Cantidad_regis= Ticket.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
-    Cantidad_nresg= TicketNoRegistrado.objects.filter(rif=rif_estacionamiento ,pagado='False').count()
+    Cantidad_regis= Ticket.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = False ).count()
+    Cantidad_nresg= TicketNoRegistrado.objects.filter(rif=rif_estacionamiento).exclude(hora_salida__isnull = False ).count()
     Cantidad = Cantidad_nresg + Cantidad_regis
 
     context['vehiculos_en'] = Vehiculos_en
