@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'', include('ac_seguridad.urls')),
     url(r'^notificaciones/',include('notificaciones.urls')),
+    url(r'^manejador/',include('manejador.urls')),
     url(r'^admin/', admin.site.urls),
 ]

@@ -110,3 +110,4 @@ con el número {ticket} \n \
 
     else:
         data_response['success'] = False
+    return JsonResponse(data_response)
