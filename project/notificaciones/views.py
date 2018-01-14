@@ -1,15 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt
 from .mailer import Mailer
 
 import pdb
 from ac_seguridad.models import *
+from project.celery import app
 import requests
 import json
 
@@ -66,17 +62,19 @@ def enviar_correo_entrada(request):
 #                              to=[data_recibida['email']])
 #         # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
 #         email.send()
-        mail = Mailer()
-        mail.send_messages(subject='Entrada de estacionamiento',
-                   template='notificaciones/email-entrada.html',
-                   context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
-                            'estacionamiento': data_recibida['nombre_estacionamiento'],
-                            'placa': data_recibida['placa'],
-                            'monto_tarifa': data_recibida['monto_tarifa'],
-                            'tipo_tarifa': data_recibida['tipo_tarifa'],
-                            'ticket': data_recibida['ticket']
-                            },
-                   to_emails=[data_recibida['email']])
+        # pdb.set_trace()
+        # mail = Mailer()
+        __send_in_mail.delay(data_recibida)
+        # mail.send_messages(subject='Entrada de estacionamiento',
+        #            template='notificaciones/email-entrada.html',
+        #            context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+        #                     'estacionamiento': data_recibida['nombre_estacionamiento'],
+        #                     'placa': data_recibida['placa'],
+        #                     'monto_tarifa': data_recibida['monto_tarifa'],
+        #                     'tipo_tarifa': data_recibida['tipo_tarifa'],
+        #                     'ticket': data_recibida['ticket']
+        #                     },
+        #            to_emails=[data_recibida['email']])
         data_response['success'] = True
 
     else:
@@ -118,15 +116,16 @@ def enviar_correo_salida(request):
 #                              to=[data_recibida['email']])
 #         # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
 #         email.send()
-        mail = Mailer()
-        mail.send_messages(subject='Salida de estacionamiento',
-                   template='notificaciones/email-salida.html',
-                   context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
-                            'estacionamiento': data_recibida['nombre_estacionamiento'],
-                            'placa': data_recibida['placa'],
-                            'ticket': data_recibida['ticket']
-                            },
-                   to_emails=[data_recibida['email']])
+        __send_out_mail.delay(data_recibida=data_recibida)
+        # mail = Mailer()
+        # mail.send_messages(subject='Salida de estacionamiento',
+        #            template='notificaciones/email-salida.html',
+        #            context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+        #                     'estacionamiento': data_recibida['nombre_estacionamiento'],
+        #                     'placa': data_recibida['placa'],
+        #                     'ticket': data_recibida['ticket']
+        #                     },
+        #            to_emails=[data_recibida['email']])
 
 
         data_response['success'] = True
@@ -134,3 +133,29 @@ def enviar_correo_salida(request):
     else:
         data_response['success'] = False
     return JsonResponse(data_response)
+
+@app.task
+def __send_in_mail(data_recibida):
+    mail = Mailer()
+    mail.send_messages(subject='Entrada de estacionamiento',
+               template='notificaciones/email-entrada.html',
+               context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+                        'estacionamiento': data_recibida['nombre_estacionamiento'],
+                        'placa': data_recibida['placa'],
+                        'monto_tarifa': data_recibida['monto_tarifa'],
+                        'tipo_tarifa': data_recibida['tipo_tarifa'],
+                        'ticket': data_recibida['ticket']
+                        },
+               to_emails=[data_recibida['email']])
+
+@app.task
+def __send_out_mail(data_recibida):
+    mail = Mailer()
+    mail.send_messages(subject='Salida de estacionamiento',
+               template='notificaciones/email-salida.html',
+               context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+                        'estacionamiento': data_recibida['nombre_estacionamiento'],
+                        'placa': data_recibida['placa'],
+                        'ticket': data_recibida['ticket']
+                        },
+               to_emails=[data_recibida['email']])

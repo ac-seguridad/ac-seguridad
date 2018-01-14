@@ -8,10 +8,9 @@ class Mailer:
     Send email messages helper class
     """
 
-    def __init__(self, from_email=None):
-        # TODO setup the default from email
+    def __init__(self):
         self.connection = mail.get_connection()
-        self.from_email = from_email
+        self.from_email = "ac.seguridad256@gmail.com"
 
     def send_messages(self, subject, template, context, to_emails):
         messages = self.__generate_messages(subject, template, context, to_emails)

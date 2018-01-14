@@ -9,6 +9,7 @@ from django.utils import timezone
 
 import pdb
 from ac_seguridad.models import *
+from project.celery import app
 import requests
 
 # Create your views here.
@@ -228,6 +229,7 @@ def generar_actividad(estacionamiento, vehiculo, persona, tipo, ticket=None):
 
 # ***********************************************************************************Enviar Mensaje
 
+# @app.task
 def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     url = "http://{}:{}/notificaciones/enviar_correo_entrada/".format(HOST,PORT)
     data_mensaje = {
@@ -244,6 +246,7 @@ def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     respuesta_request = requests.post(url, data=data_mensaje)
     respuesta = respuesta_request.json()
 
+# @app.task
 def enviar_mensaje_salida(estacionamiento, vehiculo, ticket, persona):
 
     url = "http://{}:{}/notificaciones/enviar_correo_salida/".format(HOST,PORT)
