@@ -2,3 +2,7 @@ django==1.11.3
 psycopg2
 requests==2.18.4
 mod_wsgi
+celery
+django-celery
+anyjson
+django-celery-email

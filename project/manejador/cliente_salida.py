@@ -16,8 +16,8 @@ import requests
 # Constantes.
 NUM_PUERTA = 5
 RIF = "12345"
-HOST = "ac-seguridad.tk"
-PORT = 80
+HOST = "localhost"
+PORT = 8000
 #1234 acceso restringido
 #0000 acceso no restringido
 #pdb.set_trace()

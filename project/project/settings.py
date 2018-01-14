@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'ac_seguridad.apps.AcSeguridadConfig',
     'manejador.apps.ManejadorConfig',
     'notificaciones.apps.NotificacionesConfig',
+    'djcelery',
+    'djcelery_email',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -143,9 +145,8 @@ EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER ='ac.seguridad256@gmail.com'
 EMAIL_HOST_PASSWORD = 'Anabel94'
 EMAIL_PORT=587
+# Use Celery as Email backend, makes email async
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp-mail.outlook.com'
-# EMAIL_HOST_USER = 'acseguridad256@outlook.com'
-# EMAIL_HOST_PASSWORD = 'Anabel94'
-# EMAIL_PORT = 25
+# Celery Conf
+CELERY_BROKER_URL = 'amqp://ac-seguridad:vas20Tpp@localhost:5672/ac-seguridad'

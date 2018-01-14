@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.views.decorators.csrf import csrf_exempt
+from .mailer import Mailer
 
 import pdb
 from ac_seguridad.models import *
@@ -42,29 +43,40 @@ def enviar_correo_entrada(request):
     data_response = dict()
     if request.method == 'POST':
         data_recibida = request.POST
-        contenido = "Estimado usuario {usuario}:\n\n\n \
-        Se ha registrado un ingreso en el estacionamiento {estacionamiento} de su vehículo {placa} \
-le hemos asigando el número {ticket} \n \
-        Le recodamos: \n\
-        El estacionamiento {estacionamiento} actualmente cuenta con una tarifa {tipo_tarifa} con el monto:{monto_tarifa}. \
-Adicionalmente le recordamos que por la seguridad de su vehículo se ha asociado a su \
-número de ticket a la placa de su carro, por lo que solo con su número de \
-ticket podrá ser extraido su vehículo.\n\n \
-        Gracias por usar nuestro servicio de seguridad: AC Seguridad. \n\
-        Si no reconoce esta entrada responder a este correo.".format(
-            usuario=data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
-            estacionamiento= data_recibida['nombre_estacionamiento'],
-            placa = data_recibida['placa'],
-            monto_tarifa = data_recibida['monto_tarifa'],
-            tipo_tarifa = data_recibida['tipo_tarifa'],
-            ticket = data_recibida['ticket'],
-
-        )
-        email = EmailMessage(subject='Entrada en estacionamiento',
-                             body=contenido,
-                             to=[data_recibida['email']])
-        # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
-        email.send()
+#         contenido = "Estimado usuario {usuario}:\n\n\n \
+#         Se ha registrado un ingreso en el estacionamiento {estacionamiento} de su vehículo {placa} \
+# le hemos asigando el número {ticket} \n \
+#         Le recodamos: \n\
+#         El estacionamiento {estacionamiento} actualmente cuenta con una tarifa {tipo_tarifa} con el monto:{monto_tarifa}. \
+# Adicionalmente le recordamos que por la seguridad de su vehículo se ha asociado a su \
+# número de ticket a la placa de su carro, por lo que solo con su número de \
+# ticket podrá ser extraido su vehículo.\n\n \
+#         Gracias por usar nuestro servicio de seguridad: AC Seguridad. \n\
+#         Si no reconoce esta entrada responder a este correo.".format(
+#             usuario=data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+#             estacionamiento= data_recibida['nombre_estacionamiento'],
+#             placa = data_recibida['placa'],
+#             monto_tarifa = data_recibida['monto_tarifa'],
+#             tipo_tarifa = data_recibida['tipo_tarifa'],
+#             ticket = data_recibida['ticket'],
+#
+#         )
+#         email = EmailMessage(subject='Entrada en estacionamiento',
+#                              body=contenido,
+#                              to=[data_recibida['email']])
+#         # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
+#         email.send()
+        mail = Mailer()
+        mail.send_messages(subject='Entrada de estacionamiento',
+                   template='notificaciones/email-entrada.html',
+                   context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+                            'estacionamiento': data_recibida['nombre_estacionamiento'],
+                            'placa': data_recibida['placa'],
+                            'monto_tarifa': data_recibida['monto_tarifa'],
+                            'tipo_tarifa': data_recibida['tipo_tarifa'],
+                            'ticket': data_recibida['ticket']
+                            },
+                   to_emails=[data_recibida['email']])
         data_response['success'] = True
 
     else:
@@ -90,22 +102,33 @@ def enviar_correo_salida(request):
     data_response = dict()
     if request.method == 'POST':
         data_recibida = request.POST
-        contenido = "Estimado usuario {usuario}:\n\n\n \
-        Se ha registrado un egreso en el estacionamiento {estacionamiento} de su vehículo {placa} \
-con el número {ticket} \n \
-        Gracias por usar nuestro servicio de seguridad: AC Seguridad. \n\
-        Si no reconoce este egreso responder a este correo.".format(
-            usuario=data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
-            estacionamiento= data_recibida['nombre_estacionamiento'],
-            placa = data_recibida['placa'],
-            ticket = data_recibida['ticket'],
+#         contenido = "Estimado usuario {usuario}:\n\n\n \
+#         Se ha registrado un egreso en el estacionamiento {estacionamiento} de su vehículo {placa} \
+# con el número {ticket} \n \
+#         Gracias por usar nuestro servicio de seguridad: AC Seguridad. \n\
+#         Si no reconoce este egreso responder a este correo.".format(
+#             usuario=data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+#             estacionamiento= data_recibida['nombre_estacionamiento'],
+#             placa = data_recibida['placa'],
+#             ticket = data_recibida['ticket'],
+#
+#         )
+#         email = EmailMessage(subject='Entrada en estacionamiento',
+#                              body=contenido,
+#                              to=[data_recibida['email']])
+#         # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
+#         email.send()
+        mail = Mailer()
+        mail.send_messages(subject='Salida de estacionamiento',
+                   template='notificaciones/email-salida.html',
+                   context={'usuario': data_recibida['nombre_dueno'] + " " + data_recibida['apellido_dueno'],
+                            'estacionamiento': data_recibida['nombre_estacionamiento'],
+                            'placa': data_recibida['placa'],
+                            'ticket': data_recibida['ticket']
+                            },
+                   to_emails=[data_recibida['email']])
 
-        )
-        email = EmailMessage(subject='Entrada en estacionamiento',
-                             body=contenido,
-                             to=[data_recibida['email']])
-        # email = EmailMessage('Test', 'Test', to=['anaberincon9@gmail.com'])
-        email.send()
+
         data_response['success'] = True
 
     else:

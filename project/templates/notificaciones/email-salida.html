@@ -1,0 +1,18 @@
+{% extends 'email-base.html' %}
+{% load static %}
+{% block contenido_mensaje %}
+<h1>
+  Estimado usuario {{ usuario }}:
+</h1>
+<h3>
+  Se ha registrado un egreso del estacionamiento {{ estacionamiento }} de
+  su vehículo {{ placa }} con el número {{ ticket }}.
+
+  Le recodamos: <br>
+  El estacionamiento {{ estacionamiento }} actualmente cuenta con una tarifa
+  {{ tipo_tarifa }} con el monto: {{ monto_tarifa }}.<br>
+
+  Gracias por usar nuestro servicio de seguridad: AC Seguridad.<br>
+  Si no reconoce esta entrada responder a este correo.
+</h3>
+{% endblock}
