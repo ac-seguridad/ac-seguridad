@@ -150,7 +150,7 @@ def manejar_mensaje(request):
                                 generar_alerta(rif=estacionamiento, placa=placa, tipo_alerta='salida_exitosa', usuario= None)
                             else:
                                 generar_alerta(rif=estacionamiento, placa=placa ,tipo_alerta='salida_manual', usuario= None)
-                            if (ticket.vehiculo.dueno.enviar_correo):
+                            if (ticket.placa.dueno.enviar_correo):
                                 enviar_mensaje_salida(estacionamiento=estacionamiento,
                                                ticket=ticket,
                                                vehiculo=ticket.vehiculo,
@@ -235,7 +235,6 @@ def generar_actividad(estacionamiento, vehiculo, persona, tipo, ticket=None):
 
 # ***********************************************************************************Enviar Mensaje
 
-# @app.task
 def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     url = "http://{}:{}/notificaciones/enviar_correo_entrada/".format(HOST,PORT)
     data_mensaje = {
@@ -252,7 +251,6 @@ def enviar_mensaje_entrada(estacionamiento, vehiculo, ticket, persona):
     respuesta_request = requests.post(url, data=data_mensaje)
     respuesta = respuesta_request.json()
 
-# @app.task
 def enviar_mensaje_salida(estacionamiento, vehiculo, ticket, persona):
 
     url = "http://{}:{}/notificaciones/enviar_correo_salida/".format(HOST,PORT)
