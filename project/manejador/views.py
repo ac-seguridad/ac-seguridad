@@ -84,12 +84,12 @@ def manejar_mensaje(request):
                                   tipo= respuesta['tipo']
 
                                   )
-                enviar_mensaje_entrada(estacionamiento=estacionamiento,
-                               ticket=ticket,
-                               vehiculo=vehiculo,
-                               persona=vehiculo.dueno,
-
-                               )
+                if (vehiculo.dueno.enviar_correo):
+                    enviar_mensaje_entrada(estacionamiento=estacionamiento,
+                                   ticket=ticket,
+                                   vehiculo=vehiculo,
+                                   persona=vehiculo.dueno,
+                                   )
                 if(mensaje['lectura_automatica'] == True):
                     generar_alerta(rif=estacionamiento, placa=placa, tipo_alerta='entrada_exitosa', usuario= vehiculo.dueno.cedula)
                 else:
@@ -150,6 +150,12 @@ def manejar_mensaje(request):
                                 generar_alerta(rif=estacionamiento, placa=placa, tipo_alerta='salida_exitosa', usuario= None)
                             else:
                                 generar_alerta(rif=estacionamiento, placa=placa ,tipo_alerta='salida_manual', usuario= None)
+                            if (ticket.vehiculo.dueno.enviar_correo):
+                                enviar_mensaje_salida(estacionamiento=estacionamiento,
+                                               ticket=ticket,
+                                               vehiculo=ticket.vehiculo,
+                                               persona=ticket.vehiculo.dueno,
+                                               )
                             # generar_actividad(estacionamiento=estacionamiento,
                             #                   ticket=ticket,
                             #                   vehiculo= vehiculo,
