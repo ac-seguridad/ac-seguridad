@@ -139,6 +139,8 @@ def manejar_mensaje(request):
                     respuesta['tipo']= "NO_ticket_no_encontrado"
             else:
                 try:
+                    import pdb
+                    pdb.set_trace()
                     # Verificamos si el ticket exite.
                     ticket=Ticket.objects.get(numero_ticket=ticket)
                     if (ticket.pagado):
@@ -153,8 +155,8 @@ def manejar_mensaje(request):
                             if (ticket.placa.dueno.enviar_correo):
                                 enviar_mensaje_salida(estacionamiento=estacionamiento,
                                                ticket=ticket,
-                                               vehiculo=ticket.vehiculo,
-                                               persona=ticket.vehiculo.dueno,
+                                               vehiculo=ticket.placa,
+                                               persona=ticket.placa.dueno,
                                                )
                             # generar_actividad(estacionamiento=estacionamiento,
                             #                   ticket=ticket,
