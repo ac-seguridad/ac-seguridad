@@ -20,7 +20,7 @@ def index(request):
     # return HttpResponse("Hello, world. You're at the polls index.")
 
 HOST = "localhost"
-PORT = 8000
+PORT = 80
 @csrf_exempt
 def manejar_mensaje(request):
     '''
