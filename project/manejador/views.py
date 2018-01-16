@@ -139,8 +139,6 @@ def manejar_mensaje(request):
                     respuesta['tipo']= "NO_ticket_no_encontrado"
             else:
                 try:
-                    import pdb
-                    pdb.set_trace()
                     # Verificamos si el ticket exite.
                     ticket=Ticket.objects.get(numero_ticket=ticket)
                     if (ticket.pagado):
